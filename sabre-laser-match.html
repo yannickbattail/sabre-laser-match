@@ -22,36 +22,36 @@
     <tbody>
     <tr>
       <td>
-        <input type="number" id="score0" value="0" readonly="readonly" autocomplete='off' />
+        <input type="number" id="scoreVert" value="0" readonly="readonly" autocomplete='off' />
       </td>
       <td>
-        <input type="number" id="score1" value="0" readonly="readonly" autocomplete='off' />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button onclick="touche(1, 0)">+1</button>
-        <button onclick="touche(3, 0)">+3</button>
-        <button onclick="touche(5, 0)">+5</button>
-      </td>
-      <td>
-        <button onclick="touche(1, 1)">+1</button>
-        <button onclick="touche(3, 1)">+3</button>
-        <button onclick="touche(5, 1)">+5</button>
+        <input type="number" id="scoreRouge" value="0" readonly="readonly" autocomplete='off' />
       </td>
     </tr>
     <tr>
       <td>
-        <button onclick="carton(0, 0)">blanc</button>
-        <button onclick="carton(1, 0)">jaune</button>
-        <button onclick="carton(2, 0)">rouge</button>
-        <button onclick="carton(3, 0)">noir</button>
+        <button onclick="touche('main', 'vert')">+1</button>
+        <button onclick="touche('membre', 'vert')">+3</button>
+        <button onclick="touche('tronc', 'vert')">+5</button>
       </td>
       <td>
-        <button onclick="carton(0, 1)">blanc</button>
-        <button onclick="carton(1, 1)">jaune</button>
-        <button onclick="carton(2, 1)">rouge</button>
-        <button onclick="carton(3, 1)">noir</button>
+        <button onclick="touche('main', 'rouge')">+1</button>
+        <button onclick="touche('membre', 'rouge')">+3</button>
+        <button onclick="touche('tronc', 'rouge')">+5</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button onclick="carton('blanc', 'vert')">blanc</button>
+        <button onclick="carton('jaune', 'vert')">jaune</button>
+        <button onclick="carton('rouge', 'vert')">rouge</button>
+        <button onclick="carton('noir', 'vert')">noir</button>
+      </td>
+      <td>
+        <button onclick="carton('blanc', 'rouge')">blanc</button>
+        <button onclick="carton('jaune', 'rouge')">jaune</button>
+        <button onclick="carton('rouge', 'rouge')">rouge</button>
+        <button onclick="carton('noir', 'rouge')">noir</button>
       </td>
     </tr>
     </tbody>
@@ -61,54 +61,100 @@
   </div>
   <button onclick="annuler()">Annuler la dernière action</button>
   <script>
-    const CARTONS = [
-      {
+    class Event {
+      temps;
+      combattant;
+      type;
+      nom;
+      constructor(temps, combattant, type, nom) {
+        this.temps = temps;
+        this.combattant = combattant;
+        this.type = type;
+        this.nom = nom;
+      }
+    }
+    const CARTONS = {
+      blanc: {
         couleur: 'blanc',
         points: 0
       },
-      {
+      jaune:{
         couleur: 'jaune',
         points: -2
       },
-      {
+      rouge:{
         couleur: 'rouge',
         points: -5
       },
-      {
+      noir:{
         couleur: 'noir',
         points: -15
       }
-    ];
-    const COMBATTANTS = ['vert', 'rouge'];
-    function carton(cartonNum, combatant) {
-      ajoutHistorique(COMBATTANTS[combatant]+ ": carton " + CARTONS[cartonNum].couleur + " " + CARTONS[cartonNum].points, CARTONS[cartonNum].points);
-      changeScore(CARTONS[cartonNum].points, combatant);
+    };
+    const TOUCHES = {
+      main: {
+        points: 1
+      },
+      membre:{
+        points: 2
+      },
+      tronc:{
+        points: 5
+      },
+    };
+    const COMBATTANTS = {
+      vert: {
+        couleur: 'vert',
+        nom: "combattant vert",
+      },
+      rouge: {
+        couleur: 'rouge',
+        nom: "combattant rouge",
+      }
+    };
+    const historique = [];
+    function carton(carton, combatant) {
+      historique.push(new Event(getTime(), combatant, 'carton', carton));
+      refresh();
     }
-    function touche(points, combatant) {
-      ajoutHistorique(COMBATTANTS[combatant]+ ": touche +"+ points, points);
-      changeScore(points, combatant);
+    function touche(type, combatant) {
+      historique.push(new Event(getTime(), combatant, 'touche', type));
+      refresh();
     }
     function annuler() {
-      const historique = document.getElementById("historique");
-      if (historique.options.length === 0) return ;
-      const lastIndex = historique.options.length - 1;
-      const combatant = historique.options[lastIndex].text.startsWith("vert")?0:1;
-      const points = Number(historique.options[lastIndex].value);
-      changeScore(points * -1, combatant);
-      historique.remove(lastIndex);
+      historique.pop();
+      refresh();
     }
-    function ajoutHistorique(texte, points) {
-      const historique = document.getElementById("historique");
+    function ajoutHistorique(event) {
+      const historiqueSelect = document.getElementById("historique");
       const option = document.createElement("option");
-      option.text = texte;
-      option.value = points;
-      historique.add(option);
-      historique.scrollTop = historique.scrollHeight;
+      if (event.type === 'carton') option.text = `[${event.temps}] ${event.combattant}: ${event.type} ${event.nom} (${CARTONS[event.nom].points})`;
+      else if (event.type === 'touche') option.text = `[${event.temps}] ${event.combattant}: ${event.type} ${event.nom} (${TOUCHES[event.nom].points})`;
+      else if (event.type === 'debut') option.text = `[${event.temps}] Combattez!`;
+      historiqueSelect.add(option);
+      historiqueSelect.scrollTop = historiqueSelect.scrollHeight;
     }
-    function changeScore(points, combatant) {
-      const scoreInput = document.getElementById('score'+combatant);
-      console.log(scoreInput.value, points, combatant);
-      scoreInput.value = Number(scoreInput.value) + points;
+    function updateScore() {
+      document.getElementById('scoreVert').value = historique.filter(e => e.combattant === 'vert').map(e => {
+        if (e.type === 'carton') return CARTONS[e.nom].points;
+        else if (e.type === 'touche') return TOUCHES[e.nom].points;
+        else return 0;
+      }).reduce((a, b) => a + b, 0)
+      document.getElementById('scoreRouge').value = historique.filter(e => e.combattant === 'rouge').map(e => {
+        if (e.type === 'carton') return CARTONS[e.nom].points;
+        else if (e.type === 'touche') return TOUCHES[e.nom].points;
+        else return 0;
+      }).reduce((a, b) => a + b, 0)
+    }
+    function refresh() {
+      const historiqueSelect = document.getElementById("historique");
+      historiqueSelect.innerHTML = "";
+      historique.map(e => ajoutHistorique(e));
+      historiqueSelect.scrollTop = historiqueSelect.scrollHeight;
+      updateScore();
+    }
+    function getTime() {
+      return 0;
     }
   </script>
   </body>
