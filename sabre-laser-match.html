@@ -5,27 +5,51 @@
     <meta charset="utf-8">
     <title>Sabre laser - match</title>
     <style>
-      #score0, #score1 {
+      .dark {
+        color: rgb(100, 200, 255);
+        background-color: rgba(30,30,30);
+      }
+      .dark button, .dark input, .dark select {
+        color: rgb(100, 200, 255);
+        background-color: rgba(60,60,60);
+        border-color: rgb(100, 200, 255);
+        border-radius: 5px;
+      }
+      button {
+        margin: 10px;
+        padding: 10px;
+      }
+      #scoreVert, #scoreRouge {
         width: 40px;
+        font-size: 20px;
+        text-align: center;
+      }
+      #restant {
+        font-size: 20px;
+      }
+      body {
+        text-align: center;
       }
     </style>
   </head>
-  <body>
-  Temps restant:<span id="restant">00:00</span>
-  <table border="2">
+  <body class="dark">
+  <span id="restant">00:00</span>
+  <button id="start" onclick="start()">&gt; </button>
+  <button id="reset" onclick="reset()">reset</button>
+  <table style="width:100%">
     <thead>
       <tr>
-        <th>Combattant vert</th>
-        <th>Combattant rouge</th>
+        <th>Vert</th>
+        <th>Rouge</th>
       </tr>
     </thead>
     <tbody>
     <tr>
       <td>
-        <input type="number" id="scoreVert" value="0" readonly="readonly" autocomplete='off' />
+        <input type="text" id="scoreVert" value="0" readonly="readonly" autocomplete='off' />
       </td>
       <td>
-        <input type="number" id="scoreRouge" value="0" readonly="readonly" autocomplete='off' />
+        <input type="text" id="scoreRouge" value="0" readonly="readonly" autocomplete='off' />
       </td>
     </tr>
     <tr>
@@ -57,7 +81,7 @@
     </tbody>
   </table>
   <div>
-    <select id="historique" multiple="multiple"></select>
+    <select id="historique" multiple="multiple"  size="10" style="width: 100%"></select>
   </div>
   <button onclick="annuler()">Annuler la dernière action</button>
   <script>
@@ -102,17 +126,11 @@
         points: 5
       },
     };
-    const COMBATTANTS = {
-      vert: {
-        couleur: 'vert',
-        nom: "combattant vert",
-      },
-      rouge: {
-        couleur: 'rouge',
-        nom: "combattant rouge",
-      }
-    };
+    const duree = 180;
     const historique = [];
+    let time = 0;
+    let status = 'pret';
+    let intervalID = null;
     function carton(carton, combatant) {
       historique.push(new Event(getTime(), combatant, 'carton', carton));
       refresh();
@@ -146,15 +164,56 @@
         else return 0;
       }).reduce((a, b) => a + b, 0)
     }
+    function updateTimer() {
+      if (status === "en cours") {
+        document.getElementById('start').innerText = "||";
+      } else {
+        document.getElementById('start').innerText = "> ";
+      }
+      document.getElementById('restant').innerText = pad0(Math.floor(time / 60)) + ":" + pad0(time % 60);
+    }
     function refresh() {
       const historiqueSelect = document.getElementById("historique");
       historiqueSelect.innerHTML = "";
       historique.map(e => ajoutHistorique(e));
       historiqueSelect.scrollTop = historiqueSelect.scrollHeight;
       updateScore();
+      updateTimer();
     }
     function getTime() {
       return 0;
+    }
+    function atInterval() {
+      if (time >= duree) {
+        window.clearInterval(intervalID);
+        status = "fini";
+      } else {
+        time++;
+      }
+      refresh();
+    }
+    function pad0(value) {
+      return value<10?'0'+value:value;
+    }
+    function reset() {
+      window.clearInterval(intervalID);
+      time = 0;
+      status = "pret";
+      refresh();
+    }
+    function start() {
+      if (status === "en cours") {
+        window.clearInterval(intervalID);
+        status = "pause";
+      } else if (status === "pause" || status === "pret") {
+        intervalID = window.setInterval(atInterval, 1000);
+        status = "en cours";
+      } else if (status === "fini") {
+        time = 0;
+        intervalID = window.setInterval(atInterval, 1000);
+        status = "en cours";
+      }
+      refresh();
     }
   </script>
   </body>
