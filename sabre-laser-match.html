@@ -11,13 +11,11 @@
         color: rgb(100, 200, 255);
         background-color: rgba(30,30,30);
       }
-      .dark button {
+      button {
         color: rgb(100, 200, 255);
         background-color: rgba(60,60,60);
         border-color: rgb(100, 200, 255);
         border-radius: 5px;
-      }
-      button {
         margin: 10px;
         padding: 10px;
       }
@@ -26,7 +24,11 @@
       button[disabled=disabled] {
         border-color: rgb(30, 60, 75);
       }
-        button img {
+      #historique img {
+        width: 20px;
+        height: 20px;
+      }
+      button img {
         width: 30px;
         height: 30px;
       }
@@ -67,9 +69,9 @@
   </head>
   <body class="dark">
   <span id="restant">00:00</span>
-  <button id="start" onclick="start()"><img src="images/play.svg" alt="démarrer le combat" /></button>
-  <button id="reset" onclick="reset()">Nouveau combat</button>
-  <button onclick="annuler()"><img src="images/abort.svg" alt="supprimer la dernière action" /></button>
+  <button id="start" onclick="start()"><img src="images/play.svg" alt="démarrer le combat" title="démarrer le combat" /></button>
+  <button id="reset" onclick="reset()"><img src="images/abort.svg" alt="Nouveau combat" title="Nouveau combat" /></button>
+  <button onclick="annuler()"><img src="images/abort.svg" alt="Supprimer la dernière action" title="Supprimer la dernière action" /></button>
   <table style="width:100%">
     <thead>
       <tr>
@@ -91,32 +93,32 @@
     </tr>
     <tr>
       <td>
-        <button class="touche main" onclick="touche('main', 'vert')"><img src="images/main.svg" alt="carton blanc" /></button>
-        <button class="touche bras"  onclick="touche('bras', 'vert')"><img src="images/bras.svg" alt="carton blanc" /></button>
-        <button class="touche jambe"  onclick="touche('jambe', 'vert')"><img src="images/jambe.svg" alt="carton blanc" /></button>
-        <button class="touche tronc"  onclick="touche('tronc', 'vert')"><img src="images/torse.svg" alt="carton blanc" /></button>
-        <button class="touche tete"  onclick="touche('tete', 'vert')"><img src="images/tete.svg" alt="carton blanc" /></button>
+        <button class="touche main" onclick="touche('main', 'vert')"><img src="images/main.svg" alt="touche main" title="touche main" /></button>
+        <button class="touche bras"  onclick="touche('bras', 'vert')"><img src="images/bras.svg" alt="touche bras" title="touche bras" /></button>
+        <button class="touche jambe"  onclick="touche('jambe', 'vert')"><img src="images/jambe.svg" alt="touche jambe" title="touche jambe" /></button>
+        <button class="touche tronc"  onclick="touche('tronc', 'vert')"><img src="images/tronc.svg" alt="touche tronc" title="touche tronc" /></button>
+        <button class="touche tête"  onclick="touche('tête', 'vert')"><img src="images/tete.svg" alt="touche tête" title="touche tête" /></button>
       </td>
       <td>
-        <button class="touche main"  onclick="touche('main', 'rouge')"><img src="images/main.svg" alt="carton blanc" /></button>
-        <button class="touche bras"  onclick="touche('bras', 'rouge')"><img src="images/bras.svg" alt="carton blanc" /></button>
-        <button class="touche jambe"  onclick="touche('jambe', 'rouge')"><img src="images/jambe.svg" alt="carton blanc" /></button>
-        <button class="touche tronc"  onclick="touche('tronc', 'rouge')"><img src="images/torse.svg" alt="carton blanc" /></button>
-        <button class="touche tete"  onclick="touche('tete', 'rouge')"><img src="images/tete.svg" alt="carton blanc" /></button>
+        <button class="touche main"  onclick="touche('main', 'rouge')"><img src="images/main.svg" alt="touche main" title="touche main" /></button>
+        <button class="touche bras"  onclick="touche('bras', 'rouge')"><img src="images/bras.svg" alt="touche bras" title="touche bras" /></button>
+        <button class="touche jambe"  onclick="touche('jambe', 'rouge')"><img src="images/jambe.svg" alt="touche jambe" title="touche jambe" /></button>
+        <button class="touche tronc"  onclick="touche('tronc', 'rouge')"><img src="images/tronc.svg" alt="touche tronc" title="touche tronc" /></button>
+        <button class="touche tête"  onclick="touche('tête', 'rouge')"><img src="images/tete.svg" alt="touche tête" title="touche tête" /></button>
       </td>
     </tr>
     <tr>
       <td>
-        <button class="carton blanc" onclick="carton('blanc', 'vert')"><img src="images/carton-blanc.svg" alt="carton blanc" /></button>
-        <button class="carton jaune" onclick="carton('jaune', 'vert')"><img src="images/carton-jaune.svg" alt="carton jaune" /></button>
-        <button class="carton rouge" onclick="carton('rouge', 'vert')"><img src="images/carton-rouge.svg" alt="carton rouge" /></button>
-        <button class="carton noir" onclick="carton('noir', 'vert')"><img src="images/carton-noir.svg" alt="carton noir" /></button>
+        <button class="carton blanc" onclick="carton('blanc', 'vert')"><img src="images/carton-blanc.svg" alt="carton blanc" title="carton blanc" /></button>
+        <button class="carton jaune" onclick="carton('jaune', 'vert')"><img src="images/carton-jaune.svg" alt="carton jaune" title="carton jaune" /></button>
+        <button class="carton rouge" onclick="carton('rouge', 'vert')"><img src="images/carton-rouge.svg" alt="carton rouge" title="carton rouge" /></button>
+        <button class="carton noir" onclick="carton('noir', 'vert')"><img src="images/carton-noir.svg" alt="carton noir" title="carton noir" /></button>
       </td>
       <td>
-        <button class="carton blanc" onclick="carton('blanc', 'rouge')"><img src="images/carton-blanc.svg" alt="carton blanc" /></button>
-        <button class="carton jaune" onclick="carton('jaune', 'rouge')"><img src="images/carton-jaune.svg" alt="carton jaune" /></button>
-        <button class="carton rouge" onclick="carton('rouge', 'rouge')"><img src="images/carton-rouge.svg" alt="carton rouge" /></button>
-        <button class="carton noir" onclick="carton('noir', 'rouge')"><img src="images/carton-noir.svg" alt="carton noir" /></button>
+        <button class="carton blanc" onclick="carton('blanc', 'rouge')"><img src="images/carton-blanc.svg" alt="carton blanc" title="carton blanc" /></button>
+        <button class="carton jaune" onclick="carton('jaune', 'rouge')"><img src="images/carton-jaune.svg" alt="carton jaune" title="carton jaune" /></button>
+        <button class="carton rouge" onclick="carton('rouge', 'rouge')"><img src="images/carton-rouge.svg" alt="carton rouge" title="carton rouge" /></button>
+        <button class="carton noir" onclick="carton('noir', 'rouge')"><img src="images/carton-noir.svg" alt="carton noir" title="carton noir" /></button>
       </td>
     </tr>
     </tbody>
@@ -198,50 +200,58 @@
     const CARTONS = {
       blanc: {
         couleur: 'blanc',
-        points: 0
+        points: 0,
+        image: "images/carton-blanc.svg"
       },
       jaune:{
         couleur: 'jaune',
-        points: 3
+        points: 3,
+        image: "images/carton-jaune.svg"
       },
       rouge:{
         couleur: 'rouge',
-        points: 5
+        points: 5,
+        image: "images/carton-rouge.svg"
       },
       noir:{
         couleur: 'noir',
-        points: 0
+        points: 0,
+        image: "images/carton-noir.svg"
       }
     };
     const TOUCHES = {
       main: {
-        points: 1
+        points: 1,
+        image: "images/main.svg"
       },
       bras:{
-        points: 3
+        points: 3,
+        image: "images/bras.svg"
       },
       jambe:{
-        points: 3
+        points: 3,
+        image: "images/jambe.svg"
       },
       tronc:{
-        points: 5
+        points: 5,
+        image: "images/tronc.svg"
       },
-      tete:{
-        points: 5
+      tête:{
+        points: 5,
+        image: "images/tete.svg"
       },
     };
     const duree = 180;
-    const scroreMax = 15;
+    const scoreMax = 15;
     let historique = [];
     let time = 0;
-    let status = 'pret'; // "pret" "en cours" "pause" "fini"
-    let intervalID = null;
-    function carton(carton, combatant) {
-      historique.push(new Event(time, combatant, 'carton', carton));
+    let status = 'prêt'; // "prêt" "en cours" "pause" "fini"
+    function carton(carton, Combattant) {
+      historique.push(new Event(time, Combattant, 'carton', carton));
       refresh();
     }
-    function touche(type, combatant) {
-      historique.push(new Event(time, combatant, 'touche', type));
+    function touche(type, Combattant) {
+      historique.push(new Event(time, Combattant, 'touche', type));
       refresh();
     }
     function annuler() {
@@ -252,15 +262,18 @@
       return `<span class="${combattant}Combattant">${combattant}</span>`;
     }
     function formatCarton(carton) {
-      return `<span class="${carton}Carton">${carton}</span>`;
+      return `<img src="${CARTONS[carton].image}" alt="touche ${carton}" />`;
+    }
+    function formatTouche(touche) {
+      return `<img src="${TOUCHES[touche].image}" alt="touche ${touche}" />`;
     }
     function ajoutHistorique(event) {
       const horodatage = `<span class="temps">[${formatTime(event.temps)}]</span>`
       if (event.type === 'carton') {
-        return `<div>${horodatage} combattant ${formatCombattant(event.combattant)}: ${event.type} ${formatCarton(event.nom)} (${CARTONS[event.nom].points} combattant ${autreComabattant(event.combattant)})</div>`;
+        return `<div>${horodatage} combattant ${formatCombattant(event.combattant)}: ${event.type} ${formatCarton(event.nom)} (+${CARTONS[event.nom].points} combattant ${autreComabattant(event.combattant)})</div>`;
       }
       else if (event.type === 'touche') {
-        return `<div>${horodatage} combattant ${formatCombattant(event.combattant)}: ${event.type} ${event.nom} (${TOUCHES[event.nom].points})</div>`;
+        return `<div>${horodatage} combattant ${formatCombattant(event.combattant)}: ${event.type} ${formatTouche(event.nom)} (+${TOUCHES[event.nom].points})</div>`;
       }
     }
 
@@ -296,7 +309,7 @@
       NodeUpdate.updateDiv("historique", html);
       document.getElementById('scoreVert').innerHTML = calcScore("vert");
       document.getElementById('scoreRouge').innerHTML = calcScore("rouge");
-      activeButtons(status !== "pret");
+      activeButtons(status !== "prêt");
       updateTimer();
     }
     function activeButtons(active) {
@@ -310,11 +323,12 @@
       }
     }
     function atInterval() {
-      if (time >= duree || calcScore("vert") >= scroreMax || calcScore("rouge") >= scroreMax) {
+      if (time >= duree || calcScore("vert") >= scoreMax || calcScore("rouge") >= scoreMax) {
         window.clearInterval(intervalID);
         status = "fini";
         document.getElementById('message').innerHTML = win();
-      } else {
+      }
+      if (status === "en cours") {
         time++;
       }
       refresh();
@@ -332,24 +346,21 @@
       return value<10?'0'+value:value;
     }
     function reset() {
-      window.clearInterval(intervalID);
       time = 0;
-      status = "pret";
+      status = "prêt";
       historique = [];
       refresh();
     }
     function start() {
       if (status === "en cours") {
-        window.clearInterval(intervalID);
         status = "pause";
-      } else if (status === "pause" || status === "pret") {
-        intervalID = window.setInterval(atInterval, 1000);
+      } else if (status === "pause" || status === "prêt") {
         status = "en cours";
       } else if (status === "fini") {
         time = 0;
-        intervalID = window.setInterval(atInterval, 1000);
         status = "en cours";
       }
+      intervalID = window.setInterval(atInterval, 1000);
       refresh();
     }
     refresh();
