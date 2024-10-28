@@ -1,0 +1,23 @@
+{
+  "name": "Sabre laser match",
+  "start_url": "https://yannickbattail.github.io/sabre-laser-match/sabre-laser-match.html",
+  "display": "standalone",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "images/light-sabers-couleur.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/light-sabers-couleur_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/light-sabers-couleur_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}
