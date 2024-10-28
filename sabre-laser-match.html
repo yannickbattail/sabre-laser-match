@@ -70,7 +70,7 @@
   <body class="dark">
   <span id="restant">00:00</span>
   <button id="start" onclick="start()"><img src="images/play.svg" alt="démarrer le combat" title="démarrer le combat" /></button>
-  <button id="reset" onclick="reset()"><img src="images/abort.svg" alt="Nouveau combat" title="Nouveau combat" /></button>
+  <button id="reset" onclick="reset()"><img src="images/light-sabers-blanc.svg" alt="Nouveau combat" title="Nouveau combat" /></button>
   <button onclick="annuler()"><img src="images/abort.svg" alt="Supprimer la dernière action" title="Supprimer la dernière action" /></button>
   <table style="width:100%">
     <thead>
@@ -201,22 +201,26 @@
       blanc: {
         couleur: 'blanc',
         points: 0,
-        image: "images/carton-blanc.svg"
+        image: "images/carton-blanc.svg",
+        cartonSuperieur: 'jaune',
       },
       jaune:{
         couleur: 'jaune',
         points: 3,
-        image: "images/carton-jaune.svg"
+        image: "images/carton-jaune.svg",
+        cartonSuperieur: 'rouge',
       },
       rouge:{
         couleur: 'rouge',
         points: 5,
-        image: "images/carton-rouge.svg"
+        image: "images/carton-rouge.svg",
+        cartonSuperieur: 'noir',
       },
       noir:{
         couleur: 'noir',
         points: 0,
-        image: "images/carton-noir.svg"
+        image: "images/carton-noir.svg",
+        cartonSuperieur: 'noir',
       }
     };
     const TOUCHES = {
@@ -267,28 +271,29 @@
     function formatTouche(touche) {
       return `<img src="${TOUCHES[touche].image}" alt="touche ${touche}" />`;
     }
-    function ajoutHistorique(event) {
-      const horodatage = `<span class="temps">[${formatTime(event.temps)}]</span>`
-      if (event.type === 'carton') {
-        return `<div>${horodatage} combattant ${formatCombattant(event.combattant)}: ${event.type} ${formatCarton(event.nom)} (+${CARTONS[event.nom].points} combattant ${autreComabattant(event.combattant)})</div>`;
-      }
-      else if (event.type === 'touche') {
-        return `<div>${horodatage} combattant ${formatCombattant(event.combattant)}: ${event.type} ${formatTouche(event.nom)} (+${TOUCHES[event.nom].points})</div>`;
-      }
-    }
 
     function autreComabattant(combattant) {
       return combattant === 'vert' ? 'rouge' : 'vert';
     }
+    function cartonSuperieur(carton, nbCarton) {
+      if (nbCarton >= 2) {
+        return CARTONS[CARTONS[carton.nom].cartonSuperieur];
+      } else {
+        return CARTONS[carton.nom];
+      }
+    }
     function calcScore(combattant) {
-      return historique
-        .filter(e => (e.combattant === combattant && e.type === 'touche')
-                 || (e.combattant === autreComabattant(combattant) && e.type === 'carton'))
-        .map(e => {
-          if (e.type === 'carton') return CARTONS[e.nom].points;
-          else if (e.type === 'touche') return TOUCHES[e.nom].points;
-          else return 0;
-      }).reduce((a, b) => a + b, 0)
+      let score = historique
+        .filter(e => (e.combattant === combattant && e.type === 'touche'))
+        .map(e => TOUCHES[e.nom].points).reduce((a, b) => a + b, 0)
+      const cartons = historique.filter(e => (e.combattant === autreComabattant(combattant) && e.type === 'carton'));
+      let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
+      for (let i = 0; i < cartons.length; i++) {
+        const carton = cartons[i];
+        nbCarton[carton.nom]++;
+        score += cartonSuperieur(carton, nbCarton[carton.nom]).points;
+      }
+      return score;
     }
     function updateTimer() {
       if (status === "en cours") {
@@ -301,12 +306,29 @@
     function formatTime(time){
       return pad0(Math.floor(time / 60)) + ":" + pad0(time % 60);
     }
-    function refresh() {
+    function getHistorique() {
       let html = "";
-      for (let i = historique.length-1; i >= 0; i--) {
-        html += ajoutHistorique(historique[i]);
+      let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
+      for (let i = historique.length - 1; i >= 0; i--) {
+        const hist = historique[i];
+        const horodatage = `<span class="temps">[${formatTime(hist.temps)}]</span>`
+        const prefix =  `${horodatage} combattant ${formatCombattant(hist.combattant)}: `;
+        if (hist.type === 'carton') {
+          nbCarton[hist.nom]++;
+          if (nbCarton[hist.nom] >= 2) {
+            html += `<div>${prefix} ${nbCarton[hist.nom]}e ${hist.type} ${formatCarton(hist.nom)} --&gt; ${formatCarton(CARTONS[hist.nom].cartonSuperieur)}  (+${CARTONS[CARTONS[hist.nom].cartonSuperieur].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`;
+          } else {
+            html += `<div>${prefix} ${nbCarton[hist.nom]}er ${hist.type} ${formatCarton(hist.nom)} (+${CARTONS[hist.nom].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`;
+          }
+        } else if (hist.type === 'touche') {
+          html += `<div>${prefix} ${hist.type} ${formatTouche(hist.nom)} (+${TOUCHES[hist.nom].points})</div>`;
+        }
       }
-      NodeUpdate.updateDiv("historique", html);
+      return html;
+    }
+
+    function refresh() {
+      NodeUpdate.updateDiv("historique", getHistorique());
       document.getElementById('scoreVert').innerHTML = calcScore("vert");
       document.getElementById('scoreRouge').innerHTML = calcScore("rouge");
       activeButtons(status !== "prêt");
