@@ -1,5 +1,7 @@
 # sabre laser match
 
-décompte des points d'un match de sabre laser 
+Décompte des points d'un match de sabre laser au plus proche de la FFE.
 
-dispo [ici](https://yannickbattail.github.io/sabre-laser-match/sabre-laser-match.html)
+Dispo [ici](https://yannickbattail.github.io/sabre-laser-match/sabre-laser-match.html)
+
+icons from [game-icons.net](https://game-icons.net/)
