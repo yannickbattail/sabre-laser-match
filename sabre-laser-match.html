@@ -316,26 +316,26 @@
       return pad0(Math.floor(time / 60)) + ":" + pad0(time % 60);
     }
     function getHistorique() {
-      let html = "";
+      let html = [];
       let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
-      for (let i = historique.length - 1; i >= 0; i--) {
+      for (let i = 0; i < historique.length; i++) {
         const hist = historique[i];
         const horodatage = `<span class="temps">[${formatTime(hist.temps)}]</span>`
         const prefix =  `${horodatage} combattant ${formatCombattant(hist.combattant)}: `;
         if (hist.type === 'carton') {
           nbCarton[hist.nom]++;
           if (nbCarton[hist.nom] >= 2) {
-            html += `<div>${prefix} ${nbCarton[hist.nom]}e ${hist.type} ${formatCarton(hist.nom)} --&gt; ${formatCarton(CARTONS[hist.nom].cartonSuperieur)}  (+${CARTONS[CARTONS[hist.nom].cartonSuperieur].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`;
+            html.push(`<div>${prefix} ${nbCarton[hist.nom]}e ${hist.type} ${formatCarton(hist.nom)} --&gt; ${formatCarton(CARTONS[hist.nom].cartonSuperieur)}  (+${CARTONS[CARTONS[hist.nom].cartonSuperieur].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`);
           } else {
-            html += `<div>${prefix} ${nbCarton[hist.nom]}er ${hist.type} ${formatCarton(hist.nom)} (+${CARTONS[hist.nom].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`;
+            html.push(`<div>${prefix} ${nbCarton[hist.nom]}er ${hist.type} ${formatCarton(hist.nom)} (+${CARTONS[hist.nom].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`);
           }
         } else if (hist.type === 'touche') {
-          html += `<div>${prefix} ${hist.type} ${formatTouche(hist.nom)} (+${TOUCHES[hist.nom].points})</div>`;
+          html.push(`<div>${prefix} ${hist.type} ${formatTouche(hist.nom)} (+${TOUCHES[hist.nom].points})</div>`);
         } else if (hist.type === 'mort subite') {
-          html += `<div>${horodatage} ${hist.type} ${hist.nom}</div>`;
+          html.push(`<div>${horodatage} ${hist.type} ${hist.nom}</div>`);
         }
       }
-      return html;
+      return html.reverse().join('');
     }
 
     function refresh() {
