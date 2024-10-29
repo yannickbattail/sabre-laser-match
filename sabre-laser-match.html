@@ -246,6 +246,8 @@
       },
     };
     const duree = 180;
+    const prolongation = 30;
+    const mortSubiteScore = 10;
     const scoreMax = 15;
     let historique = [];
     let time = 0;
@@ -259,7 +261,14 @@
       refresh();
     }
     function annuler() {
-      historique.pop();
+      const event = historique.pop();
+      document.getElementById('message').innerHTML = "";
+      if (event && event.type === 'mort subite') {
+        historique.pop();
+      }
+      if (status === 'fini'){
+        status = "pause";
+      }
       refresh();
     }
     function formatCombattant(combattant) {
@@ -322,6 +331,8 @@
           }
         } else if (hist.type === 'touche') {
           html += `<div>${prefix} ${hist.type} ${formatTouche(hist.nom)} (+${TOUCHES[hist.nom].points})</div>`;
+        } else if (hist.type === 'mort subite') {
+          html += `<div>${horodatage} ${hist.type} ${hist.nom}</div>`;
         }
       }
       return html;
@@ -335,25 +346,49 @@
       updateTimer();
     }
     function activeButtons(active) {
-      const touche = document.getElementsByClassName("touche");
-      for (let i = 0; i < touche.length ; i++) {
-        touche[i].disabled = !active;
-      }
-      const carton = document.getElementsByClassName("carton");
-      for (let i = 0; i < carton.length ; i++) {
-        carton[i].disabled = !active;
+      if (isMortSubite()){
+        const touches = document.querySelectorAll('.main,.bras,.jambe');
+        for (let i = 0; i < touches.length ; i++) {
+          touches[i].disabled = true;
+        }
+      } else {
+        const elems = document.querySelectorAll('.touche,.carton,.jambe');
+        for (let i = 0; i < elems.length ; i++) {
+          elems[i].disabled = !active;
+        }
       }
     }
     function atInterval() {
-      if (time >= duree || calcScore("vert") >= scoreMax || calcScore("rouge") >= scoreMax) {
-        window.clearInterval(intervalID);
+      if (calcScore("vert") >= scoreMax || calcScore("rouge") >= scoreMax) {
         status = "fini";
         document.getElementById('message').innerHTML = win();
+      } else if (time >= duree && calcScore("vert") !== calcScore("rouge")) {
+        status = "fini";
+        document.getElementById('message').innerHTML = win();
+      } else if (time >= duree && time <= (duree + prolongation) && calcScore("vert") === calcScore("rouge")) {
+        mortSubite(`Prolongation ${prolongation}s`);
+      } else if (time > (duree + prolongation)) {
+        status = "fini";
+        document.getElementById('message').innerHTML = win();
+      } else if (calcScore("vert") >= mortSubiteScore && calcScore("rouge") >= mortSubiteScore) {
+        mortSubite();
       }
       if (status === "en cours") {
         time++;
       }
       refresh();
+    }
+    function isMortSubite() {
+      return historique.some(e => e.type === 'mort subite');
+    }
+    function isMortSubiteCause(cause="") {
+      return historique.some(e => e.type === 'mort subite' && e.nom === cause);
+    }
+    function mortSubite(cause="") {
+      if (!isMortSubiteCause(cause)) {
+        historique.push(new Event(time, "", 'mort subite', cause));
+      }
+      document.getElementById('message').innerHTML = "Mort subite! "+cause;
     }
     function win() {
       if (calcScore("vert") > calcScore("rouge")) {
@@ -371,21 +406,24 @@
       time = 0;
       status = "prêt";
       historique = [];
+      document.getElementById('message').innerHTML = "Prêt?";
       refresh();
     }
     function start() {
       if (status === "en cours") {
         status = "pause";
+        document.getElementById('message').innerHTML = "Cessez!";
       } else if (status === "pause" || status === "prêt") {
+        document.getElementById('message').innerHTML = "Combattez!";
         status = "en cours";
       } else if (status === "fini") {
         time = 0;
         status = "en cours";
       }
-      intervalID = window.setInterval(atInterval, 1000);
       refresh();
     }
-    refresh();
+    reset();
+    window.setInterval(atInterval, 1000);
   </script>
   </body>
 </html>
