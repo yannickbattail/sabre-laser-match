@@ -16,10 +16,10 @@ Match en 15 points
 - touche torse, tete +5 points
 
 Fautes
-- faute du 1er groupe: la 1ère donne un carton blanc, les autres carton jaune
-- faute du 2eme groupe: la 2ère donne un carton jaune, les autres carton rouge
-- faute du 3eme groupe: la 3ère donne un carton rouge, l'autre carton noir
-- faute du 4eme groupe: la 4ère donne un carton noir
+- faute du 1er groupe: la 1ère donne un carton blanc, les autres donnent un carton jaune
+- faute du 2ème groupe: la 2ère donne un carton jaune, les autres donnent un carton rouge
+- faute du 3ème groupe: la 3ère donne un carton rouge, l'autre donne un carton noir
+- faute du 4ème groupe: la 4ère donne un carton noir
 
 Cartons
 - blanc +0 point pour l'adversaire
