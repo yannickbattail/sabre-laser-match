@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "strict": true,
+  },
+  "lib": ["dom","es6"],
+  "files": [
+    "*.ts"
+  ]
+}

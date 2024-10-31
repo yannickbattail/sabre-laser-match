@@ -1,0 +1,80 @@
+body {
+    text-align: center;
+}
+.dark {
+    color: rgb(100, 200, 255);
+    background-color: rgba(30,30,30);
+}
+button {
+    color: rgb(100, 200, 255);
+    background-color: rgba(60,60,60);
+    border-color: rgb(100, 200, 255);
+    border-width: 4px;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 10px;
+}
+button:disabled,
+button[disabled],
+button[disabled=disabled] {
+    border-color: rgb(30, 60, 75);
+}
+#historique img {
+    width: 20px;
+    height: 20px;
+}
+button img {
+    width: 30px;
+    height: 30px;
+}
+#scoreVert, #scoreRouge {
+    width: 40px;
+    font-size: 20px;
+    text-align: center;
+}
+.vertCombattant {
+    color: chartreuse;
+}
+.rougeCombattant {
+    color: red;
+}
+.blancCarton {
+    color: black;
+    background-color: white;
+}
+.jauneCarton {
+    color: black;
+    background-color: yellow;
+}
+.rougeCarton {
+    color: black;
+    background-color: red;
+}
+.noirCarton {
+    color: white;
+    background-color: black;
+}
+#restant {
+    font-size: 20px;
+}
+
+#lightsaber {
+    width:500px;
+    margin:auto;
+    line-height:0;
+    padding:20px;
+    text-align:center;
+}
+#light {
+    display:inline-block;
+    position:relative;
+    width:500px;
+    background:#fff;
+    height:14px;
+    border-radius:2px 7px 7px 2px;
+    box-shadow:0 0 5px #fff,0 0 8px #fff,0 0 12px #fff,0 0 15px blue,0 0 25px blue;
+    z-index:5;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    transition: all 1s;
+}
