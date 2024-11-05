@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "clean": "rm *.js",
     "build": "tsc",
     "build:watch": "tsc --watch"
   },

@@ -1,11 +1,11 @@
 /// <reference path="./Carton.ts" />
 /// <reference path="./Touche.ts" />
 /// <reference path="./Regle.ts" />
-/// <reference path="./MatchStatus.ts" />
+/// <reference path="./MatchState.ts" />
 /// <reference path="./NodeUpdate.ts" />
 
 class Gui {
-    constructor(private matchStatus: MatchStatus, private regle: Regle) {
+    constructor(private matchStatus: MatchState, private regle: Regle) {
     }
 
     public carton(carton, Combattant) {
