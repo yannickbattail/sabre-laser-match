@@ -1,81 +1,125 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta charset="utf-8">
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" type="image/svg+xml" href="images/light-sabers-couleur.svg" />
-    <link rel="stylesheet" href="style.css" />
+    <link href="manifest.json" rel="manifest"/>
+    <link href="images/light-sabers-couleur.svg" rel="icon" type="image/svg+xml"/>
+    <link href="style.css" rel="stylesheet"/>
     <title>Sabre laser - match</title>
-    <script src="NodeUpdate.ts"></script>
-    <script src="Carton.ts"></script>
-    <script src="Touche.ts"></script>
-    <script src="Evenement.ts"></script>
-    <script src="regles.ts"></script>
-    <script src="Regle.ts"></script>
-    <script src="MatchState.ts"></script>
-    <script src="Match.ts"></script>
-    <script src="main.ts"></script>
-  </head>
-  <body class="dark">
-  <span id="restant">00:00</span>
-  <button id="start" onclick="start()"><img src="images/play.svg" alt="démarrer le combat" title="démarrer le combat" /></button>
-  <button id="reset" onclick="reset()"><img src="images/light-sabers-blanc.svg" alt="Nouveau combat" title="Nouveau combat" /></button>
-  <button onclick="annuler()"><img src="images/abort.svg" alt="Supprimer la dernière action" title="Supprimer la dernière action" /></button>
-  <!--  <div id="lightsaber"><span id="light"></span></div>-->
-  <table style="width:100%">
+</head>
+<body class="dark">
+<span id="time">00:00</span>
+<button id="play" onclick="gui.play()">
+    <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
+</button>
+<button id="reset" onclick="gui.reset()">
+    <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
+</button>
+<button onclick="gui.annuler()">
+    <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
+</button>
+<!--  <div id="lightsaber"><span id="light"></span></div>-->
+<table style="width:100%">
     <thead>
-      <tr>
-        <th id="message" colspan="2">Prêt?</th>
-      </tr>
-      <tr>
+    <tr>
+        <th colspan="2" id="message">Prêt?</th>
+    </tr>
+    <tr>
         <th><span class="vertCombattant">Vert</span></th>
         <th><span class="rougeCombattant">Rouge</span></th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
     <tr>
-      <td id="scoreVert">
-        0
-      </td>
-      <td id="scoreRouge">
-        0
-      </td>
+        <td id="scoreVert">
+            0
+        </td>
+        <td id="scoreRouge">
+            0
+        </td>
     </tr>
     <tr>
-      <td>
-        <button class="touche main" onclick="touche('main', 'vert')"><img src="images/main.svg" alt="touche main" title="touche main" /></button>
-        <button class="touche bras"  onclick="touche('bras', 'vert')"><img src="images/bras.svg" alt="touche bras" title="touche bras" /></button>
-        <button class="touche jambe"  onclick="touche('jambe', 'vert')"><img src="images/jambe.svg" alt="touche jambe" title="touche jambe" /></button>
-        <button class="touche tronc"  onclick="touche('tronc', 'vert')"><img src="images/tronc.svg" alt="touche tronc" title="touche tronc" /></button>
-        <button class="touche tête"  onclick="touche('tête', 'vert')"><img src="images/tete.svg" alt="touche tête" title="touche tête" /></button>
-      </td>
-      <td>
-        <button class="touche main"  onclick="touche('main', 'rouge')"><img src="images/main.svg" alt="touche main" title="touche main" /></button>
-        <button class="touche bras"  onclick="touche('bras', 'rouge')"><img src="images/bras.svg" alt="touche bras" title="touche bras" /></button>
-        <button class="touche jambe"  onclick="touche('jambe', 'rouge')"><img src="images/jambe.svg" alt="touche jambe" title="touche jambe" /></button>
-        <button class="touche tronc"  onclick="touche('tronc', 'rouge')"><img src="images/tronc.svg" alt="touche tronc" title="touche tronc" /></button>
-        <button class="touche tête"  onclick="touche('tête', 'rouge')"><img src="images/tete.svg" alt="touche tête" title="touche tête" /></button>
-      </td>
+        <td>
+            <button class="touche main" onclick="gui.touche('main', 'vert')">
+                <img alt="touche main" src="images/main.svg" title="touche main"/>
+            </button>
+            <button class="touche bras" onclick="gui.touche('bras', 'vert')">
+                <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
+            </button>
+            <button class="touche jambe" onclick="gui.touche('jambe', 'vert')">
+                <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
+            </button>
+            <button class="touche tronc" onclick="gui.touche('tronc', 'vert')">
+                <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
+            </button>
+            <button class="touche tête" onclick="gui.touche('tête', 'vert')">
+                <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
+            </button>
+        </td>
+        <td>
+            <button class="touche main" onclick="gui.touche('main', 'rouge')">
+                <img alt="touche main" src="images/main.svg" title="touche main"/>
+            </button>
+            <button class="touche bras" onclick="gui.touche('bras', 'rouge')">
+                <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
+            </button>
+            <button class="touche jambe" onclick="gui.touche('jambe', 'rouge')">
+                <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
+            </button>
+            <button class="touche tronc" onclick="gui.touche('tronc', 'rouge')">
+                <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
+            </button>
+            <button class="touche tête" onclick="gui.touche('tête', 'rouge')">
+                <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
+            </button>
+        </td>
     </tr>
     <tr>
-      <td>
-        <button class="carton blanc" onclick="carton('blanc', 'vert')"><img src="images/carton-blanc.svg" alt="carton blanc" title="carton blanc" /></button>
-        <button class="carton jaune" onclick="carton('jaune', 'vert')"><img src="images/carton-jaune.svg" alt="carton jaune" title="carton jaune" /></button>
-        <button class="carton rouge" onclick="carton('rouge', 'vert')"><img src="images/carton-rouge.svg" alt="carton rouge" title="carton rouge" /></button>
-        <button class="carton noir" onclick="carton('noir', 'vert')"><img src="images/carton-noir.svg" alt="carton noir" title="carton noir" /></button>
-      </td>
-      <td>
-        <button class="carton blanc" onclick="carton('blanc', 'rouge')"><img src="images/carton-blanc.svg" alt="carton blanc" title="carton blanc" /></button>
-        <button class="carton jaune" onclick="carton('jaune', 'rouge')"><img src="images/carton-jaune.svg" alt="carton jaune" title="carton jaune" /></button>
-        <button class="carton rouge" onclick="carton('rouge', 'rouge')"><img src="images/carton-rouge.svg" alt="carton rouge" title="carton rouge" /></button>
-        <button class="carton noir" onclick="carton('noir', 'rouge')"><img src="images/carton-noir.svg" alt="carton noir" title="carton noir" /></button>
-      </td>
+        <td>
+            <button class="carton blanc" onclick="gui.carton('blanc', 'vert')">
+                <img alt="carton blanc" src="images/carton-blanc.svg" title="carton blanc"/>
+            </button>
+            <button class="carton jaune" onclick="gui.carton('jaune', 'vert')">
+                <img alt="carton jaune" src="images/carton-jaune.svg" title="carton jaune"/>
+            </button>
+            <button class="carton rouge" onclick="gui.carton('rouge', 'vert')">
+                <img alt="carton rouge" src="images/carton-rouge.svg" title="carton rouge"/>
+            </button>
+            <button class="carton noir" onclick="gui.carton('noir', 'vert')">
+                <img alt="carton noir" src="images/carton-noir.svg" title="carton noir"/>
+            </button>
+        </td>
+        <td>
+            <button class="carton blanc" onclick="gui.carton('blanc', 'rouge')">
+                <img alt="carton blanc" src="images/carton-blanc.svg" title="carton blanc"/>
+            </button>
+            <button class="carton jaune" onclick="gui.carton('jaune', 'rouge')">
+                <img alt="carton jaune" src="images/carton-jaune.svg" title="carton jaune"/>
+            </button>
+            <button class="carton rouge" onclick="gui.carton('rouge', 'rouge')">
+                <img alt="carton rouge" src="images/carton-rouge.svg" title="carton rouge"/>
+            </button>
+            <button class="carton noir" onclick="gui.carton('noir', 'rouge')">
+                <img alt="carton noir" src="images/carton-noir.svg" title="carton noir"/>
+            </button>
+        </td>
     </tr>
     </tbody>
-  </table>
-  <div id="historique"></div>
-  <script>
-  </script>
-  </body>
+</table>
+<div id="historique"></div>
+<script src="NodeUpdate.js"></script>
+<script src="throw.js"></script>
+<script src="Carton.js"></script>
+<script src="Touche.js"></script>
+<script src="Evenement.js"></script>
+<script src="EventLog.js"></script>
+<script src="Regle.js"></script>
+<script src="regles.js"></script>
+<script src="MortSubite.js"></script>
+<script src="MatchState.js"></script>
+<script src="MatchModel.js"></script>
+<script src="Gui.js"></script>
+<script src="main.js"></script>
+</body>
 </html>

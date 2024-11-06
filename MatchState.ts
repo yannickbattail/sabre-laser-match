@@ -1,15 +1,19 @@
 /// <reference path="./Evenement.ts" />
 
 enum MatchStatus {
-    prêt, en_cours, pause, fini,
+    pret = "prêt", en_cours = "en cours", pause = "pause", fini = "fini",
 }
 
 class MatchState {
-    constructor(public time: number = 0, public status: MatchStatus = MatchStatus.prêt, public historique: Evenement[] = []) {
+    constructor(public time: number = 0, public status: MatchStatus = MatchStatus.pret, public historique: Evenement[] = []) {
     }
 
-    public addEvenement(combattant: CombattantCouleur, type: EvenementType, nom: string) {
-        this.historique.push(new Evenement(this.time, combattant, type, nom));
+    public addTouche(combattant: CombattantCouleur, nom: ToucheNom) {
+        this.historique.push(new EvenementTouche(this.time, combattant, nom));
+    }
+
+    public addCarton(combattant: CombattantCouleur, couleur: CartonCouleur) {
+        this.historique.push(new EvenementCarton(this.time, combattant, couleur));
     }
 
     public removeLastEvenement() {
@@ -18,7 +22,7 @@ class MatchState {
 
     public reset() {
         this.time = 0;
-        this.status = MatchStatus.prêt;
+        this.status = MatchStatus.pret;
         this.historique = [];
     }
 }

@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
+    "target": "es2015",
     "module": "commonjs",
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": true
   },
-  "lib": ["dom","es6"],
-  "files": [
+  "lib": [
+    "dom",
+    "es2015"
+  ],
+  "include": [
     "*.ts"
   ]
 }

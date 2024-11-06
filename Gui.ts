@@ -2,141 +2,143 @@
 /// <reference path="./Touche.ts" />
 /// <reference path="./Regle.ts" />
 /// <reference path="./MatchState.ts" />
+/// <reference path="./MatchModel.ts" />
+/// <reference path="./EventLog.ts" />
 /// <reference path="./NodeUpdate.ts" />
 
+class GuiElem {
+    public historique = document.getElementById('historique') || _throw(new Error("Element 'historique' non trouvé"));
+    public time = document.getElementById('time') || _throw(new Error("Element 'restant' non trouvé"));
+    public scoreVert = document.getElementById('scoreVert') || _throw(new Error("Element 'scoreVert' non trouvé"));
+    public scoreRouge = document.getElementById('scoreRouge') || _throw(new Error("Element 'scoreRouge' non trouvé"));
+}
+
 class Gui {
-    constructor(private matchStatus: MatchState, private regle: Regle) {
+    private time: number = 0;
+    private guiElem = new GuiElem();
+
+    constructor(private readonly matchState: MatchState, private regle: Regle) {
+        window.setInterval(() => {
+            this.atInterval()
+        }, 1000);
     }
 
-    public carton(carton, Combattant) {
-        this.matchStatus.addEvenement(Combattant, 'carton', carton);
+    public touche(nom: ToucheNom, combattant: CombattantCouleur) {
+        this.matchState.addTouche(combattant, nom);
         this.refresh();
     }
 
-    public touche(type, Combattant) {
-        this.matchStatus.addEvenement(Combattant, 'touche', type);
+    public carton(carton: CartonCouleur, combattant: CombattantCouleur) {
+        this.matchState.addCarton(combattant, carton);
         this.refresh();
     }
+
 
     public reset() {
-        this.matchStatus.reset();
+        this.matchState.reset();
         this.refresh();
     }
 
     public annuler() {
-        this.matchStatus.removeLastEvenement();
+        this.matchState.removeLastEvenement();
         this.refresh();
     }
 
-    public start() {
-        if (matchStatus === "en cours") {
-            matchStatus = "pause";
-            document.getElementById('message').innerHTML = "Cessez!";
-        } else if (matchStatus === "pause" || matchStatus === "prêt") {
-            document.getElementById('message').innerHTML = "Combattez!";
-            matchStatus = "en cours";
-        } else if (matchStatus === "fini") {
-            time = 0;
-            matchStatus = "en cours";
+    public play() {
+        if (this.matchState.status === MatchStatus.en_cours) {
+            this.matchState.status = MatchStatus.pause;
+        } else if (this.matchState.status === MatchStatus.pause || this.matchState.status === MatchStatus.pret) {
+            this.matchState.status = MatchStatus.en_cours;
         }
-        refresh();
+        this.refresh();
+    }
+
+    private atInterval() {
+        if (this.matchState.status === MatchStatus.en_cours) {
+            this.time++;
+        }
+        this.refresh();
     }
 
     private refresh() {
-
+        const match = new MatchModel(this.matchState, this.regle);
+        this.guiElem.historique.innerHTML = this.getHistorique(match);
+        this.guiElem.scoreVert.innerHTML = match.scores.vert.toString();
+        this.guiElem.scoreRouge.innerHTML = match.scores.rouge.toString();
+        this.activeButtons(match);
+        this.updateTimer();
     }
 
-    private formatCombattant(combattant) {
+    private formatCombattant(combattant: CombattantCouleur) {
         return `<span class="${combattant}Combattant">${combattant}</span>`;
     }
 
-    private formatCarton(carton) {
-        return `<img src="${CARTONS[carton].image}" alt="touche ${carton}" />`;
+    private formatCarton(carton: CartonCouleur) {
+        return `<img src="${this.regle.getCarton(carton).image}" alt="touche ${carton}" />`;
     }
 
-    private formatTouche(touche) {
-        return `<img src="${TOUCHES[touche].image}" alt="touche ${touche}" />`;
-    }
-
-    private autreComabattant(combattant) {
-        return combattant === 'vert' ? 'rouge' : 'vert';
-    }
-
-    private cartonSuperieur(carton, nbCarton) {
-        if (nbCarton >= 2) {
-            return CARTONS[CARTONS[carton.nom].cartonSuperieur];
-        } else {
-            return CARTONS[carton.nom];
-        }
-    }
-
-    private calcScore(combattant) {
-        let score = historique
-            .filter(e => (e.combattant === combattant && e.type === 'touche'))
-            .map(e => TOUCHES[e.nom].points).reduce((a, b) => a + b, 0)
-        const cartons = historique.filter(e => (e.combattant === autreComabattant(combattant) && e.type === 'carton'));
-        let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
-        for (let i = 0; i < cartons.length; i++) {
-            const carton = cartons[i];
-            nbCarton[carton.nom]++;
-            score += cartonSuperieur(carton, nbCarton[carton.nom]).points;
-        }
-        return score;
+    private formatTouche(touche: ToucheNom) {
+        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" />`;
     }
 
     private updateTimer() {
-        if (matchStatus === "en cours") {
-            document.getElementById('start').innerHTML = '<img src="images/pause.svg" alt="mettre en pause le combat" />';
-        } else {
-            document.getElementById('start').innerHTML = '<img src="images/play.svg" alt="démarrer le combat" />';
-        }
-        document.getElementById('restant').innerText = formatTime(time);
+        this.guiElem.time.innerText = this.formatTime(this.time);
     }
 
 
-    private formatTime(time) {
-        return pad0(Math.floor(time / 60)) + ":" + pad0(time % 60);
+    private formatTime(time: number) {
+        return this.pad0(Math.floor(time / 60)) + ":" + this.pad0(time % 60);
     }
 
-    private getHistorique() {
+    private getHistorique(match: MatchModel) {
         let html = [];
-        let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
-        for (let i = 0; i < historique.length; i++) {
-            const hist = historique[i];
-            const horodatage = `<span class="temps">[${formatTime(hist.temps)}]</span>`
-            const prefix = `${horodatage} combattant ${formatCombattant(hist.combattant)}: `;
-            if (hist.type === 'carton') {
-                nbCarton[hist.nom]++;
-                if (nbCarton[hist.nom] >= 2) {
-                    html.push(`<div>${prefix} ${nbCarton[hist.nom]}e ${hist.type} ${formatCarton(hist.nom)} --&gt; ${formatCarton(CARTONS[hist.nom].cartonSuperieur)}  (+${CARTONS[CARTONS[hist.nom].cartonSuperieur].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`);
+        for (let i = 0; i < match.eventLog.length; i++) {
+            const eventLog: EventLog = match.eventLog[i];
+            const horodatage = `<span class="temps">[${this.formatTime(eventLog.temps)}]</span>`
+            if (eventLog instanceof EventLogCarton) {
+                const prefix = `${horodatage} combattant ${this.formatCombattant(eventLog.combattant)}: `;
+                if (eventLog.numeroCarton >= 2) {
+                    html.push(`<div>${prefix} ${eventLog.numeroCarton}e carton ${this.formatCarton(eventLog.carton.couleur)} &rarr; ${this.formatCarton(eventLog.carton.cartonSuperieur)}  (+${regle.getCartonSuperieur(eventLog.carton.couleur).points} combattant ${this.formatCombattant(eventLog.adversaire)})</div>`);
                 } else {
-                    html.push(`<div>${prefix} ${nbCarton[hist.nom]}er ${hist.type} ${formatCarton(hist.nom)} (+${CARTONS[hist.nom].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`);
+                    html.push(`<div>${prefix} ${eventLog.numeroCarton}er carton ${this.formatCarton(eventLog.carton.couleur)} (+${eventLog.carton.points} combattant ${this.formatCombattant(eventLog.adversaire)})</div>`);
                 }
-            } else if (hist.type === 'touche') {
-                html.push(`<div>${prefix} ${hist.type} ${formatTouche(hist.nom)} (+${TOUCHES[hist.nom].points})</div>`);
-            } else if (hist.type === 'mort subite') {
-                html.push(`<div>${horodatage} ${hist.type} ${hist.nom}</div>`);
+            } else if (eventLog instanceof EventLogTouche) {
+                const prefix = `${horodatage} combattant ${this.formatCombattant(eventLog.combattant)}: `;
+                html.push(`<div>${prefix} touche ${this.formatTouche(eventLog.touche.nom)} (+${eventLog.touche.points})</div>`);
+            } else if (eventLog instanceof EventLogMortSubite) {
+                html.push(`<div>${horodatage} mort subite ${eventLog.cause}</div>`);
             }
         }
         return html.reverse().join('');
     }
 
-    private pad0(value) {
+    private pad0(value: number) {
         return value < 10 ? '0' + value : value;
     }
 
-    private activeButtons(active) {
-        if (isMortSubite()) {
+    private activeButtons(match: MatchModel) {
+        if (match.mortSubite) {
             const touches = document.querySelectorAll('.main,.bras,.jambe');
             for (let i = 0; i < touches.length; i++) {
-                touches[i].disabled = true;
+                const toucheElem = touches[i];
+                if (toucheElem instanceof HTMLButtonElement) {
+                    toucheElem.disabled = true;
+                } else {
+                    console.log(toucheElem);
+                }
             }
         } else {
             const elems = document.querySelectorAll('.touche,.carton,.jambe');
+            const active = match.status === MatchStatus.pret;
+            console.log(match.status, active);
             for (let i = 0; i < elems.length; i++) {
-                elems[i].disabled = !active;
+                const toucheElem = elems[i];
+                if (toucheElem instanceof HTMLButtonElement) {
+                    toucheElem.disabled = !active;
+                } else {
+                    console.log(toucheElem);
+                }
             }
         }
     }
-
 }

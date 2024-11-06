@@ -1,5 +1,5 @@
 enum ToucheNom {
-    "main", "bras", "jambe", "tronc", "tête"
+    main = "main", bras = "bras", jambe = "jambe", tronc = "tronc", tete = "tête"
 }
 
 class Touche {
