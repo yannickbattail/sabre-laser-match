@@ -11,10 +11,11 @@ class GuiElem {
     public time = document.getElementById('time') || _throw(new Error("Element 'restant' non trouvé"));
     public scoreVert = document.getElementById('scoreVert') || _throw(new Error("Element 'scoreVert' non trouvé"));
     public scoreRouge = document.getElementById('scoreRouge') || _throw(new Error("Element 'scoreRouge' non trouvé"));
+    public play = document.getElementById('play') || _throw(new Error("Element 'play' non trouvé"));
+    public message = document.getElementById('message') || _throw(new Error("Element 'message' non trouvé"));
 }
 
 class Gui {
-    private time: number = 0;
     private guiElem = new GuiElem();
 
     constructor(private readonly matchState: MatchState, private regle: Regle) {
@@ -41,6 +42,7 @@ class Gui {
 
     public annuler() {
         this.matchState.removeLastEvenement();
+        this.matchState.status = MatchStatus.en_cours;
         this.refresh();
     }
 
@@ -55,7 +57,7 @@ class Gui {
 
     private atInterval() {
         if (this.matchState.status === MatchStatus.en_cours) {
-            this.time++;
+            this.matchState.time++;
         }
         this.refresh();
     }
@@ -65,6 +67,10 @@ class Gui {
         this.guiElem.historique.innerHTML = this.getHistorique(match);
         this.guiElem.scoreVert.innerHTML = match.scores.vert.toString();
         this.guiElem.scoreRouge.innerHTML = match.scores.rouge.toString();
+        this.guiElem.message.innerHTML = match.message;
+        this.guiElem.play.innerHTML = this.matchState.status === MatchStatus.en_cours
+            ? '<img src="images/pause.svg" alt="mettre en pause le combat" />'
+            : '<img src="images/play.svg" alt="démarrer le combat" />';
         this.activeButtons(match);
         this.updateTimer();
     }
@@ -82,7 +88,7 @@ class Gui {
     }
 
     private updateTimer() {
-        this.guiElem.time.innerText = this.formatTime(this.time);
+        this.guiElem.time.innerText = this.formatTime(this.matchState.time);
     }
 
 
@@ -106,7 +112,17 @@ class Gui {
                 const prefix = `${horodatage} combattant ${this.formatCombattant(eventLog.combattant)}: `;
                 html.push(`<div>${prefix} touche ${this.formatTouche(eventLog.touche.nom)} (+${eventLog.touche.points})</div>`);
             } else if (eventLog instanceof EventLogMortSubite) {
-                html.push(`<div>${horodatage} mort subite ${eventLog.cause}</div>`);
+                if (eventLog.cause === MortSubite.limite) {
+                    html.push(`<div>${horodatage} mort subite: score des 2 combattants &gt; ${this.regle.mortSubiteScore}</div>`);
+                } else {
+                    html.push(`<div>${horodatage} mort subite: score ex aequo, prolongation de ${this.regle.prolongation}s</div>`);
+                }
+            } else if (eventLog instanceof EventLogWin) {
+                if (eventLog.combattant) {
+                    html.push(`<div>${horodatage} Fin du match: le combattant ${this.formatCombattant(eventLog.combattant)} a gagné!</div>`);
+                } else {
+                    html.push(`<div>${horodatage} Fin du match: ex aequo</div>`);
+                }
             }
         }
         return html.reverse().join('');
@@ -129,12 +145,12 @@ class Gui {
             }
         } else {
             const elems = document.querySelectorAll('.touche,.carton,.jambe');
-            const active = match.status === MatchStatus.pret;
-            console.log(match.status, active);
+            const disable = this.matchState.status === MatchStatus.pret
+                                    || this.matchState.status === MatchStatus.fini;
             for (let i = 0; i < elems.length; i++) {
                 const toucheElem = elems[i];
                 if (toucheElem instanceof HTMLButtonElement) {
-                    toucheElem.disabled = !active;
+                    toucheElem.disabled = disable;
                 } else {
                     console.log(toucheElem);
                 }

@@ -1,5 +1,5 @@
 enum CartonCouleur {
-    'blanc', 'jaune', 'rouge', 'noir'
+    blanc = 'blanc', jaune = 'jaune', rouge = 'rouge', noir = 'noir'
 }
 
 class Carton {

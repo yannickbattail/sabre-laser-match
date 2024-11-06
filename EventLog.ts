@@ -26,3 +26,9 @@ class EventLogMortSubite extends EventLog {
         super(temps);
     }
 }
+
+class EventLogWin extends EventLog {
+    constructor(public temps: number, public combattant: CombattantCouleur | null, public cause?: MortSubite) {
+        super(temps);
+    }
+}
