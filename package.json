@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "clean": "rm *.js *.js.map",
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
+  "dependencies": {
+    "typescript": "^3.5.3"
+  }
+}

@@ -1,430 +1,127 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta charset="utf-8">
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" type="image/svg+xml" href="images/light-sabers-couleur.svg" />
+    <link href="manifest.json" rel="manifest"/>
+    <link href="images/light-sabers-couleur.svg" rel="icon" type="image/svg+xml"/>
+    <link href="style.css" rel="stylesheet"/>
     <title>Sabre laser - match</title>
-    <style>
-      .dark {
-        color: rgb(100, 200, 255);
-        background-color: rgba(30,30,30);
-      }
-      button {
-        color: rgb(100, 200, 255);
-        background-color: rgba(60,60,60);
-        border-color: rgb(100, 200, 255);
-        border-width: 4px;
-        border-radius: 15px;
-        margin: 5px;
-        padding: 10px;
-      }
-      button:disabled,
-      button[disabled],
-      button[disabled=disabled] {
-        border-color: rgb(30, 60, 75);
-      }
-      #historique img {
-        width: 20px;
-        height: 20px;
-      }
-      button img {
-        width: 30px;
-        height: 30px;
-      }
-      #scoreVert, #scoreRouge {
-        width: 40px;
-        font-size: 20px;
-        text-align: center;
-      }
-      .vertCombattant {
-        color: chartreuse;
-      }
-      .rougeCombattant {
-        color: red;
-      }
-      .blancCarton {
-        color: black;
-        background-color: white;
-      }
-      .jauneCarton {
-        color: black;
-        background-color: yellow;
-      }
-      .rougeCarton {
-        color: black;
-        background-color: red;
-      }
-      .noirCarton {
-        color: white;
-        background-color: black;
-      }
-      #restant {
-        font-size: 20px;
-      }
-      body {
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body class="dark">
-  <span id="restant">00:00</span>
-  <button id="start" onclick="start()"><img src="images/play.svg" alt="démarrer le combat" title="démarrer le combat" /></button>
-  <button id="reset" onclick="reset()"><img src="images/light-sabers-blanc.svg" alt="Nouveau combat" title="Nouveau combat" /></button>
-  <button onclick="annuler()"><img src="images/abort.svg" alt="Supprimer la dernière action" title="Supprimer la dernière action" /></button>
-  <table style="width:100%">
+</head>
+<body class="dark">
+<span id="time">00:00</span>
+<button id="play" onclick="gui.play()">
+    <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
+</button>
+<button id="reset" onclick="gui.reset()">
+    <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
+</button>
+<button onclick="gui.annuler()">
+    <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
+</button>
+<!--  <div id="lightsaber"><span id="light"></span></div>-->
+<table style="width:100%">
     <thead>
-      <tr>
-        <th id="message" colspan="2"></th>
-      </tr>
-      <tr>
+    <tr>
+        <th colspan="2">
+            <div id="message">Prêt?</div>
+        </th>
+    </tr>
+    <tr>
         <th><span class="vertCombattant">Vert</span></th>
         <th><span class="rougeCombattant">Rouge</span></th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
     <tr>
-      <td id="scoreVert">
-        0
-      </td>
-      <td id="scoreRouge">
-        0
-      </td>
+        <td id="scoreVert">
+            0
+        </td>
+        <td id="scoreRouge">
+            0
+        </td>
     </tr>
     <tr>
-      <td>
-        <button class="touche main" onclick="touche('main', 'vert')"><img src="images/main.svg" alt="touche main" title="touche main" /></button>
-        <button class="touche bras"  onclick="touche('bras', 'vert')"><img src="images/bras.svg" alt="touche bras" title="touche bras" /></button>
-        <button class="touche jambe"  onclick="touche('jambe', 'vert')"><img src="images/jambe.svg" alt="touche jambe" title="touche jambe" /></button>
-        <button class="touche tronc"  onclick="touche('tronc', 'vert')"><img src="images/tronc.svg" alt="touche tronc" title="touche tronc" /></button>
-        <button class="touche tête"  onclick="touche('tête', 'vert')"><img src="images/tete.svg" alt="touche tête" title="touche tête" /></button>
-      </td>
-      <td>
-        <button class="touche main"  onclick="touche('main', 'rouge')"><img src="images/main.svg" alt="touche main" title="touche main" /></button>
-        <button class="touche bras"  onclick="touche('bras', 'rouge')"><img src="images/bras.svg" alt="touche bras" title="touche bras" /></button>
-        <button class="touche jambe"  onclick="touche('jambe', 'rouge')"><img src="images/jambe.svg" alt="touche jambe" title="touche jambe" /></button>
-        <button class="touche tronc"  onclick="touche('tronc', 'rouge')"><img src="images/tronc.svg" alt="touche tronc" title="touche tronc" /></button>
-        <button class="touche tête"  onclick="touche('tête', 'rouge')"><img src="images/tete.svg" alt="touche tête" title="touche tête" /></button>
-      </td>
+        <td>
+            <button class="touche main" disabled="disabled" onclick="gui.touche('main', 'vert')">
+                <img alt="touche main" src="images/main.svg" title="touche main"/>
+            </button>
+            <button class="touche bras" disabled="disabled" onclick="gui.touche('bras', 'vert')">
+                <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
+            </button>
+            <button class="touche jambe" disabled="disabled" onclick="gui.touche('jambe', 'vert')">
+                <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
+            </button>
+            <button class="touche tronc" disabled="disabled" onclick="gui.touche('tronc', 'vert')">
+                <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
+            </button>
+            <button class="touche tête" disabled="disabled" onclick="gui.touche('tête', 'vert')">
+                <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
+            </button>
+        </td>
+        <td>
+            <button class="touche main" disabled="disabled" onclick="gui.touche('main', 'rouge')">
+                <img alt="touche main" src="images/main.svg" title="touche main"/>
+            </button>
+            <button class="touche bras" disabled="disabled" onclick="gui.touche('bras', 'rouge')">
+                <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
+            </button>
+            <button class="touche jambe" disabled="disabled" onclick="gui.touche('jambe', 'rouge')">
+                <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
+            </button>
+            <button class="touche tronc" disabled="disabled" onclick="gui.touche('tronc', 'rouge')">
+                <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
+            </button>
+            <button class="touche tête" disabled="disabled" onclick="gui.touche('tête', 'rouge')">
+                <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
+            </button>
+        </td>
     </tr>
     <tr>
-      <td>
-        <button class="carton blanc" onclick="carton('blanc', 'vert')"><img src="images/carton-blanc.svg" alt="carton blanc" title="carton blanc" /></button>
-        <button class="carton jaune" onclick="carton('jaune', 'vert')"><img src="images/carton-jaune.svg" alt="carton jaune" title="carton jaune" /></button>
-        <button class="carton rouge" onclick="carton('rouge', 'vert')"><img src="images/carton-rouge.svg" alt="carton rouge" title="carton rouge" /></button>
-        <button class="carton noir" onclick="carton('noir', 'vert')"><img src="images/carton-noir.svg" alt="carton noir" title="carton noir" /></button>
-      </td>
-      <td>
-        <button class="carton blanc" onclick="carton('blanc', 'rouge')"><img src="images/carton-blanc.svg" alt="carton blanc" title="carton blanc" /></button>
-        <button class="carton jaune" onclick="carton('jaune', 'rouge')"><img src="images/carton-jaune.svg" alt="carton jaune" title="carton jaune" /></button>
-        <button class="carton rouge" onclick="carton('rouge', 'rouge')"><img src="images/carton-rouge.svg" alt="carton rouge" title="carton rouge" /></button>
-        <button class="carton noir" onclick="carton('noir', 'rouge')"><img src="images/carton-noir.svg" alt="carton noir" title="carton noir" /></button>
-      </td>
+        <td>
+            <button class="carton blanc" disabled="disabled" onclick="gui.carton('blanc', 'vert')">
+                <img alt="carton blanc" src="images/carton-blanc.svg" title="carton blanc"/>
+            </button>
+            <button class="carton jaune" disabled="disabled" onclick="gui.carton('jaune', 'vert')">
+                <img alt="carton jaune" src="images/carton-jaune.svg" title="carton jaune"/>
+            </button>
+            <button class="carton rouge" disabled="disabled" onclick="gui.carton('rouge', 'vert')">
+                <img alt="carton rouge" src="images/carton-rouge.svg" title="carton rouge"/>
+            </button>
+            <button class="carton noir" disabled="disabled" onclick="gui.carton('noir', 'vert')">
+                <img alt="carton noir" src="images/carton-noir.svg" title="carton noir"/>
+            </button>
+        </td>
+        <td>
+            <button class="carton blanc" disabled="disabled" onclick="gui.carton('blanc', 'rouge')">
+                <img alt="carton blanc" src="images/carton-blanc.svg" title="carton blanc"/>
+            </button>
+            <button class="carton jaune" disabled="disabled" onclick="gui.carton('jaune', 'rouge')">
+                <img alt="carton jaune" src="images/carton-jaune.svg" title="carton jaune"/>
+            </button>
+            <button class="carton rouge" disabled="disabled" onclick="gui.carton('rouge', 'rouge')">
+                <img alt="carton rouge" src="images/carton-rouge.svg" title="carton rouge"/>
+            </button>
+            <button class="carton noir" disabled="disabled" onclick="gui.carton('noir', 'rouge')">
+                <img alt="carton noir" src="images/carton-noir.svg" title="carton noir"/>
+            </button>
+        </td>
     </tr>
     </tbody>
-  </table>
-  <div id="historique"></div>
-  <script>
-    class NodeUpdate {
-      static hasChanged(node1, node2) {
-        if (node1.nodeType !== node2.nodeType) return true;
-        if (node1.nodeName !== node2.nodeName) return true;
-        return node1.nodeType == Node.TEXT_NODE && node1.textContent !== node2.textContent;
-      }
-
-      static updateAttributes(oldNode, newNode) {
-        const attrToRm = oldNode.getAttributeNames().filter((attr) => newNode.getAttributeNames().indexOf(attr) === -1);
-        attrToRm.forEach((attr) => oldNode.removeAttribute(attr));
-
-        for (let i = 0; i < newNode.attributes.length; ++i) {
-          if (
-                  !oldNode.hasAttribute(newNode.attributes[i].name) ||
-                  oldNode.getAttribute(newNode.attributes[i].name) != newNode.attributes[i].value
-          ) {
-            oldNode.setAttribute(newNode.attributes[i].name, newNode.attributes[i].value);
-          }
-        }
-      }
-
-      static updateChildren(oldNode, newNode) {
-        const newNodeLength = newNode.childNodes.length;
-        const oldNodeLength = oldNode.childNodes.length;
-        const maxLength = Math.max(newNodeLength, oldNodeLength);
-        for (let i = 0; i < maxLength; i++) {
-          if (i >= oldNodeLength) {
-            try {
-              oldNode.appendChild(newNode.childNodes[i].cloneNode(true));
-            } catch (e) {
-              console.log(e);
-            }
-          } else if (i >= newNodeLength) {
-            oldNode.removeChild(oldNode.childNodes[newNodeLength]);
-          } else {
-            const oldChild = oldNode.childNodes[i];
-            const newChild = newNode.childNodes[i];
-            if (NodeUpdate.hasChanged(oldChild, newChild)) {
-              oldNode.replaceChild(newChild.cloneNode(true), oldChild);
-            } else {
-              NodeUpdate.updateChildren(oldChild, newChild);
-
-              if (oldChild instanceof HTMLElement && newChild instanceof HTMLElement) {
-                NodeUpdate.updateAttributes(oldChild, newChild);
-              }
-            }
-          }
-        }
-      }
-
-      static updateDiv(id, html) {
-        const oldDiv = document.getElementById(id);
-        if (oldDiv != null) {
-          const newDiv = document.createElement('div');
-          newDiv.innerHTML = html;
-          NodeUpdate.updateChildren(oldDiv, newDiv);
-        }
-      }
-    }
-
-    class Event {
-      temps;
-      combattant;
-      type;
-      nom;
-      constructor(temps, combattant, type, nom) {
-        this.temps = temps;
-        this.combattant = combattant;
-        this.type = type;
-        this.nom = nom;
-      }
-    }
-    const CARTONS = {
-      blanc: {
-        couleur: 'blanc',
-        points: 0,
-        image: "images/carton-blanc.svg",
-        cartonSuperieur: 'jaune',
-      },
-      jaune:{
-        couleur: 'jaune',
-        points: 3,
-        image: "images/carton-jaune.svg",
-        cartonSuperieur: 'rouge',
-      },
-      rouge:{
-        couleur: 'rouge',
-        points: 5,
-        image: "images/carton-rouge.svg",
-        cartonSuperieur: 'noir',
-      },
-      noir:{
-        couleur: 'noir',
-        points: 0,
-        image: "images/carton-noir.svg",
-        cartonSuperieur: 'noir',
-      }
-    };
-    const TOUCHES = {
-      main: {
-        points: 1,
-        image: "images/main.svg"
-      },
-      bras:{
-        points: 3,
-        image: "images/bras.svg"
-      },
-      jambe:{
-        points: 3,
-        image: "images/jambe.svg"
-      },
-      tronc:{
-        points: 5,
-        image: "images/tronc.svg"
-      },
-      tête:{
-        points: 5,
-        image: "images/tete.svg"
-      },
-    };
-    const duree = 180;
-    const prolongation = 30;
-    const mortSubiteScore = 10;
-    const scoreMax = 15;
-    let historique = [];
-    let time = 0;
-    let status = 'prêt'; // "prêt" "en cours" "pause" "fini"
-    function carton(carton, Combattant) {
-      historique.push(new Event(time, Combattant, 'carton', carton));
-      refresh();
-    }
-    function touche(type, Combattant) {
-      historique.push(new Event(time, Combattant, 'touche', type));
-      refresh();
-    }
-    function annuler() {
-      const event = historique.pop();
-      document.getElementById('message').innerHTML = "";
-      if (event && event.type === 'mort subite') {
-        historique.pop();
-      }
-      if (status === 'fini'){
-        status = "pause";
-      }
-      refresh();
-    }
-    function formatCombattant(combattant) {
-      return `<span class="${combattant}Combattant">${combattant}</span>`;
-    }
-    function formatCarton(carton) {
-      return `<img src="${CARTONS[carton].image}" alt="touche ${carton}" />`;
-    }
-    function formatTouche(touche) {
-      return `<img src="${TOUCHES[touche].image}" alt="touche ${touche}" />`;
-    }
-
-    function autreComabattant(combattant) {
-      return combattant === 'vert' ? 'rouge' : 'vert';
-    }
-    function cartonSuperieur(carton, nbCarton) {
-      if (nbCarton >= 2) {
-        return CARTONS[CARTONS[carton.nom].cartonSuperieur];
-      } else {
-        return CARTONS[carton.nom];
-      }
-    }
-    function calcScore(combattant) {
-      let score = historique
-        .filter(e => (e.combattant === combattant && e.type === 'touche'))
-        .map(e => TOUCHES[e.nom].points).reduce((a, b) => a + b, 0)
-      const cartons = historique.filter(e => (e.combattant === autreComabattant(combattant) && e.type === 'carton'));
-      let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
-      for (let i = 0; i < cartons.length; i++) {
-        const carton = cartons[i];
-        nbCarton[carton.nom]++;
-        score += cartonSuperieur(carton, nbCarton[carton.nom]).points;
-      }
-      return score;
-    }
-    function updateTimer() {
-      if (status === "en cours") {
-        document.getElementById('start').innerHTML = '<img src="images/pause.svg" alt="mettre en pause le combat" />';
-      } else {
-        document.getElementById('start').innerHTML = '<img src="images/play.svg" alt="démarrer le combat" />';
-      }
-      document.getElementById('restant').innerText = formatTime(time);
-    }
-    function formatTime(time){
-      return pad0(Math.floor(time / 60)) + ":" + pad0(time % 60);
-    }
-    function getHistorique() {
-      let html = [];
-      let nbCarton = {blanc: 0, jaune: 0, rouge: 0, noir: 0};
-      for (let i = 0; i < historique.length; i++) {
-        const hist = historique[i];
-        const horodatage = `<span class="temps">[${formatTime(hist.temps)}]</span>`
-        const prefix =  `${horodatage} combattant ${formatCombattant(hist.combattant)}: `;
-        if (hist.type === 'carton') {
-          nbCarton[hist.nom]++;
-          if (nbCarton[hist.nom] >= 2) {
-            html.push(`<div>${prefix} ${nbCarton[hist.nom]}e ${hist.type} ${formatCarton(hist.nom)} --&gt; ${formatCarton(CARTONS[hist.nom].cartonSuperieur)}  (+${CARTONS[CARTONS[hist.nom].cartonSuperieur].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`);
-          } else {
-            html.push(`<div>${prefix} ${nbCarton[hist.nom]}er ${hist.type} ${formatCarton(hist.nom)} (+${CARTONS[hist.nom].points} combattant ${formatCombattant(autreComabattant(hist.combattant))})</div>`);
-          }
-        } else if (hist.type === 'touche') {
-          html.push(`<div>${prefix} ${hist.type} ${formatTouche(hist.nom)} (+${TOUCHES[hist.nom].points})</div>`);
-        } else if (hist.type === 'mort subite') {
-          html.push(`<div>${horodatage} ${hist.type} ${hist.nom}</div>`);
-        }
-      }
-      return html.reverse().join('');
-    }
-
-    function refresh() {
-      NodeUpdate.updateDiv("historique", getHistorique());
-      document.getElementById('scoreVert').innerHTML = calcScore("vert");
-      document.getElementById('scoreRouge').innerHTML = calcScore("rouge");
-      activeButtons(status !== "prêt");
-      updateTimer();
-    }
-    function activeButtons(active) {
-      if (isMortSubite()){
-        const touches = document.querySelectorAll('.main,.bras,.jambe');
-        for (let i = 0; i < touches.length ; i++) {
-          touches[i].disabled = true;
-        }
-      } else {
-        const elems = document.querySelectorAll('.touche,.carton,.jambe');
-        for (let i = 0; i < elems.length ; i++) {
-          elems[i].disabled = !active;
-        }
-      }
-    }
-    function atInterval() {
-      if (calcScore("vert") >= scoreMax || calcScore("rouge") >= scoreMax) {
-        status = "fini";
-        document.getElementById('message').innerHTML = win();
-      } else if (time >= duree && calcScore("vert") !== calcScore("rouge")) {
-        status = "fini";
-        document.getElementById('message').innerHTML = win();
-      } else if (time >= duree && time <= (duree + prolongation) && calcScore("vert") === calcScore("rouge")) {
-        mortSubite(`Prolongation ${prolongation}s`);
-      } else if (time > (duree + prolongation)) {
-        status = "fini";
-        document.getElementById('message').innerHTML = win();
-      } else if (calcScore("vert") >= mortSubiteScore && calcScore("rouge") >= mortSubiteScore) {
-        mortSubite();
-      }
-      if (status === "en cours") {
-        time++;
-      }
-      refresh();
-    }
-    function isMortSubite() {
-      return historique.some(e => e.type === 'mort subite');
-    }
-    function isMortSubiteCause(cause="") {
-      return historique.some(e => e.type === 'mort subite' && e.nom === cause);
-    }
-    function mortSubite(cause="") {
-      if (!isMortSubiteCause(cause)) {
-        historique.push(new Event(time, "", 'mort subite', cause));
-      }
-      document.getElementById('message').innerHTML = "Mort subite! "+cause;
-    }
-    function win() {
-      if (calcScore("vert") > calcScore("rouge")) {
-        return `Le combattant ${formatCombattant("vert")} gagne le combat!`;
-      } else if (calcScore("rouge") > calcScore("vert")) {
-        return `Le combattant ${formatCombattant("rouge")} gagne le combat!`;
-      } else {
-        return `Combattants ex aequo!`;
-      }
-    }
-    function pad0(value) {
-      return value<10?'0'+value:value;
-    }
-    function reset() {
-      time = 0;
-      status = "prêt";
-      historique = [];
-      document.getElementById('message').innerHTML = "Prêt?";
-      refresh();
-    }
-    function start() {
-      if (status === "en cours") {
-        status = "pause";
-        document.getElementById('message').innerHTML = "Cessez!";
-      } else if (status === "pause" || status === "prêt") {
-        document.getElementById('message').innerHTML = "Combattez!";
-        status = "en cours";
-      } else if (status === "fini") {
-        time = 0;
-        status = "en cours";
-      }
-      refresh();
-    }
-    reset();
-    window.setInterval(atInterval, 1000);
-  </script>
-  </body>
+</table>
+<div id="historique"></div>
+<script src="NodeUpdate.js"></script>
+<script src="throw.js"></script>
+<script src="Carton.js"></script>
+<script src="Touche.js"></script>
+<script src="Evenement.js"></script>
+<script src="EventLog.js"></script>
+<script src="Regle.js"></script>
+<script src="MortSubite.js"></script>
+<script src="MatchState.js"></script>
+<script src="MatchModel.js"></script>
+<script src="Gui.js"></script>
+<script src="tests.js"></script>
+<script src="main.js"></script>
+</body>
 </html>
