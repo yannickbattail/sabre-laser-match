@@ -5,7 +5,6 @@
 /// <reference path="./EventLog.ts" />
 /// <reference path="./MortSubite.ts" />
 
-
 class MatchModel {
     public scores = {vert: 0, rouge: 0};
     public mortSubite?: MortSubite = undefined;
@@ -14,8 +13,14 @@ class MatchModel {
     public eventLog: EventLog[] = [];
     public tempMax: number;
 
-    constructor(private matchState: MatchState, private regle: Regle) {
-        let nbCarton: Record<CartonCouleur, number> = {} as Record<CartonCouleur, number>;
+    constructor(
+        private matchState: MatchState,
+        private regle: Regle,
+    ) {
+        let nbCarton: Record<CartonCouleur, number> = {} as Record<
+            CartonCouleur,
+            number
+        >;
         nbCarton[CartonCouleur.blanc] = 0;
         nbCarton[CartonCouleur.jaune] = 0;
         nbCarton[CartonCouleur.rouge] = 0;
@@ -40,26 +45,38 @@ class MatchModel {
             } else if (evenement instanceof EvenementTouche) {
                 this.processTouche(evenement);
             }
-            if (this.mortSubite) {
-                this.matchState.status = MatchStatus.fini;
-                this.message = `Fin du match: le combattant ${evenement.combattant} a gagné en mort subite.`;
-            }
-            this.tempMax = this.regle.duree + this.checkMortSubite(evenement.temps);
-            this.checkWin(evenement.temps);
+            this.checkMortSubite(evenement.temps);
         }
+        this.checkWin();
     }
 
     private processTouche(evenement: EvenementTouche) {
         const touche = this.regle.getTouche(evenement.nom);
-        this.eventLog.push(new EventLogTouche(evenement.temps, evenement.combattant, touche));
+        this.eventLog.push(
+            new EventLogTouche(evenement.temps, evenement.combattant, touche),
+        );
         this.scores[evenement.combattant] += touche.points;
     }
 
-    private processCarton(evenement: EvenementCarton, nbCarton: Record<CartonCouleur, number>) {
+    private processCarton(
+        evenement: EvenementCarton,
+        nbCarton: Record<CartonCouleur, number>,
+    ) {
         const evNom = evenement.couleur;
         nbCarton[evNom]++;
-        const carton = nbCarton[evNom] >= 2 ? this.regle.getCartonSuperieur(evNom) : this.regle.getCarton(evNom);
-        this.eventLog.push(new EventLogCarton(evenement.temps, evenement.combattant, this.regle.getCarton(evNom), Regle.adversaire(evenement.combattant), nbCarton[evNom]));
+        const carton =
+            nbCarton[evNom] >= 2
+                ? this.regle.getCartonSuperieur(evNom)
+                : this.regle.getCarton(evNom);
+        this.eventLog.push(
+            new EventLogCarton(
+                evenement.temps,
+                evenement.combattant,
+                this.regle.getCarton(evNom),
+                Regle.adversaire(evenement.combattant),
+                nbCarton[evNom],
+            ),
+        );
         this.scores[Regle.adversaire(evenement.combattant)] += carton.points;
         if (carton.couleur === CartonCouleur.noir) {
             this.matchState.status = MatchStatus.fini;
@@ -67,46 +84,52 @@ class MatchModel {
         }
     }
 
-    private checkMortSubite(temps: number) {
-        if (this.scores[CombattantCouleur.vert] >= this.regle.mortSubiteScore && this.scores[CombattantCouleur.rouge] >= this.regle.mortSubiteScore) {
-            this.mortSubite = MortSubite.limite;
+    private checkMortSubite(tempsEvenement: number) {
+        this.tempMax = this.regle.duree;
+        if (
+            this.scores[CombattantCouleur.vert] >= this.regle.mortSubiteScore &&
+            this.scores[CombattantCouleur.rouge] >= this.regle.mortSubiteScore
+        ) {
             this.message = `Mort subite: scores &gt; ${this.regle.mortSubiteScore}.`;
-            this.eventLog.push(new EventLogMortSubite(temps, MortSubite.limite));
-            return 0;
+            if (!this.mortSubite) {
+                this.eventLog.push(new EventLogMortSubite(tempsEvenement, MortSubite.limite));
+            }
+            this.mortSubite = MortSubite.limite;
         }
-        if (temps >= this.regle.duree && temps < this.regle.duree + this.regle.prolongation) {
-
-        }
-        if (this.scores[CombattantCouleur.vert] === this.scores[CombattantCouleur.rouge] && temps > this.regle.duree) {
+        if (
+            this.scores[CombattantCouleur.vert] === this.scores[CombattantCouleur.rouge] &&
+            this.matchState.time > this.regle.duree
+        ) {
+            if (this.mortSubite !== MortSubite.prolongation) {
+                this.eventLog.push(new EventLogMortSubite(this.regle.duree, MortSubite.prolongation));
+            }
             this.mortSubite = MortSubite.prolongation;
             this.message = `Mort subite: ex aequo prolongation de ${this.regle.prolongation}s.`;
-            this.eventLog.push(new EventLogMortSubite(temps, MortSubite.prolongation));
-            return this.regle.prolongation;
+            this.tempMax = this.regle.duree + this.regle.prolongation;
         }
-        return 0;
     }
 
-    private checkWin(temps: number) {
-        if (this.mortSubite === MortSubite.prolongation) {
-            if (this.scores[CombattantCouleur.vert] > this.scores[CombattantCouleur.rouge]) {
-                this.win(temps, CombattantCouleur.vert);
-            }
-            if (this.scores[CombattantCouleur.rouge] > this.scores[CombattantCouleur.vert]) {
-                this.win(temps, CombattantCouleur.rouge);
+    private checkWin() {
+        if (this.mortSubite !== MortSubite.prolongation) {
+            if (this.scores[CombattantCouleur.vert] >= this.regle.scoreMax) {
+                return this.win(this.matchState.time, CombattantCouleur.vert, true);
+            } else if (this.scores[CombattantCouleur.rouge] >= this.regle.scoreMax) {
+                return this.win(this.matchState.time, CombattantCouleur.rouge, true);
             }
         } else {
-            if (this.scores[CombattantCouleur.vert] >= this.regle.scoreMax) {
-                this.win(temps, CombattantCouleur.vert);
-            } else if (this.scores[CombattantCouleur.rouge] >= this.regle.scoreMax) {
-                this.win(temps, CombattantCouleur.rouge);
+            if (this.scores[CombattantCouleur.vert] > this.scores[CombattantCouleur.rouge]) {
+                return this.win(this.matchState.time, CombattantCouleur.vert, false);
+            }
+            if (this.scores[CombattantCouleur.rouge] > this.scores[CombattantCouleur.vert]) {
+                return this.win(this.matchState.time, CombattantCouleur.rouge, false);
             }
         }
         if (this.matchState.time > this.tempMax) {
-            this.win(temps, null);
+            return this.win(this.tempMax, null, false);
         }
     }
 
-    private win(temps: number, combattantCouleur: CombattantCouleur | null) {
+    private win(temps: number, combattantCouleur: CombattantCouleur | null, b: boolean) {
         this.matchState.status = MatchStatus.fini;
         this.message = combattantCouleur
             ? `Fin du match: le combattant ${combattantCouleur} a gagné.`

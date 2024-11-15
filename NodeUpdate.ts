@@ -2,19 +2,28 @@ class NodeUpdate {
     public static hasChanged(node1: Node, node2: Node) {
         if (node1.nodeType !== node2.nodeType) return true;
         if (node1.nodeName !== node2.nodeName) return true;
-        return node1.nodeType == Node.TEXT_NODE && node1.textContent !== node2.textContent;
+        return (
+            node1.nodeType == Node.TEXT_NODE &&
+            node1.textContent !== node2.textContent
+        );
     }
 
     public static updateAttributes(oldNode: Element, newNode: Element) {
-        const attrToRm = oldNode.getAttributeNames().filter((attr) => newNode.getAttributeNames().indexOf(attr) === -1);
+        const attrToRm = oldNode
+            .getAttributeNames()
+            .filter((attr) => newNode.getAttributeNames().indexOf(attr) === -1);
         attrToRm.forEach((attr) => oldNode.removeAttribute(attr));
 
         for (let i = 0; i < newNode.attributes.length; ++i) {
             if (
                 !oldNode.hasAttribute(newNode.attributes[i].name) ||
-                oldNode.getAttribute(newNode.attributes[i].name) != newNode.attributes[i].value
+                oldNode.getAttribute(newNode.attributes[i].name) !=
+                newNode.attributes[i].value
             ) {
-                oldNode.setAttribute(newNode.attributes[i].name, newNode.attributes[i].value);
+                oldNode.setAttribute(
+                    newNode.attributes[i].name,
+                    newNode.attributes[i].value,
+                );
             }
         }
     }
@@ -40,7 +49,10 @@ class NodeUpdate {
                 } else {
                     NodeUpdate.updateChildren(oldChild, newChild);
 
-                    if (oldChild instanceof HTMLElement && newChild instanceof HTMLElement) {
+                    if (
+                        oldChild instanceof HTMLElement &&
+                        newChild instanceof HTMLElement
+                    ) {
                         NodeUpdate.updateAttributes(oldChild, newChild);
                     }
                 }
@@ -51,7 +63,7 @@ class NodeUpdate {
     public static updateDiv(id: string, html: string) {
         const oldDiv = document.getElementById(id);
         if (oldDiv != null) {
-            const newDiv = document.createElement('div');
+            const newDiv = document.createElement("div");
             newDiv.innerHTML = html;
             NodeUpdate.updateChildren(oldDiv, newDiv);
         }

@@ -1,3 +1,4 @@
 enum MortSubite {
-    prolongation = "prolongation", limite = "limite"
+    prolongation = "prolongation",
+    limite = "limite",
 }
