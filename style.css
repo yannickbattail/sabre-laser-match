@@ -24,16 +24,8 @@ button[disabled="disabled"] {
 }
 
 #message {
-    color: black;
-    background: #fff;
-    box-shadow: 0 0 5px #fff,
-    0 0 8px #fff,
-    0 0 12px #fff,
-    0 0 15px blue,
-    0 0 25px blue;
-    display: inline-block;
-    border-radius: 10px 10px 10px 10px;
-    padding: 0px 5px 0px 5px;
+    font-size: 20px;
+    margin: 10px;
 }
 
 #historique img {
@@ -51,6 +43,10 @@ button img {
     width: 40px;
     font-size: 20px;
     text-align: center;
+}
+
+#time {
+    font-size: 20px;
 }
 
 .vertCombattant {
@@ -85,8 +81,16 @@ button img {
     font-size: 20px;
 }
 
+#lightsaberTd {
+    width: 14px;
+    max-width: 14px;
+}
+
 #lightsaber {
-    width: 500px;
+    width: 14px;
+    max-width: 14px;
+
+    height: 100%;
     margin: auto;
     line-height: 0;
     padding: 20px;
@@ -96,10 +100,12 @@ button img {
 #light {
     display: inline-block;
     position: relative;
-    width: 500px;
+    height: 100%;
+    min-height: 150px;
     background: #fff;
-    height: 14px;
-    border-radius: 2px 7px 7px 2px;
+    max-width: 14px;
+    width: 14px;
+    border-radius: 7px 2px 2px 7px;
     box-shadow: 0 0 5px #fff,
     0 0 8px #fff,
     0 0 12px #fff,

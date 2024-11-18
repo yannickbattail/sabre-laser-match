@@ -13,13 +13,15 @@ class GuiElem {
             _throw(new Error("Element 'play' non trouvé"));
         this.message = document.getElementById("message") ||
             _throw(new Error("Element 'message' non trouvé"));
+        this.changeRegle = document.getElementById("changeRegle") ||
+            _throw(new Error("Element 'changeRegle' non trouvé"));
     }
 }
 class Gui {
-    constructor(matchState, regle) {
+    constructor(matchState) {
         this.matchState = matchState;
-        this.regle = regle;
         this.guiElem = new GuiElem();
+        this.regle = this.getRegle();
         window.setInterval(() => {
             this.atInterval();
         }, 1000);
@@ -50,6 +52,15 @@ class Gui {
             this.matchState.status = MatchStatus.en_cours;
         }
         this.refresh();
+    }
+    changeRegle() {
+        this.regle = this.getRegle();
+        this.reset();
+    }
+    getRegle() {
+        let regleNom = Regle.getRegleByNom(this.guiElem.changeRegle.value);
+        console.info("Changement de règle: " + regleNom);
+        return regleNom;
     }
     atInterval() {
         if (this.matchState.status === MatchStatus.en_cours) {
@@ -83,7 +94,7 @@ class Gui {
         this.guiElem.time.innerText = this.formatTime(this.matchState.time);
     }
     formatTime(time) {
-        return this.pad0(Math.floor(time / 60)) + ":" + this.pad0(time % 60);
+        return this.pad0(Math.floor(time / 60)) + ":" + this.pad0(time % 60) + "s";
     }
     getHistorique(match) {
         let html = [];
@@ -93,7 +104,7 @@ class Gui {
             if (eventLog instanceof EventLogCarton) {
                 const prefix = `${horodatage} combattant ${this.formatCombattant(eventLog.combattant)}: `;
                 if (eventLog.numeroCarton >= 2) {
-                    html.push(`<div>${prefix} ${eventLog.numeroCarton}e carton ${this.formatCarton(eventLog.carton.couleur)} &rarr; ${this.formatCarton(eventLog.carton.cartonSuperieur)}  (+${regle.getCartonSuperieur(eventLog.carton.couleur).points} combattant ${this.formatCombattant(eventLog.adversaire)})</div>`);
+                    html.push(`<div>${prefix} ${eventLog.numeroCarton}e carton ${this.formatCarton(eventLog.carton.couleur)} &rarr; ${this.formatCarton(eventLog.carton.cartonSuperieur)}  (+${this.regle.getCartonSuperieur(eventLog.carton.couleur).points} combattant ${this.formatCombattant(eventLog.adversaire)})</div>`);
                 }
                 else {
                     html.push(`<div>${prefix} ${eventLog.numeroCarton}er carton ${this.formatCarton(eventLog.carton.couleur)} (+${eventLog.carton.points} combattant ${this.formatCombattant(eventLog.adversaire)})</div>`);

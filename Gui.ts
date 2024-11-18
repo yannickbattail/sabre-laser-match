@@ -118,7 +118,7 @@ class Gui {
     }
 
     private formatTime(time: number) {
-        return this.pad0(Math.floor(time / 60)) + ":" + this.pad0(time % 60);
+        return this.pad0(Math.floor(time / 60)) + ":" + this.pad0(time % 60) + "s";
     }
 
     private getHistorique(match: MatchModel) {
