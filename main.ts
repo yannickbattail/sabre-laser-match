@@ -7,8 +7,8 @@
 /// <reference path="./throw.ts" />
 /// <reference path="./tests.ts" />
 
-const regle: Regle = Regle.getRegleByNom("FFE");
+
 const matchState: MatchState = new MatchState();
-const gui = new Gui(matchState, regle);
+const gui = new Gui(matchState);
 
 tests();

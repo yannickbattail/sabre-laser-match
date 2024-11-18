@@ -20,6 +20,26 @@
     <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
 </button>
 <!--  <div id="lightsaber"><span id="light"></span></div>-->
+<div>
+    <span id="time">00:00</span>
+    <button id="play" onclick="gui.play()">
+        <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
+    </button>
+    <button id="reset" onclick="gui.reset()">
+        <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
+    </button>
+    <button onclick="gui.annuler()">
+        <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
+    </button>
+    <div style="display: inline-block; text-align: right;">
+        <label for="changeRegle">Règles:</label>
+        <select id="changeRegle" onchange="gui.changeRegle()">
+            <option value="FFE">FFE</option>
+            <option value="perso">perso</option>
+            <option value="test">test</option>
+        </select>
+    </div>
+</div>
 <table style="width:100%">
     <thead>
     <tr>
