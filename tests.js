@@ -67,7 +67,7 @@ function test4(regle) {
     console.log("Test4 passed");
 }
 function tests() {
-    const regle = Regle.getRegleByNom("test");
+    const regle = Regle.getRegleByNom("tests");
     test1(regle);
     test2(regle);
     test3(regle);

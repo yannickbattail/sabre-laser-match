@@ -46,7 +46,20 @@ button img {
 }
 
 #time {
+    display: inline-block;
     font-size: 20px;
+}
+
+.positive {
+    color: rgb(100, 200, 255);
+}
+
+.positive25th {
+    color: rgb(255, 128, 0);
+}
+
+.negative {
+    color: rgb(255, 0, 0);
 }
 
 .vertCombattant {

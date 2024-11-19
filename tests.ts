@@ -78,7 +78,7 @@ function test4(regle: Regle) {
 }
 
 function tests() {
-    const regle: Regle = Regle.getRegleByNom("test");
+    const regle: Regle = Regle.getRegleByNom("tests");
     test1(regle);
     test2(regle);
     test3(regle);

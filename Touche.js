@@ -8,10 +8,11 @@ var ToucheNom;
     ToucheNom["tete"] = "t\u00EAte";
 })(ToucheNom || (ToucheNom = {}));
 class Touche {
-    constructor(nom, points, mortSubite, image) {
+    constructor(nom, points, mortSubite, prolongation, image) {
         this.nom = nom;
         this.points = points;
         this.mortSubite = mortSubite;
+        this.prolongation = prolongation;
         this.image = image;
     }
 }

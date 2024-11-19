@@ -11,6 +11,7 @@ class Touche {
         public nom: ToucheNom,
         public points: number,
         public mortSubite: boolean,
+        public prolongation: boolean,
         public image: string,
     ) {
     }
