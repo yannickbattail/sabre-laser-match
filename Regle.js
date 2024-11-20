@@ -30,30 +30,49 @@ class Regle {
         return (this.touches.find((c) => c.nom === nom) ||
             _throw(new Error(`Touche ${nom} introuvable`)));
     }
+    getTouchesMortSubite(mortSubite) {
+        return (this.touches.filter((c) => c.mortSubite === mortSubite));
+    }
+    getTouchesProlongation(prolongation) {
+        return (this.touches.filter((c) => c.prolongation === prolongation));
+    }
 }
 Regle.REGLES = [
-    new Regle("test", [
+    new Regle("FFE", [
         new Carton(CartonCouleur.blanc, 0, "images/carton-blanc.svg", CartonCouleur.jaune),
         new Carton(CartonCouleur.jaune, 3, "images/carton-jaune.svg", CartonCouleur.rouge),
         new Carton(CartonCouleur.rouge, 5, "images/carton-rouge.svg", CartonCouleur.noir),
         new Carton(CartonCouleur.noir, 0, "images/carton-noir.svg", CartonCouleur.noir),
     ], [
-        new Touche(ToucheNom.main, 1, false, "images/main.svg"),
-        new Touche(ToucheNom.bras, 3, false, "images/bras.svg"),
-        new Touche(ToucheNom.jambe, 3, false, "images/jambe.svg"),
-        new Touche(ToucheNom.tronc, 5, true, "images/tronc.svg"),
-        new Touche(ToucheNom.tete, 5, true, "images/tete.svg"),
-    ], 10, 10, 10, 15), new Regle("FFE", [
+        new Touche(ToucheNom.main, 1, false, false, "images/main.svg"),
+        new Touche(ToucheNom.bras, 3, false, false, "images/bras.svg"),
+        new Touche(ToucheNom.jambe, 3, false, false, "images/jambe.svg"),
+        new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
+        new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
+    ], 180, 30, 10, 15),
+    new Regle("perso", [
         new Carton(CartonCouleur.blanc, 0, "images/carton-blanc.svg", CartonCouleur.jaune),
         new Carton(CartonCouleur.jaune, 3, "images/carton-jaune.svg", CartonCouleur.rouge),
         new Carton(CartonCouleur.rouge, 5, "images/carton-rouge.svg", CartonCouleur.noir),
         new Carton(CartonCouleur.noir, 0, "images/carton-noir.svg", CartonCouleur.noir),
     ], [
-        new Touche(ToucheNom.main, 1, false, "images/main.svg"),
-        new Touche(ToucheNom.bras, 3, false, "images/bras.svg"),
-        new Touche(ToucheNom.jambe, 3, false, "images/jambe.svg"),
-        new Touche(ToucheNom.tronc, 5, true, "images/tronc.svg"),
-        new Touche(ToucheNom.tete, 5, true, "images/tete.svg"),
-    ], 180, 30, 10, 15)
+        new Touche(ToucheNom.main, 1, true, true, "images/main.svg"),
+        new Touche(ToucheNom.bras, 2, true, true, "images/bras.svg"),
+        new Touche(ToucheNom.jambe, 3, true, true, "images/jambe.svg"),
+        new Touche(ToucheNom.tronc, 4, true, true, "images/tronc.svg"),
+        new Touche(ToucheNom.tete, 4, true, true, "images/tete.svg"),
+    ], 180, 0, 1, 15),
+    new Regle("tests", [
+        new Carton(CartonCouleur.blanc, 0, "images/carton-blanc.svg", CartonCouleur.jaune),
+        new Carton(CartonCouleur.jaune, 3, "images/carton-jaune.svg", CartonCouleur.rouge),
+        new Carton(CartonCouleur.rouge, 5, "images/carton-rouge.svg", CartonCouleur.noir),
+        new Carton(CartonCouleur.noir, 0, "images/carton-noir.svg", CartonCouleur.noir),
+    ], [
+        new Touche(ToucheNom.main, 1, false, false, "images/main.svg"),
+        new Touche(ToucheNom.bras, 3, false, true, "images/bras.svg"),
+        new Touche(ToucheNom.jambe, 3, false, true, "images/jambe.svg"),
+        new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
+        new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
+    ], 10, 10, 10, 15),
 ];
 //# sourceMappingURL=Regle.js.map
