@@ -33,7 +33,7 @@ class Gui {
         this.init();
         window.setInterval(() => {
             this.atInterval();
-        }, 1000);
+        }, 100);
     }
     touche(nom, combattant) {
         this.matchState.addTouche(combattant, nom);
@@ -96,7 +96,7 @@ class Gui {
     }
     atInterval() {
         if (this.matchState.status === MatchStatus.en_cours) {
-            this.matchState.time++;
+            this.matchState.time += 0.1;
         }
         this.refresh();
     }
@@ -144,8 +144,8 @@ class Gui {
     formatTime(time) {
         const t = Math.abs(time);
         const sign = Math.sign(time) === -1 ? "-" : "";
-        let min = this.pad0(Math.floor(t / 60));
-        let sec = this.pad0(t % 60);
+        let min = (t / 60).toFixed(0).padStart(2, '0');
+        let sec = (t % 60).toFixed(1).padStart(4, '0');
         return `${sign}${min}:${sec}s`;
     }
     getHistorique(match) {
