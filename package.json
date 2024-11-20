@@ -1,20 +1,41 @@
 {
+  "version": "1.0.0",
+  "description": "Match sabre laser",
+  "name": "sabre-laser-match",
   "scripts": {
-    "clean": "rm ./src/*.js",
-    "build": "tsc",
+    "clean": "rm -Rf dist",
+    "build": "webpack --mode=production --node-env=production",
     "build:watch": "tsc --watch",
-    "start": "live-server --wait=1000 ./src",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve",
     "lint": "eslint --fix ./src/*.ts",
     "format": "stylelint ./src/*.css && prettier -w ."
+
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/node": "^22.9.1",
+    "@types/webpack": "^5.28.5",
+    "@webpack-cli/generators": "^3.0.7",
+    "css-loader": "^7.1.2",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
-    "live-server": "^1.2.2",
-    "prettier": "^3.4.2",
-    "stylelint": "^16.11.0",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.18.1"
+    "html-inline-script-webpack-plugin": "^3.2.1",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.9.2",
+    "prettier": "^3.3.3",
+    "style-loader": "^4.0.0",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0",
+    "workbox-webpack-plugin": "^7.3.0"
   }
 }
