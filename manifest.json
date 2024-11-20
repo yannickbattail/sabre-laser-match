@@ -1,7 +1,7 @@
 {
   "name": "Match Sabre laser ",
   "short_name": "Match Sabrelaser",
-  "start_url": "https://yannickbattail.github.io/sabre-laser-match/sabre-laser-match.html",
+  "start_url": "https://yannickbattail.github.io/sabre-laser-match/index.html",
   "display": "standalone",
   "prefer_related_applications": false,
   "icons": [
