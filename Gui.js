@@ -185,9 +185,6 @@ class Gui {
         }
         return html.reverse().join("");
     }
-    pad0(value) {
-        return value < 10 ? "0" + value : value;
-    }
     activeButtons(match) {
         if (match.mortSubite === MortSubite.limite) {
             this.enableButton(this.regle.getTouchesMortSubite(false).map((touche) => touche.nom), false);
@@ -198,8 +195,7 @@ class Gui {
             this.enableButton(this.regle.getTouchesProlongation(true).map((touche) => touche.nom), true);
         }
         else {
-            const enable = this.matchState.status !== MatchStatus.pret &&
-                this.matchState.status !== MatchStatus.fini;
+            const enable = this.matchState.status !== MatchStatus.pret;
             this.enableButton(this.regle.touches.map((touche) => touche.nom), enable);
             this.enableButton(this.regle.cartons.map((carton) => carton.couleur), enable);
         }

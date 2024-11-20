@@ -68,7 +68,7 @@ class MatchModel {
             this.mortSubite = MortSubite.limite;
         }
         if (this.scores[CombattantCouleur.vert] === this.scores[CombattantCouleur.rouge] &&
-            this.matchState.time > this.regle.duree) {
+            this.matchState.time >= this.regle.duree) {
             if (this.mortSubite !== MortSubite.prolongation) {
                 this.eventLog.push(new EventLogMortSubite(this.regle.duree, MortSubite.prolongation));
             }
@@ -94,7 +94,7 @@ class MatchModel {
                 return this.win(this.matchState.time, CombattantCouleur.rouge, false);
             }
         }
-        if (this.matchState.time > this.tempMax) {
+        if (this.matchState.time >= this.tempMax) {
             return this.win(this.tempMax, null, false);
         }
     }
