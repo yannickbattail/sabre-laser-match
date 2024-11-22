@@ -1,82 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE HTML>
+<html lang="en-US">
 <head>
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta charset="utf-8">
-    <link href="manifest.json" rel="manifest"/>
-    <link href="images/light-sabers-couleur.svg" rel="icon" type="image/svg+xml"/>
-    <link href="style.css" rel="stylesheet"/>
-    <title>Sabre laser - match</title>
+    <meta charset="UTF-8">
+    <meta content="0; url=index.html" http-equiv="refresh">
+    <script type="text/javascript">
+        window.location.href = "index.html"
+    </script>
+    <title>Page Redirection</title>
 </head>
-<body class="dark">
-<div>
-    <div id="time">00:00</div>
-    <button id="play" onclick="gui.play()">
-        <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
-    </button>
-    <button id="reset" onclick="gui.reset()">
-        <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
-    </button>
-    <button onclick="gui.annuler()">
-        <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
-    </button>
-    <div style="display: inline-block; text-align: right;">
-        <label for="changeRegle">Règles:</label>
-        <select id="changeRegle" onchange="gui.changeRegle()">
-            <option value="FFE">FFE</option>
-            <option value="perso">perso</option>
-            <option value="test">test</option>
-        </select>
-    </div>
-</div>
-<table style="width:100%">
-    <thead>
-    <tr>
-        <th colspan="3">
-            <div id="message">Prêt?</div>
-        </th>
-    </tr>
-    <tr>
-        <th><span class="vertCombattant">Vert</span></th>
-        <th></th>
-        <th><span class="rougeCombattant">Rouge</span></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td id="scoreVert">
-            0
-        </td>
-        <td id="lightsaberTd" rowspan="3">
-            <div id="lightsaber"><span id="light"></span></div>
-        </td>
-        <td id="scoreRouge">
-            0
-        </td>
-    </tr>
-    <tr>
-        <td id="touchesVert"></td>
-        <td id="touchesRouge"></td>
-    </tr>
-    <tr>
-        <td id="cartonsVert"></td>
-        <td id="cartonsRouge"></td>
-    </tr>
-    </tbody>
-</table>
-<div id="historique"></div>
-<script src="NodeUpdate.js"></script>
-<script src="throw.js"></script>
-<script src="Carton.js"></script>
-<script src="Touche.js"></script>
-<script src="Evenement.js"></script>
-<script src="EventLog.js"></script>
-<script src="Regle.js"></script>
-<script src="MortSubite.js"></script>
-<script src="MatchState.js"></script>
-<script src="MatchModel.js"></script>
-<script src="Gui.js"></script>
-<script src="tests.js"></script>
-<script src="main.js"></script>
+<body>
+La page a été déplacée vers <a href='index.html'>index.html</a>.
 </body>
 </html>

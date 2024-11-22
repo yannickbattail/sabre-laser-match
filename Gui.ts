@@ -86,7 +86,7 @@ class Gui {
         }
     }
 
-    init() {
+    private init() {
         this.guiElem.touchesVert.innerHTML = this.initTouches(CombattantCouleur.vert);
         this.guiElem.touchesRouge.innerHTML = this.initTouches(CombattantCouleur.rouge);
         this.guiElem.cartonsVert.innerHTML = this.initCartons(CombattantCouleur.vert);
@@ -94,21 +94,21 @@ class Gui {
         this.guiElem.changeRegle.innerHTML = this.initRegles();
     }
 
-    initTouches(combattant: CombattantCouleur): string {
+    private initTouches(combattant: CombattantCouleur): string {
         return this.regle.touches.map((touche) =>
             `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
                 <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}"/>${touche.points}
             </button>`).join("");
     }
 
-    initCartons(combattant: CombattantCouleur): string {
+    private initCartons(combattant: CombattantCouleur): string {
         return this.regle.cartons.map((carton) =>
             `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
                 <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}"/>-${carton.points}
             </button>`).join("");
     }
 
-    initRegles(): string {
+    private initRegles(): string {
         return Regle.REGLES.map((regle) =>
             `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ''}>${regle.nom}</option>`).join("");
     }
@@ -223,10 +223,6 @@ class Gui {
         return html.reverse().join("");
     }
 
-    private pad0(value: number) {
-        return value < 10 ? "0" + value : value;
-    }
-
     private activeButtons(match: MatchModel) {
         if (match.mortSubite === MortSubite.limite) {
             this.enableButton(this.regle.getTouchesMortSubite(false).map((touche) => touche.nom), false);
@@ -235,9 +231,7 @@ class Gui {
             this.enableButton(this.regle.getTouchesProlongation(false).map((touche) => touche.nom), false);
             this.enableButton(this.regle.getTouchesProlongation(true).map((touche) => touche.nom), true);
         } else {
-            const enable =
-                this.matchState.status !== MatchStatus.pret &&
-                this.matchState.status !== MatchStatus.fini;
+            const enable = this.matchState.status !== MatchStatus.pret
             this.enableButton(this.regle.touches.map((touche) => touche.nom), enable);
             this.enableButton(this.regle.cartons.map((carton) => carton.couleur), enable);
         }
