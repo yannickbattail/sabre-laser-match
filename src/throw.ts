@@ -1,3 +1,3 @@
-function _throw(error: Error): never {
-    throw error;
+export function _throw(error: Error): never {
+  throw error;
 }

@@ -1,13 +1,15 @@
-/// <reference path="./Evenement.ts" />
+import {CombattantCouleur, Evenement, EvenementCarton, EvenementTouche,} from "./Evenement.js";
+import {CartonCouleur} from "./Carton.js";
+import {ToucheNom} from "./Touche.js";
 
-enum MatchStatus {
+export enum MatchStatus {
     pret = "prêt",
     en_cours = "en cours",
     pause = "pause",
     fini = "fini",
 }
 
-class MatchState {
+export class MatchState {
     constructor(
         public time: number = 0,
         public status: MatchStatus = MatchStatus.pret,

@@ -65,18 +65,13 @@
     </tbody>
 </table>
 <div id="historique"></div>
-<script src="NodeUpdate.js"></script>
-<script src="throw.js"></script>
-<script src="Carton.js"></script>
-<script src="Touche.js"></script>
-<script src="Evenement.js"></script>
-<script src="EventLog.js"></script>
-<script src="Regle.js"></script>
-<script src="MortSubite.js"></script>
-<script src="MatchState.js"></script>
-<script src="MatchModel.js"></script>
-<script src="Gui.js"></script>
-<script src="tests.js"></script>
-<script src="main.js"></script>
+<script type="module">
+    import {MatchState} from "./MatchState.js";
+    import {Gui} from "./Gui.js";
+    import {tests} from "./tests.js";
+
+    window.gui = new Gui(new MatchState());
+    tests();
+</script>
 </body>
 </html>

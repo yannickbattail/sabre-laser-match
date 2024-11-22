@@ -1,4 +1,4 @@
-enum MortSubite {
-    prolongation = "prolongation",
-    limite = "limite",
+export enum MortSubite {
+  prolongation = "prolongation",
+  limite = "limite",
 }

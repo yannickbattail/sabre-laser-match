@@ -1,14 +1,17 @@
-enum CombattantCouleur {
+import {CartonCouleur} from "./Carton.js";
+import {ToucheNom} from "./Touche.js";
+
+export enum CombattantCouleur {
     vert = "vert",
     rouge = "rouge",
 }
 
-enum EvenementType {
+export enum EvenementType {
     touche = "touche",
     carton = "carton",
 }
 
-abstract class Evenement {
+export abstract class Evenement {
     constructor(
         public temps: number,
         public combattant: CombattantCouleur,
@@ -17,7 +20,7 @@ abstract class Evenement {
     }
 }
 
-class EvenementTouche extends Evenement {
+export class EvenementTouche extends Evenement {
     constructor(
         temps: number,
         combattant: CombattantCouleur,
@@ -27,7 +30,7 @@ class EvenementTouche extends Evenement {
     }
 }
 
-class EvenementCarton extends Evenement {
+export class EvenementCarton extends Evenement {
     constructor(
         temps: number,
         combattant: CombattantCouleur,
