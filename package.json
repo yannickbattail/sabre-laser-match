@@ -1,10 +1,14 @@
 {
   "scripts": {
-    "clean": "rm *.js *.js.map",
+    "clean": "rm ./src/*.js ./src/*.js.map",
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "start": "live-server --wait=1000 ./src"
   },
   "dependencies": {
-    "typescript": "^3.5.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "live-server": "^1.2.2"
   }
 }

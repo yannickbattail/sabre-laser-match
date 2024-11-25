@@ -1,8 +1,9 @@
-/// <reference path="./Carton.ts" />
-/// <reference path="./Touche.ts" />
-/// <reference path="./throw.ts" />
+import {Carton, CartonCouleur} from "./Carton.js";
+import {Touche, ToucheNom} from "./Touche.js";
+import {_throw} from "./throw.js";
+import {CombattantCouleur} from "./Evenement.js";
 
-class Regle {
+export class Regle {
     public static REGLES: Regle[] = [
         new Regle(
             "FFE",
@@ -38,7 +39,12 @@ class Regle {
                 new Touche(ToucheNom.jambe, 3, false, false, "images/jambe.svg"),
                 new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
                 new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
-            ], 180, 30, 10, 15),
+            ],
+            180,
+            30,
+            10,
+            15,
+        ),
         new Regle(
             "perso",
             [
@@ -73,7 +79,12 @@ class Regle {
                 new Touche(ToucheNom.jambe, 3, true, true, "images/jambe.svg"),
                 new Touche(ToucheNom.tronc, 4, true, true, "images/tronc.svg"),
                 new Touche(ToucheNom.tete, 4, true, true, "images/tete.svg"),
-            ], 180, 0, 1, 15),
+            ],
+            180,
+            0,
+            1,
+            15,
+        ),
         new Regle(
             "tests",
             [
@@ -108,7 +119,12 @@ class Regle {
                 new Touche(ToucheNom.jambe, 3, false, true, "images/jambe.svg"),
                 new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
                 new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
-            ], 10, 10, 10, 15,),
+            ],
+            10,
+            10,
+            10,
+            15,
+        ),
     ];
 
     constructor(
@@ -157,10 +173,10 @@ class Regle {
     }
 
     public getTouchesMortSubite(mortSubite: boolean): Touche[] {
-        return (this.touches.filter((c) => c.mortSubite === mortSubite));
+        return this.touches.filter((c) => c.mortSubite === mortSubite);
     }
 
     public getTouchesProlongation(prolongation: boolean): Touche[] {
-        return (this.touches.filter((c) => c.prolongation === prolongation));
+        return this.touches.filter((c) => c.prolongation === prolongation);
     }
 }

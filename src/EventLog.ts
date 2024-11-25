@@ -1,22 +1,24 @@
-/// <reference path="./Carton.ts" />
-/// <reference path="./Touche.ts" />
-/// <reference path="./Regle.ts" />
-/// <reference path="./MatchModel.ts" />
-/// <reference path="./MortSubite.ts" />
+import {CombattantCouleur} from "./Evenement.js";
+import {Touche} from "./Touche.js";
+import {Carton} from "./Carton.js";
+import {MortSubite} from "./MortSubite.js";
 
-enum EventLogType {
+export enum EventLogType {
     touche = "touche",
     carton = "carton",
     mortSubite = "mort subite",
     win = "gagné",
 }
 
-abstract class EventLog {
-    protected constructor(public type: EventLogType, public temps: number) {
+export abstract class EventLog {
+    protected constructor(
+        public type: EventLogType,
+        public temps: number,
+    ) {
     }
 }
 
-class EventLogTouche extends EventLog {
+export class EventLogTouche extends EventLog {
     constructor(
         public temps: number,
         public combattant: CombattantCouleur,
@@ -26,7 +28,7 @@ class EventLogTouche extends EventLog {
     }
 }
 
-class EventLogCarton extends EventLog {
+export class EventLogCarton extends EventLog {
     constructor(
         public temps: number,
         public combattant: CombattantCouleur,
@@ -38,7 +40,7 @@ class EventLogCarton extends EventLog {
     }
 }
 
-class EventLogMortSubite extends EventLog {
+export class EventLogMortSubite extends EventLog {
     constructor(
         public temps: number,
         public cause: MortSubite,
@@ -47,11 +49,12 @@ class EventLogMortSubite extends EventLog {
     }
 }
 
-class EventLogWin extends EventLog {
+export class EventLogWin extends EventLog {
     constructor(
         public temps: number,
         public combattant: CombattantCouleur | null,
-        public cause?: MortSubite) {
+        public cause?: MortSubite,
+    ) {
         super(EventLogType.win, temps);
     }
 }

@@ -1,47 +1,58 @@
-/// <reference path="./Carton.ts" />
-/// <reference path="./Touche.ts" />
-/// <reference path="./Regle.ts" />
-/// <reference path="./MatchState.ts" />
-/// <reference path="./MatchModel.ts" />
-/// <reference path="./EventLog.ts" />
-/// <reference path="./NodeUpdate.ts" />
+import {_throw} from "./throw.js";
+import {Regle} from "./Regle.js";
+import {MatchState, MatchStatus} from "./MatchState.js";
+import {ToucheNom} from "./Touche.js";
+import {CombattantCouleur} from "./Evenement.js";
+import {CartonCouleur} from "./Carton.js";
+import {MatchModel} from "./MatchModel.js";
+import {EventLog, EventLogCarton, EventLogMortSubite, EventLogTouche, EventLogWin,} from "./EventLog.js";
+import {MortSubite} from "./MortSubite.js";
 
 class GuiElem {
-    public historique = document.getElementById("historique") ||
+    public historique =
+        document.getElementById("historique") ||
         _throw(new Error("Element 'historique' non trouvé"));
-    public time = document.getElementById("time") ||
+    public time =
+        document.getElementById("time") ||
         _throw(new Error("Element 'restant' non trouvé"));
-    public scoreVert = document.getElementById("scoreVert") ||
+    public scoreVert =
+        document.getElementById("scoreVert") ||
         _throw(new Error("Element 'scoreVert' non trouvé"));
-    public scoreRouge = document.getElementById("scoreRouge") ||
+    public scoreRouge =
+        document.getElementById("scoreRouge") ||
         _throw(new Error("Element 'scoreRouge' non trouvé"));
 
-    public touchesVert = document.getElementById("touchesVert") ||
+    public touchesVert =
+        document.getElementById("touchesVert") ||
         _throw(new Error("Element 'scoreRouge' non trouvé"));
-    public touchesRouge = document.getElementById("touchesRouge") ||
+    public touchesRouge =
+        document.getElementById("touchesRouge") ||
         _throw(new Error("Element 'scoreRouge' non trouvé"));
-    public cartonsVert = document.getElementById("cartonsVert") ||
+    public cartonsVert =
+        document.getElementById("cartonsVert") ||
         _throw(new Error("Element 'scoreRouge' non trouvé"));
-    public cartonsRouge = document.getElementById("cartonsRouge") ||
+    public cartonsRouge =
+        document.getElementById("cartonsRouge") ||
         _throw(new Error("Element 'scoreRouge' non trouvé"));
 
-    public play = document.getElementById("play") ||
+    public play =
+        document.getElementById("play") ||
         _throw(new Error("Element 'play' non trouvé"));
-    public message = document.getElementById("message") ||
+    public message =
+        document.getElementById("message") ||
         _throw(new Error("Element 'message' non trouvé"));
-    public changeRegle: HTMLOptionElement = document.getElementById("changeRegle") as HTMLOptionElement ||
+    public changeRegle: HTMLOptionElement =
+        (document.getElementById("changeRegle") as HTMLOptionElement) ||
         _throw(new Error("Element 'changeRegle' non trouvé"));
 }
 
-class Gui {
+export class Gui {
     private guiElem = new GuiElem();
     private regle: Regle;
 
-    constructor(
-        private readonly matchState: MatchState,
-    ) {
+    constructor(private readonly matchState: MatchState) {
         this.regle = this.getRegle();
-        this.init()
+        this.init();
         window.setInterval(() => {
             this.atInterval();
         }, 100);
@@ -71,46 +82,72 @@ class Gui {
     public play() {
         if (this.matchState.status === MatchStatus.en_cours) {
             this.matchState.status = MatchStatus.pause;
-        } else if (this.matchState.status === MatchStatus.pause || this.matchState.status === MatchStatus.pret) {
+        } else if (
+            this.matchState.status === MatchStatus.pause ||
+            this.matchState.status === MatchStatus.pret
+        ) {
             this.matchState.status = MatchStatus.en_cours;
         }
         this.refresh();
     }
 
     public changeRegle() {
-        if (this.matchState.status === MatchStatus.pret || this.matchState.status === MatchStatus.fini
-            || confirm("Changer de règle va remettre à zéro le match, voulez-vous continuer?")) {
+        if (
+            this.matchState.status === MatchStatus.pret ||
+            this.matchState.status === MatchStatus.fini ||
+            confirm(
+                "Changer de règle va remettre à zéro le match, voulez-vous continuer?",
+            )
+        ) {
             this.regle = this.getRegle();
-            this.init()
+            this.init();
             this.reset();
         }
     }
 
     private init() {
-        this.guiElem.touchesVert.innerHTML = this.initTouches(CombattantCouleur.vert);
-        this.guiElem.touchesRouge.innerHTML = this.initTouches(CombattantCouleur.rouge);
-        this.guiElem.cartonsVert.innerHTML = this.initCartons(CombattantCouleur.vert);
-        this.guiElem.cartonsRouge.innerHTML = this.initCartons(CombattantCouleur.rouge);
+        this.guiElem.touchesVert.innerHTML = this.initTouches(
+            CombattantCouleur.vert,
+        );
+        this.guiElem.touchesRouge.innerHTML = this.initTouches(
+            CombattantCouleur.rouge,
+        );
+        this.guiElem.cartonsVert.innerHTML = this.initCartons(
+            CombattantCouleur.vert,
+        );
+        this.guiElem.cartonsRouge.innerHTML = this.initCartons(
+            CombattantCouleur.rouge,
+        );
         this.guiElem.changeRegle.innerHTML = this.initRegles();
     }
 
     private initTouches(combattant: CombattantCouleur): string {
-        return this.regle.touches.map((touche) =>
-            `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
-                <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}"/>${touche.points}
-            </button>`).join("");
+        return this.regle.touches
+            .map(
+                (touche) =>
+                    `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
+                <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}";${touche.points}
+            </button>`,
+            )
+            .join("");
     }
 
     private initCartons(combattant: CombattantCouleur): string {
-        return this.regle.cartons.map((carton) =>
-            `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
-                <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}"/>-${carton.points}
-            </button>`).join("");
+        return this.regle.cartons
+            .map(
+                (carton) =>
+                    `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
+                <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}";-${carton.points}
+            </button>`,
+            )
+            .join("");
     }
 
     private initRegles(): string {
-        return Regle.REGLES.map((regle) =>
-            `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ''}>${regle.nom}</option>`).join("");
+        return Regle.REGLES.map(
+            (regle) =>
+                `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ""}>${regle.nom}</option>`,
+        ).join("");
     }
 
     private getRegle(): Regle {
@@ -134,8 +171,8 @@ class Gui {
         this.guiElem.message.innerHTML = match.message;
         this.guiElem.play.innerHTML =
             this.matchState.status === MatchStatus.en_cours
-                ? '<img src="images/pause.svg" alt="mettre en pause le combat" />'
-                : '<img src="images/play.svg" alt="démarrer le combat" />';
+                ? '<img alt="mettre en pause le combat" src="images/pause.svg"  title="mettre en pause le combat"/>'
+                : '<img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>';
         this.activeButtons(match);
         this.updateTimer();
     }
@@ -145,11 +182,11 @@ class Gui {
     }
 
     private formatCarton(carton: CartonCouleur) {
-        return `<img src="${this.regle.getCarton(carton).image}" alt="touche ${carton}" />`;
+        return `<img src="${this.regle.getCarton(carton).image}" alt="touche ${carton}" ;`;
     }
 
     private formatTouche(touche: ToucheNom) {
-        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" />`;
+        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" ;`;
     }
 
     private updateTimer() {
@@ -160,7 +197,7 @@ class Gui {
         const negativeTime = this.regle.duree - time;
         let css: string;
         if (negativeTime >= 0) {
-            if (negativeTime > (this.regle.duree * 0.25)) {
+            if (negativeTime > this.regle.duree * 0.25) {
                 css = "positive";
             } else {
                 css = "positive25th";
@@ -174,8 +211,8 @@ class Gui {
     private formatTime(time: number) {
         const t = Math.abs(time);
         const sign = Math.sign(time) === -1 ? "-" : "";
-        let min = (t / 60).toFixed(0).padStart(2, '0');
-        let sec = (t % 60).toFixed(1).padStart(4, '0');
+        let min = (t / 60).toFixed(0).padStart(2, "0");
+        let sec = (t % 60).toFixed(1).padStart(4, "0");
         return `${sign}${min}:${sec}s`;
     }
 
@@ -225,20 +262,40 @@ class Gui {
 
     private activeButtons(match: MatchModel) {
         if (match.mortSubite === MortSubite.limite) {
-            this.enableButton(this.regle.getTouchesMortSubite(false).map((touche) => touche.nom), false);
-            this.enableButton(this.regle.getTouchesMortSubite(true).map((touche) => touche.nom), true);
+            this.enableButton(
+                this.regle.getTouchesMortSubite(false).map((touche) => touche.nom),
+                false,
+            );
+            this.enableButton(
+                this.regle.getTouchesMortSubite(true).map((touche) => touche.nom),
+                true,
+            );
         } else if (match.mortSubite === MortSubite.prolongation) {
-            this.enableButton(this.regle.getTouchesProlongation(false).map((touche) => touche.nom), false);
-            this.enableButton(this.regle.getTouchesProlongation(true).map((touche) => touche.nom), true);
+            this.enableButton(
+                this.regle.getTouchesProlongation(false).map((touche) => touche.nom),
+                false,
+            );
+            this.enableButton(
+                this.regle.getTouchesProlongation(true).map((touche) => touche.nom),
+                true,
+            );
         } else {
-            const enable = this.matchState.status !== MatchStatus.pret
-            this.enableButton(this.regle.touches.map((touche) => touche.nom), enable);
-            this.enableButton(this.regle.cartons.map((carton) => carton.couleur), enable);
+            const enable = this.matchState.status !== MatchStatus.pret;
+            this.enableButton(
+                this.regle.touches.map((touche) => touche.nom),
+                enable,
+            );
+            this.enableButton(
+                this.regle.cartons.map((carton) => carton.couleur),
+                enable,
+            );
         }
     }
 
     private enableButton(buttonCss: string[], enable: boolean) {
-        const buttons = document.querySelectorAll(buttonCss.map((btn) => '.' + btn).join(","));
+        const buttons = document.querySelectorAll(
+            buttonCss.map((btn) => "." + btn).join(","),
+        );
         for (let i = 0; i < buttons.length; i++) {
             const button = buttons[i];
             if (button instanceof HTMLButtonElement) {

@@ -1,17 +1,27 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "strict": true
-  },
-  "lib": [
-    "dom",
-    "es2017"
-  ],
-  "include": [
-    "*.ts"
-  ]
+    "baseUrl": "./",
+    //"outDir": "./dist/out-tsc",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "inlineSourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "es2020",
+    "lib": [
+      "es2021",
+      "dom"
+    ]
+  }
 }

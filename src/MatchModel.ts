@@ -1,11 +1,11 @@
-/// <reference path="./Carton.ts" />
-/// <reference path="./Touche.ts" />
-/// <reference path="./Regle.ts" />
-/// <reference path="./MatchState.ts" />
-/// <reference path="./EventLog.ts" />
-/// <reference path="./MortSubite.ts" />
+import {EventLog, EventLogCarton, EventLogMortSubite, EventLogTouche, EventLogWin,} from "./EventLog.js";
+import {MatchState, MatchStatus} from "./MatchState.js";
+import {CartonCouleur} from "./Carton.js";
+import {CombattantCouleur, EvenementCarton, EvenementTouche,} from "./Evenement.js";
+import {MortSubite} from "./MortSubite.js";
+import {Regle} from "./Regle.js";
 
-class MatchModel {
+export class MatchModel {
     public scores = {vert: 0, rouge: 0};
     public mortSubite?: MortSubite = undefined;
     public message: string = "";
@@ -92,16 +92,21 @@ class MatchModel {
         ) {
             this.message = `Mort subite: scores &gt; ${this.regle.mortSubiteScore}.`;
             if (!this.mortSubite) {
-                this.eventLog.push(new EventLogMortSubite(tempsEvenement, MortSubite.limite));
+                this.eventLog.push(
+                    new EventLogMortSubite(tempsEvenement, MortSubite.limite),
+                );
             }
             this.mortSubite = MortSubite.limite;
         }
         if (
-            this.scores[CombattantCouleur.vert] === this.scores[CombattantCouleur.rouge] &&
+            this.scores[CombattantCouleur.vert] ===
+            this.scores[CombattantCouleur.rouge] &&
             this.matchState.time >= this.regle.duree
         ) {
             if (this.mortSubite !== MortSubite.prolongation) {
-                this.eventLog.push(new EventLogMortSubite(this.regle.duree, MortSubite.prolongation));
+                this.eventLog.push(
+                    new EventLogMortSubite(this.regle.duree, MortSubite.prolongation),
+                );
             }
             this.mortSubite = MortSubite.prolongation;
             this.message = `Mort subite: ex aequo prolongation de ${this.regle.prolongation}s.`;
@@ -117,10 +122,16 @@ class MatchModel {
                 return this.win(this.matchState.time, CombattantCouleur.rouge, true);
             }
         } else {
-            if (this.scores[CombattantCouleur.vert] > this.scores[CombattantCouleur.rouge]) {
+            if (
+                this.scores[CombattantCouleur.vert] >
+                this.scores[CombattantCouleur.rouge]
+            ) {
                 return this.win(this.matchState.time, CombattantCouleur.vert, false);
             }
-            if (this.scores[CombattantCouleur.rouge] > this.scores[CombattantCouleur.vert]) {
+            if (
+                this.scores[CombattantCouleur.rouge] >
+                this.scores[CombattantCouleur.vert]
+            ) {
                 return this.win(this.matchState.time, CombattantCouleur.rouge, false);
             }
         }
@@ -129,11 +140,17 @@ class MatchModel {
         }
     }
 
-    private win(temps: number, combattantCouleur: CombattantCouleur | null, b: boolean) {
+    private win(
+        temps: number,
+        combattantCouleur: CombattantCouleur | null,
+        b: boolean,
+    ) {
         this.matchState.status = MatchStatus.fini;
         this.message = combattantCouleur
             ? `Fin du match: le combattant ${combattantCouleur} a gagné.`
             : `Fin du match: ex aequo.`;
-        this.eventLog.push(new EventLogWin(temps, combattantCouleur, this.mortSubite));
+        this.eventLog.push(
+            new EventLogWin(temps, combattantCouleur, this.mortSubite),
+        );
     }
 }
