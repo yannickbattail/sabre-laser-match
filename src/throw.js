@@ -1,0 +1,4 @@
+export function _throw(error) {
+    throw error;
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhyb3cuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJ0aHJvdy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLFVBQVUsTUFBTSxDQUFDLEtBQVk7SUFDakMsTUFBTSxLQUFLLENBQUM7QUFDZCxDQUFDIn0=

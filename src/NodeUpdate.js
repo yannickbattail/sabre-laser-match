@@ -1,0 +1,64 @@
+export class NodeUpdate {
+    static hasChanged(node1, node2) {
+        if (node1.nodeType !== node2.nodeType)
+            return true;
+        if (node1.nodeName !== node2.nodeName)
+            return true;
+        return (node1.nodeType == Node.TEXT_NODE &&
+            node1.textContent !== node2.textContent);
+    }
+    static updateAttributes(oldNode, newNode) {
+        const attrToRm = oldNode
+            .getAttributeNames()
+            .filter((attr) => newNode.getAttributeNames().indexOf(attr) === -1);
+        attrToRm.forEach((attr) => oldNode.removeAttribute(attr));
+        for (let i = 0; i < newNode.attributes.length; ++i) {
+            if (!oldNode.hasAttribute(newNode.attributes[i].name) ||
+                oldNode.getAttribute(newNode.attributes[i].name) !=
+                    newNode.attributes[i].value) {
+                oldNode.setAttribute(newNode.attributes[i].name, newNode.attributes[i].value);
+            }
+        }
+    }
+    static updateChildren(oldNode, newNode) {
+        const newNodeLength = newNode.childNodes.length;
+        const oldNodeLength = oldNode.childNodes.length;
+        const maxLength = Math.max(newNodeLength, oldNodeLength);
+        for (let i = 0; i < maxLength; i++) {
+            if (i >= oldNodeLength) {
+                try {
+                    oldNode.appendChild(newNode.childNodes[i].cloneNode(true));
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            }
+            else if (i >= newNodeLength) {
+                oldNode.removeChild(oldNode.childNodes[newNodeLength]);
+            }
+            else {
+                const oldChild = oldNode.childNodes[i];
+                const newChild = newNode.childNodes[i];
+                if (NodeUpdate.hasChanged(oldChild, newChild)) {
+                    oldNode.replaceChild(newChild.cloneNode(true), oldChild);
+                }
+                else {
+                    NodeUpdate.updateChildren(oldChild, newChild);
+                    if (oldChild instanceof HTMLElement &&
+                        newChild instanceof HTMLElement) {
+                        NodeUpdate.updateAttributes(oldChild, newChild);
+                    }
+                }
+            }
+        }
+    }
+    static updateDiv(id, html) {
+        const oldDiv = document.getElementById(id);
+        if (oldDiv != null) {
+            const newDiv = document.createElement("div");
+            newDiv.innerHTML = html;
+            NodeUpdate.updateChildren(oldDiv, newDiv);
+        }
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTm9kZVVwZGF0ZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5vZGVVcGRhdGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxPQUFPLFVBQVU7SUFDZCxNQUFNLENBQUMsVUFBVSxDQUFDLEtBQVcsRUFBRSxLQUFXO1FBQy9DLElBQUksS0FBSyxDQUFDLFFBQVEsS0FBSyxLQUFLLENBQUMsUUFBUTtZQUFFLE9BQU8sSUFBSSxDQUFDO1FBQ25ELElBQUksS0FBSyxDQUFDLFFBQVEsS0FBSyxLQUFLLENBQUMsUUFBUTtZQUFFLE9BQU8sSUFBSSxDQUFDO1FBQ25ELE9BQU8sQ0FDTCxLQUFLLENBQUMsUUFBUSxJQUFJLElBQUksQ0FBQyxTQUFTO1lBQ2hDLEtBQUssQ0FBQyxXQUFXLEtBQUssS0FBSyxDQUFDLFdBQVcsQ0FDeEMsQ0FBQztJQUNKLENBQUM7SUFFTSxNQUFNLENBQUMsZ0JBQWdCLENBQUMsT0FBZ0IsRUFBRSxPQUFnQjtRQUMvRCxNQUFNLFFBQVEsR0FBRyxPQUFPO2FBQ3JCLGlCQUFpQixFQUFFO2FBQ25CLE1BQU0sQ0FBQyxDQUFDLElBQUksRUFBRSxFQUFFLENBQUMsT0FBTyxDQUFDLGlCQUFpQixFQUFFLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDdEUsUUFBUSxDQUFDLE9BQU8sQ0FBQyxDQUFDLElBQUksRUFBRSxFQUFFLENBQUMsT0FBTyxDQUFDLGVBQWUsQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDO1FBRTFELEtBQUssSUFBSSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsR0FBRyxPQUFPLENBQUMsVUFBVSxDQUFDLE1BQU0sRUFBRSxFQUFFLENBQUMsRUFBRSxDQUFDO1lBQ25ELElBQ0UsQ0FBQyxPQUFPLENBQUMsWUFBWSxDQUFDLE9BQU8sQ0FBQyxVQUFVLENBQUMsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDO2dCQUNqRCxPQUFPLENBQUMsWUFBWSxD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
