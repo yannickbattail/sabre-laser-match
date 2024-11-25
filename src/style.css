@@ -1,131 +1,132 @@
 body {
-    text-align: center;
+  text-align: center;
 }
 
 .dark {
-    color: rgb(100, 200, 255);
-    background-color: rgba(30, 30, 30);
+  color: rgb(100, 200, 255);
+  background-color: rgba(30, 30, 30);
 }
 
 button {
-    color: rgb(100, 200, 255);
-    background-color: rgba(60, 60, 60);
-    border-color: rgb(100, 200, 255);
-    border-width: 4px;
-    border-radius: 15px;
-    margin: 5px;
-    padding: 10px;
+  color: rgb(100, 200, 255);
+  background-color: rgba(60, 60, 60);
+  border-color: rgb(100, 200, 255);
+  border-width: 4px;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 10px;
 }
 
 button:disabled,
 button[disabled],
 button[disabled="disabled"] {
-    border-color: rgb(30, 60, 75);
+  border-color: rgb(30, 60, 75);
 }
 
 #message {
-    font-size: 20px;
-    margin: 10px;
+  font-size: 20px;
+  margin: 10px;
 }
 
 #historique img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 button img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 #scoreVert,
 #scoreRouge {
-    width: 40px;
-    font-size: 20px;
-    text-align: center;
+  width: 40px;
+  font-size: 20px;
+  text-align: center;
 }
 
 #time {
-    display: inline-block;
-    font-size: 20px;
+  display: inline-block;
+  font-size: 20px;
 }
 
 .positive {
-    color: rgb(100, 200, 255);
+  color: rgb(100, 200, 255);
 }
 
 .positive25th {
-    color: rgb(255, 128, 0);
+  color: rgb(255, 128, 0);
 }
 
 .negative {
-    color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0);
 }
 
 .vertCombattant {
-    color: chartreuse;
+  color: chartreuse;
 }
 
 .rougeCombattant {
-    color: red;
+  color: red;
 }
 
 .blancCarton {
-    color: black;
-    background-color: white;
+  color: black;
+  background-color: white;
 }
 
 .jauneCarton {
-    color: black;
-    background-color: yellow;
+  color: black;
+  background-color: yellow;
 }
 
 .rougeCarton {
-    color: black;
-    background-color: red;
+  color: black;
+  background-color: red;
 }
 
 .noirCarton {
-    color: white;
-    background-color: black;
+  color: white;
+  background-color: black;
 }
 
 #restant {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 #lightsaberTd {
-    width: 14px;
-    max-width: 14px;
+  width: 14px;
+  max-width: 14px;
 }
 
 #lightsaber {
-    width: 14px;
-    max-width: 14px;
+  width: 14px;
+  max-width: 14px;
 
-    height: 100%;
-    margin: auto;
-    line-height: 0;
-    padding: 20px;
-    text-align: center;
+  height: 100%;
+  margin: auto;
+  line-height: 0;
+  padding: 20px;
+  text-align: center;
 }
 
 #light {
-    display: inline-block;
-    position: relative;
-    height: 100%;
-    min-height: 150px;
-    background: #fff;
-    max-width: 14px;
-    width: 14px;
-    border-radius: 7px 2px 2px 7px;
-    box-shadow: 0 0 5px #fff,
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  min-height: 150px;
+  background: #fff;
+  max-width: 14px;
+  width: 14px;
+  border-radius: 7px 2px 2px 7px;
+  box-shadow:
+    0 0 5px #fff,
     0 0 8px #fff,
     0 0 12px #fff,
     0 0 15px blue,
     0 0 25px blue;
-    z-index: 5;
-    -webkit-transition: all 1s;
-    -moz-transition: all 1s;
-    transition: all 1s;
+  z-index: 5;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  transition: all 1s;
 }
