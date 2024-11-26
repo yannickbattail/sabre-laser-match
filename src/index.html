@@ -1,88 +1,97 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta charset="utf-8" />
-    <link href="manifest.json" rel="manifest" />
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta charset="utf-8"/>
+    <link href="manifest.json" rel="manifest"/>
     <link
-      href="images/light-sabers-couleur.svg"
-      rel="icon"
-      type="image/svg+xml"
+            href="images/light-sabers-couleur.svg"
+            rel="icon"
+            type="image/svg+xml"
     />
-    <link href="style.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet"/>
     <title>Match sabre laser</title>
-  </head>
-  <body class="dark">
-    <div>
-      <div id="time">00:00</div>
+</head>
+<body class="dark">
+<div>
+    <div id="time">00:00</div>
     <button id="play" onclick="gui.play()" style="display: inline-block">
         <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
     </button>
     <button id="pause" onclick="gui.play()" style="display: none">
         <img alt="mettre en pause le combat" src="images/pause.svg" title="mettre en pause le combat"/>
-      </button>
-      <button id="reset" onclick="gui.reset()">
+    </button>
+    <button id="reset" onclick="gui.reset()">
         <img
-          alt="Nouveau combat"
-          src="images/light-sabers-couleur.svg"
-          title="Nouveau combat"
+                alt="Nouveau combat"
+                src="images/light-sabers-couleur.svg"
+                title="Nouveau combat"
         />
-      </button>
-      <button onclick="gui.annuler()">
+    </button>
+    <button onclick="gui.annuler()">
         <img
-          alt="Supprimer la dernière action"
-          src="images/abort.svg"
-          title="Supprimer la dernière action"
+                alt="Supprimer la dernière action"
+                src="images/abort.svg"
+                title="Supprimer la dernière action"
         />
-      </button>
-      <div style="display: inline-block; text-align: right">
+    </button>
+    <div style="display: inline-block; text-align: right">
         <label for="changeRegle">Règles:</label>
         <select id="changeRegle" onchange="gui.changeRegle()">
-          <option value="FFE">FFE</option>
-          <option value="perso">perso</option>
-          <option value="test">test</option>
+            <option value="FFE">FFE</option>
+            <option value="perso">perso</option>
+            <option value="test">test</option>
         </select>
-      </div>
     </div>
-    <table style="width: 100%">
-      <thead>
-        <tr>
-          <th colspan="3">
+</div>
+<table style="width: 100%">
+    <thead>
+    <tr>
+        <th colspan="3">
             <div id="message">Prêt?</div>
-          </th>
-        </tr>
-        <tr>
-          <th><span class="vertCombattant">Vert</span></th>
-          <th></th>
-          <th><span class="rougeCombattant">Rouge</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td id="scoreVert">0</td>
-          <td id="lightsaberTd" rowspan="3">
+        </th>
+    </tr>
+    <tr>
+        <th><span class="vertCombattant">Vert</span></th>
+        <th></th>
+        <th><span class="rougeCombattant">Rouge</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td id="scoreVert">0</td>
+        <td id="lightsaberTd" rowspan="3">
             <div id="lightsaber"><span id="light"></span></div>
-          </td>
-          <td id="scoreRouge">0</td>
-        </tr>
-        <tr>
-          <td id="touchesVert"></td>
-          <td id="touchesRouge"></td>
-        </tr>
-        <tr>
-          <td id="cartonsVert"></td>
-          <td id="cartonsRouge"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div id="historique"></div>
-    <script type="module">
-      import { MatchState } from "./MatchState.js";
-      import { Gui } from "./Gui.js";
-      import { tests } from "./tests.js";
-
-      window.gui = new Gui(new MatchState());
-      tests();
-    </script>
-  </body>
+        </td>
+        <td id="scoreRouge">0</td>
+    </tr>
+    <tr>
+        <td id="touchesVert"></td>
+        <td id="touchesRouge"></td>
+    </tr>
+    <tr>
+        <td id="cartonsVert"></td>
+        <td id="cartonsRouge"></td>
+    </tr>
+    </tbody>
+</table>
+<div id="historique"></div>
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker
+                .register("service-worker.js")
+                .then((registration) => {
+                    console.log("Service Worker registered: ", registration);
+                })
+                .catch((registrationError) => {
+                    console.error(
+                        "Service Worker registration failed: ",
+                        registrationError,
+                    );
+                });
+        });
+    }
+</script>
+</body>
 </html>

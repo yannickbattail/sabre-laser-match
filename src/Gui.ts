@@ -178,15 +178,19 @@ export class Gui {
     this.guiElem.scoreVert.innerHTML = match.scores.vert.toString();
     this.guiElem.scoreRouge.innerHTML = match.scores.rouge.toString();
     this.guiElem.message.innerHTML = match.message;
-        if (this.matchState.status === MatchStatus.en_cours) {
-            this.guiElem.play.style.display = "none";
-            this.guiElem.pause.style.display = "inline-block";
-        } else {
-            this.guiElem.play.style.display = "inline-block";
-            this.guiElem.pause.style.display = "none";
-        }
+    this.displayPlayPause();
     this.activeButtons(match);
     this.updateTimer();
+  }
+
+  private displayPlayPause() {
+    if (this.matchState.status === MatchStatus.en_cours) {
+      this.guiElem.play.style.display = "none";
+      this.guiElem.pause.style.display = "block";
+    } else {
+      this.guiElem.play.style.display = "block";
+      this.guiElem.pause.style.display = "none";
+    }
   }
 
   private formatCombattant(combattant: CombattantCouleur) {

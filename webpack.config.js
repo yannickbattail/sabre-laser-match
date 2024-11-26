@@ -2,13 +2,15 @@
 
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
-const isProduction = process.env.NODE_ENV === "production";
-const stylesHandler = "style-loader";
+const isProduction = process.env.NODE_ENV == "production";
+
+const stylesHandler = MiniCssExtractPlugin.loader;
 
 const config = {
-  entry: "./src/main.ts",
+  entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
   },
@@ -21,6 +23,8 @@ const config = {
       template: "src/index.html",
     }),
 
+    new MiniCssExtractPlugin(),
+
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
@@ -32,8 +36,17 @@ const config = {
         exclude: ["/node_modules/"],
       },
       {
-        test: /\.css$/i,
-        use: [stylesHandler, "css-loader"],
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader",
+            options: {
+              insert: "head", // insert style tag inside of <head>
+              injectType: "singletonStyleTag", // this is for wrap all your style in just one style tag
+            },
+          },
+          "css-loader",
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -56,6 +69,7 @@ const config = {
 module.exports = () => {
   if (isProduction) {
     config.mode = "production";
+
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
   } else {
     config.mode = "development";
