@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "clean": "rm ./src/*.js ./src/*.js.map",
+    "clean": "rm ./src/*.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "start": "live-server --wait=1000 ./src"
