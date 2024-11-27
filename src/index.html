@@ -11,8 +11,11 @@
 <body class="dark">
 <div>
     <div id="time">00:00</div>
-    <button id="play" onclick="gui.play()">
+    <button id="play" onclick="gui.play()" style="display: inline-block">
         <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
+    </button>
+    <button id="pause" onclick="gui.play()" style="display: none">
+        <img alt="mettre en pause le combat" src="images/pause.svg" title="mettre en pause le combat"/>
     </button>
     <button id="reset" onclick="gui.reset()">
         <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
