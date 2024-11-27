@@ -1,18 +1,18 @@
-import { _throw } from "./throw.js";
-import { Regle } from "./Regle.js";
-import { MatchState, MatchStatus } from "./MatchState.js";
-import { ToucheNom } from "./Touche.js";
-import { CombattantCouleur } from "./Evenement.js";
-import { CartonCouleur } from "./Carton.js";
-import { MatchModel } from "./MatchModel.js";
+import { _throw } from "./throw";
+import { Regle } from "./Regle";
+import { MatchState, MatchStatus } from "./MatchState";
+import { ToucheNom } from "./Touche";
+import { CombattantCouleur } from "./Evenement";
+import { CartonCouleur } from "./Carton";
+import { MatchModel } from "./MatchModel";
 import {
   EventLog,
   EventLogCarton,
   EventLogMortSubite,
   EventLogTouche,
   EventLogWin,
-} from "./EventLog.js";
-import { MortSubite } from "./MortSubite.js";
+} from "./EventLog";
+import { MortSubite } from "./MortSubite";
 
 class GuiElem {
   public historique =

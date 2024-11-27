@@ -1,6 +1,6 @@
-import { MatchState } from "./MatchState.js";
-import { Gui } from "./Gui.js";
-import { tests } from "./tests.js";
+import { MatchState } from "./MatchState";
+import { Gui } from "./Gui";
+import { tests } from "./tests";
 import "./style.css";
 
 // @ts-ignore

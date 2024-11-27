@@ -3,9 +3,9 @@ import {
   Evenement,
   EvenementCarton,
   EvenementTouche,
-} from "./Evenement.js";
-import { CartonCouleur } from "./Carton.js";
-import { ToucheNom } from "./Touche.js";
+} from "./Evenement";
+import { CartonCouleur } from "./Carton";
+import { ToucheNom } from "./Touche";
 
 export enum MatchStatus {
   pret = "prêt",

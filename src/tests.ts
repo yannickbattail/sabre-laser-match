@@ -1,19 +1,15 @@
-import { Regle } from "./Regle.js";
-import { MatchState, MatchStatus } from "./MatchState.js";
+import { Regle } from "./Regle";
+import { MatchState, MatchStatus } from "./MatchState";
 import {
   CombattantCouleur,
   EvenementCarton,
   EvenementTouche,
-} from "./Evenement.js";
-import { CartonCouleur } from "./Carton.js";
-import { MatchModel } from "./MatchModel.js";
-import {
-  EventLogCarton,
-  EventLogMortSubite,
-  EventLogTouche,
-} from "./EventLog.js";
-import { ToucheNom } from "./Touche.js";
-import { MortSubite } from "./MortSubite.js";
+} from "./Evenement";
+import { CartonCouleur } from "./Carton";
+import { MatchModel } from "./MatchModel";
+import { EventLogCarton, EventLogMortSubite, EventLogTouche } from "./EventLog";
+import { ToucheNom } from "./Touche";
+import { MortSubite } from "./MortSubite";
 
 function test1(regle: Regle) {
   const matchState = new MatchState();

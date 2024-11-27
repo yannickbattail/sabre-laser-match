@@ -4,16 +4,16 @@ import {
   EventLogMortSubite,
   EventLogTouche,
   EventLogWin,
-} from "./EventLog.js";
-import { MatchState, MatchStatus } from "./MatchState.js";
-import { CartonCouleur } from "./Carton.js";
+} from "./EventLog";
+import { MatchState, MatchStatus } from "./MatchState";
+import { CartonCouleur } from "./Carton";
 import {
   CombattantCouleur,
   EvenementCarton,
   EvenementTouche,
-} from "./Evenement.js";
-import { MortSubite } from "./MortSubite.js";
-import { Regle } from "./Regle.js";
+} from "./Evenement";
+import { MortSubite } from "./MortSubite";
+import { Regle } from "./Regle";
 
 export class MatchModel {
   public scores = { vert: 0, rouge: 0 };

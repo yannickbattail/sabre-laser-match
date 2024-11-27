@@ -1,5 +1,5 @@
-import { CartonCouleur } from "./Carton.js";
-import { ToucheNom } from "./Touche.js";
+import { CartonCouleur } from "./Carton";
+import { ToucheNom } from "./Touche";
 
 export enum CombattantCouleur {
   vert = "vert",

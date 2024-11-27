@@ -1,7 +1,7 @@
-import { CombattantCouleur } from "./Evenement.js";
-import { Touche } from "./Touche.js";
-import { Carton } from "./Carton.js";
-import { MortSubite } from "./MortSubite.js";
+import { CombattantCouleur } from "./Evenement";
+import { Touche } from "./Touche";
+import { Carton } from "./Carton";
+import { MortSubite } from "./MortSubite";
 
 export enum EventLogType {
   touche = "touche",

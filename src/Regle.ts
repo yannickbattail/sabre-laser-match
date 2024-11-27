@@ -1,7 +1,7 @@
-import { Carton, CartonCouleur } from "./Carton.js";
-import { Touche, ToucheNom } from "./Touche.js";
-import { _throw } from "./throw.js";
-import { CombattantCouleur } from "./Evenement.js";
+import { Carton, CartonCouleur } from "./Carton";
+import { Touche, ToucheNom } from "./Touche";
+import { _throw } from "./throw";
+import { CombattantCouleur } from "./Evenement";
 
 export class Regle {
   public static REGLES: Regle[] = [
