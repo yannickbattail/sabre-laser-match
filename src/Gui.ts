@@ -38,6 +38,9 @@ class GuiElem {
     public play =
         document.getElementById("play") ||
         _throw(new Error("Element 'play' non trouvé"));
+    public pause =
+        document.getElementById("pause") ||
+        _throw(new Error("Element 'pause' non trouvé"));
     public message =
         document.getElementById("message") ||
         _throw(new Error("Element 'message' non trouvé"));
@@ -126,7 +129,7 @@ export class Gui {
             .map(
                 (touche) =>
                     `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
-                <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}";${touche.points}
+                <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}" />${touche.points}
             </button>`,
             )
             .join("");
@@ -137,7 +140,7 @@ export class Gui {
             .map(
                 (carton) =>
                     `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
-                <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}";-${carton.points}
+                <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}" /> -${carton.points}
             </button>`,
             )
             .join("");
@@ -169,10 +172,13 @@ export class Gui {
         this.guiElem.scoreVert.innerHTML = match.scores.vert.toString();
         this.guiElem.scoreRouge.innerHTML = match.scores.rouge.toString();
         this.guiElem.message.innerHTML = match.message;
-        this.guiElem.play.innerHTML =
-            this.matchState.status === MatchStatus.en_cours
-                ? '<img alt="mettre en pause le combat" src="images/pause.svg"  title="mettre en pause le combat"/>'
-                : '<img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>';
+        if (this.matchState.status === MatchStatus.en_cours) {
+            this.guiElem.play.style.display = "none";
+            this.guiElem.pause.style.display = "inline-block";
+        } else {
+            this.guiElem.play.style.display = "inline-block";
+            this.guiElem.pause.style.display = "none";
+        }
         this.activeButtons(match);
         this.updateTimer();
     }
@@ -211,7 +217,7 @@ export class Gui {
     private formatTime(time: number) {
         const t = Math.abs(time);
         const sign = Math.sign(time) === -1 ? "-" : "";
-        let min = (t / 60).toFixed(0).padStart(2, "0");
+        let min = Math.floor(t / 60).toFixed(0).padStart(2, "0");
         let sec = (t % 60).toFixed(1).padStart(4, "0");
         return `${sign}${min}:${sec}s`;
     }
