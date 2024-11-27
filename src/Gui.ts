@@ -211,7 +211,7 @@ export class Gui {
     private formatTime(time: number) {
         const t = Math.abs(time);
         const sign = Math.sign(time) === -1 ? "-" : "";
-        let min = (t / 60).toFixed(0).padStart(2, "0");
+        let min = Math.floor(t / 60).toFixed(0).padStart(2, "0");
         let sec = (t % 60).toFixed(1).padStart(4, "0");
         return `${sign}${min}:${sec}s`;
     }
