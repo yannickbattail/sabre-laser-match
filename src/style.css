@@ -1,5 +1,8 @@
 body {
     text-align: center;
+    background-image: url("images/lightsaber.png");
+    background-repeat: no-repeat;
+    background-position: center top+100px;
 }
 
 .dark {
@@ -26,12 +29,14 @@ button[disabled="disabled"] {
 #message {
     font-size: 20px;
     margin: 10px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 #historique {
     min-height: 50px;
     overflow: scroll;
     max-height: 100px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 #historique img {
@@ -100,38 +105,6 @@ button img {
     font-size: 20px;
 }
 
-#lightsaberTd {
-    width: 14px;
-    max-width: 14px;
-}
-
-#lightsaber {
-    width: 14px;
-    max-width: 14px;
-
-    height: 100%;
-    margin: auto;
-    line-height: 0;
-    padding: 20px;
-    text-align: center;
-}
-
-#light {
-    display: inline-block;
-    position: relative;
-    height: 100%;
-    min-height: 150px;
-    background: #fff;
-    max-width: 14px;
-    width: 14px;
-    border-radius: 7px 2px 2px 7px;
-    box-shadow: 0 0 5px #fff,
-    0 0 8px #fff,
-    0 0 12px #fff,
-    0 0 15px blue,
-    0 0 25px blue;
-    z-index: 5;
-    -webkit-transition: all 1s;
-    -moz-transition: all 1s;
-    transition: all 1s;
+#tableCombattants {
+    width: 100%;
 }
