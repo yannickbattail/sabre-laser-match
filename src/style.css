@@ -1,14 +1,40 @@
 body {
     text-align: center;
-    background-image: url("images/lightsaber.png");
-    background-repeat: no-repeat;
-    background-position: center top+100px;
 }
 
 .dark {
     color: rgb(100, 200, 255);
     background-color: rgba(30, 30, 30);
 }
+
+#background-image {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    display: block;
+    background-image: url("images/lightsaber.png");
+    background-repeat: no-repeat;
+    background-position: center top+100px;
+    width: 100%;
+    height: 100%;
+}
+
+#background-image.blue {
+    transition: all 1s ease-out;
+    filter: hue-rotate(0deg);
+}
+
+#background-image.orange {
+    transition: all 1s ease-out;
+    filter: hue-rotate(180deg);
+}
+
+#background-image.green {
+    transition: all 1s ease-out;
+    filter: hue-rotate(270deg);
+}
+
 
 button {
     color: rgb(100, 200, 255);
