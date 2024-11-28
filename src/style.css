@@ -28,6 +28,12 @@ button[disabled="disabled"] {
     margin: 10px;
 }
 
+#historique {
+    min-height: 50px;
+    overflow: scroll;
+    max-height: 100px;
+}
+
 #historique img {
     width: 20px;
     height: 20px;
