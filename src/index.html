@@ -9,6 +9,7 @@
     <title>Match sabre laser</title>
 </head>
 <body class="dark">
+<div id="background-image"></div>
 <div>
     <div id="time">00:00</div>
     <button id="play" onclick="gui.play()" style="display: inline-block">
@@ -23,25 +24,23 @@
     <button onclick="gui.annuler()">
         <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
     </button>
-    <div style="display: inline-block; text-align: right;">
+    <div style="display: none;">
         <label for="changeRegle">Règles:</label>
         <select id="changeRegle" onchange="gui.changeRegle()">
             <option value="FFE">FFE</option>
-            <option value="perso">perso</option>
-            <option value="test">test</option>
+            <option value="testing">testing</option>
         </select>
     </div>
 </div>
-<table style="width:100%">
+<table id="tableCombattants">
     <thead>
     <tr>
-        <th colspan="3">
+        <th colspan="2">
             <div id="message">Prêt?</div>
         </th>
     </tr>
     <tr>
         <th><span class="vertCombattant">Vert</span></th>
-        <th></th>
         <th><span class="rougeCombattant">Rouge</span></th>
     </tr>
     </thead>
@@ -49,9 +48,6 @@
     <tr>
         <td id="scoreVert">
             0
-        </td>
-        <td id="lightsaberTd" rowspan="3">
-            <div id="lightsaber"><span id="light"></span></div>
         </td>
         <td id="scoreRouge">
             0
