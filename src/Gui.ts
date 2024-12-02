@@ -47,6 +47,13 @@ class GuiElem {
     public changeRegle: HTMLOptionElement =
         (document.getElementById("changeRegle") as HTMLOptionElement) ||
         _throw(new Error("Element 'changeRegle' non trouvé"));
+
+    public config =
+        document.getElementById("config") ||
+        _throw(new Error("Element 'config' non trouvé"));
+    public combat =
+        document.getElementById("combat") ||
+        _throw(new Error("Element 'combat' non trouvé"));
 }
 
 export class Gui {
@@ -106,6 +113,16 @@ export class Gui {
             this.init();
             this.reset();
         }
+    }
+
+    public showConfig() {
+        this.guiElem.config.style.display = "block";
+        this.guiElem.combat.style.display = "none";
+    }
+
+    public hideConfig() {
+        this.guiElem.config.style.display = "none";
+        this.guiElem.combat.style.display = "block";
     }
 
     private init() {
