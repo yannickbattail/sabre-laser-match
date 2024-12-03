@@ -7,7 +7,7 @@ echo "Checking out pages branch"
 git checkout pages
 git pull
 echo "Rebasing pages branch on main"
-git merge --ff-only main
+git merge --no-ff main
 
 echo "Building"
 npm ci
