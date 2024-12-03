@@ -115,6 +115,23 @@ export class Gui {
         }
     }
 
+    public changeValeurRegles(elem: HTMLInputElement) {
+        const name = elem.id;
+        const value = parseInt(elem.value);
+        const reglePerso: Regle = Regle.getRegleByNom("personnalisée");
+        if (name === "duree") {
+            reglePerso.duree = value;
+        } else if (name === "prolongation") {
+            reglePerso.prolongation = value;
+        } else if (name === "mortSubiteScore") {
+            reglePerso.mortSubiteScore = value;
+        } else if (name === "scoreMax") {
+            reglePerso.scoreMax = value;
+        }
+        this.refresh();
+
+    }
+
     public showConfig() {
         this.guiElem.config.style.display = "block";
         this.guiElem.combat.style.display = "none";
