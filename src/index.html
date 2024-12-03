@@ -10,60 +10,78 @@
 </head>
 <body class="dark">
 <div id="background-image"></div>
-<div>
-    <div id="time">00:00</div>
-    <button id="play" onclick="gui.play()" style="display: inline-block">
-        <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
-    </button>
-    <button id="pause" onclick="gui.play()" style="display: none">
-        <img alt="mettre en pause le combat" src="images/pause.svg" title="mettre en pause le combat"/>
-    </button>
-    <button id="reset" onclick="gui.reset()">
-        <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
-    </button>
-    <button onclick="gui.annuler()">
-        <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
-    </button>
-    <div style="display: none;">
+<div id="combat" style="display: block">
+    <div style="text-align: left">
+        <div style="display: inline-block">
+            <button id="play" onclick="gui.play()" style="display: inline-block">
+                <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
+            </button>
+            <button id="pause" onclick="gui.play()" style="display: none">
+                <img alt="mettre en pause le combat" src="images/pause.svg" title="mettre en pause le combat"/>
+            </button>
+            <button id="reset" onclick="gui.reset()">
+                <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
+            </button>
+            <button onclick="gui.annuler()">
+                <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
+            </button>
+            <button onclick="gui.showConfig()">
+                <img alt="Configuration" src="images/gear.svg" title="Configuration"/>
+            </button>
+        </div>
+        <div id="time" style="display: inline-block">00:00</div>
+        <div id="message" style="display: inline-block">Prêt?</div>
+
+    </div>
+    <table id="tableCombattants">
+        <thead>
+        <tr>
+            <th><span class="vertCombattant">Vert</span></th>
+            <th><span class="rougeCombattant">Rouge</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="scoreVert">
+                0
+            </td>
+            <td id="scoreRouge">
+                0
+            </td>
+        </tr>
+        <tr>
+            <td id="touchesVert"></td>
+            <td id="touchesRouge"></td>
+        </tr>
+        <tr>
+            <td id="cartonsVert"></td>
+            <td id="cartonsRouge"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="historique"></div>
+</div>
+<div id="config" style="display: none">
+    <div>
+        <h2 style="display: inline-block">Configuration</h2>
+        <button onclick="gui.hideConfig()">[X]</button>
+    </div>
+    Décompte des points d'un match de sabre laser au plus proche de la
+    <a href="https://www.ffescrime.fr/media-documents/?thematic=sabre-laser">FFE</a>.<br/>
+    <div>
         <label for="changeRegle">Règles:</label>
         <select id="changeRegle" onchange="gui.changeRegle()">
             <option value="FFE">FFE</option>
             <option value="testing">testing</option>
         </select>
     </div>
+    <br/>
+    Les sources sont dispo <a href="https://github.com/yannickbattail/sabre-laser-match">ici</a>.<br/>
+    Si vous avez des idées d'amélioration ou un bug, n'hésitez à créer un ticket
+    <a href="https://github.com/yannickbattail/sabre-laser-match/issues">ici</a>.<br/>
+    <br/>
+    Les icônes viennent de <a href="https://game-icons.net/">game-icons.net</a>.<br/>
 </div>
-<table id="tableCombattants">
-    <thead>
-    <tr>
-        <th colspan="2">
-            <div id="message">Prêt?</div>
-        </th>
-    </tr>
-    <tr>
-        <th><span class="vertCombattant">Vert</span></th>
-        <th><span class="rougeCombattant">Rouge</span></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td id="scoreVert">
-            0
-        </td>
-        <td id="scoreRouge">
-            0
-        </td>
-    </tr>
-    <tr>
-        <td id="touchesVert"></td>
-        <td id="touchesRouge"></td>
-    </tr>
-    <tr>
-        <td id="cartonsVert"></td>
-        <td id="cartonsRouge"></td>
-    </tr>
-    </tbody>
-</table>
-<div id="historique"></div>
 <script type="module">
     import {MatchState} from "./MatchState.js";
     import {Gui} from "./Gui.js";
