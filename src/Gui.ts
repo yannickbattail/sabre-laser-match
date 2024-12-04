@@ -127,9 +127,10 @@ export class Gui {
             reglePerso.mortSubiteScore = value;
         } else if (name === "scoreMax") {
             reglePerso.scoreMax = value;
+        } else {
+            throw new Error(`id ${name} non géré`);
         }
         this.refresh();
-
     }
 
     public showConfig() {
@@ -160,9 +161,8 @@ export class Gui {
 
     private initTouches(combattant: CombattantCouleur): string {
         return this.regle.touches
-            .map(
-                (touche) =>
-                    `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
+            .map((touche) =>
+                `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
                 <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}" />${touche.points}
             </button>`,
             )
@@ -171,9 +171,8 @@ export class Gui {
 
     private initCartons(combattant: CombattantCouleur): string {
         return this.regle.cartons
-            .map(
-                (carton) =>
-                    `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
+            .map((carton) =>
+                `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
                 <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}" /> -${carton.points}
             </button>`,
             )
@@ -181,10 +180,10 @@ export class Gui {
     }
 
     private initRegles(): string {
-        return Regle.REGLES.map(
-            (regle) =>
-                `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ""}>${regle.nom}</option>`,
-        ).join("");
+        return Regle.REGLES
+            .filter(r => r.nom !== "testing")
+            .map((regle) => `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ""}>${regle.nom}</option>`)
+            .join("");
     }
 
     private getRegle(): Regle {
@@ -222,11 +221,11 @@ export class Gui {
     }
 
     private formatCarton(carton: CartonCouleur) {
-        return `<img src="${this.regle.getCarton(carton).image}" alt="touche ${carton}" ;`;
+        return `<img src="${this.regle.getCarton(carton).image}" alt="carton ${carton}" />`;
     }
 
     private formatTouche(touche: ToucheNom) {
-        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" ;`;
+        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" />`;
     }
 
     private updateTimer() {
