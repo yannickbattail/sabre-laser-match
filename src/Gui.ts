@@ -127,6 +127,9 @@ export class Gui {
             reglePerso.mortSubiteScore = value;
         } else if (name === "scoreMax") {
             reglePerso.scoreMax = value;
+        } else if (name.startsWith('touche_')) {
+            const touche = name.replace('touche_', '');
+            reglePerso.getTouche(touche as ToucheNom).points = value;
         } else {
             throw new Error(`id ${name} non géré`);
         }
@@ -141,6 +144,7 @@ export class Gui {
     public hideConfig() {
         this.guiElem.config.style.display = "none";
         this.guiElem.combat.style.display = "block";
+        this.changeRegle();
     }
 
     private init() {

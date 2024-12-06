@@ -74,7 +74,7 @@
             <option value="FFE">FFE</option>
             <option value="testing">testing</option>
         </select>
-        <div>
+        <div id="ruleEditor">
             Modification de la règle "personnalisée":<br/>
             <table style="display: inline-table">
                 <tr>
@@ -100,6 +100,36 @@
                     <td><input id="scoreMax" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
                                type="number"
                                value="15"/></td>
+                </tr>
+                <tr>
+                    <td>Touches</td>
+                    <td>
+                        <label for="touche_main">
+                            <img alt="touche main" src="images/main.svg" title="touche main"/>
+                        </label>
+                        <input id="touche_main" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="1"/>
+                        <label for="touche_bras">
+                            <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
+                        </label>
+                        <input id="touche_bras" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="3"/>
+                        <label for="touche_jambe">
+                            <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
+                        </label>
+                        <input id="touche_jambe" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="3"/>
+                        <label for="touche_tronc">
+                            <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
+                        </label>
+                        <input id="touche_tronc" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="5"/>
+                        <label for="touche_tête">
+                            <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
+                        </label>
+                        <input id="touche_tête" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="5"/>
+                    </td>
                 </tr>
             </table>
         </div>
