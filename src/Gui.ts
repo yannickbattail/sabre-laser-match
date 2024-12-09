@@ -130,6 +130,9 @@ export class Gui {
         } else if (name.startsWith('touche_')) {
             const touche = name.replace('touche_', '');
             reglePerso.getTouche(touche as ToucheNom).points = value;
+        } else if (name.startsWith('carton_')) {
+            const carton = name.replace('carton_', '');
+            reglePerso.getCarton(carton as CartonCouleur).points = value;
         } else {
             throw new Error(`id ${name} non géré`);
         }
