@@ -1,9 +1,20 @@
 {
+  "id": "http://127.0.0.1:8080/",
   "name": "Match Sabre laser ",
-  "short_name": "Match Sabrelaser",
-  "start_url": "https://yannickbattail.github.io/sabre-laser-match/index.html",
+  "short_name": "MatchSabreLaser",
+  "description": "Décompte des points d'un match de sabre laser au plus proche de la FFE.",
+  "categories": [
+    "sports"
+  ],
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "http://127.0.0.1:8080/",
+  "scope": "http://127.0.0.1:8080/",
   "display": "standalone",
+  "orientation": "natural",
   "prefer_related_applications": false,
+  "theme_color": "rgb(100, 200, 255)",
+  "background_color": "rgb(30, 30, 30)",
   "icons": [
     {
       "src": "images/light-sabers-couleur.svg",
