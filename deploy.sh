@@ -13,6 +13,8 @@ echo "Building"
 npm ci
 npm run build
 cp sabre-laser-match.html index.html
+rm ./src/manifest.json
+mv ./src/manifest_prod.json ./src/manifest.json
 gitignore=$(grep -v .js ./.gitignore)
 echo "$gitignore" > ./.gitignore
 echo "Adding files and committing"
