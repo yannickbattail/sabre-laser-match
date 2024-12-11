@@ -115,6 +115,30 @@ export class Gui {
         }
     }
 
+    public changeValeurRegles(elem: HTMLInputElement) {
+        const name = elem.id;
+        const value = parseInt(elem.value);
+        const reglePerso: Regle = Regle.getRegleByNom("personnalisée");
+        if (name === "duree") {
+            reglePerso.duree = value;
+        } else if (name === "prolongation") {
+            reglePerso.prolongation = value;
+        } else if (name === "mortSubiteScore") {
+            reglePerso.mortSubiteScore = value;
+        } else if (name === "scoreMax") {
+            reglePerso.scoreMax = value;
+        } else if (name.startsWith('touche_')) {
+            const touche = name.replace('touche_', '');
+            reglePerso.getTouche(touche as ToucheNom).points = value;
+        } else if (name.startsWith('carton_')) {
+            const carton = name.replace('carton_', '');
+            reglePerso.getCarton(carton as CartonCouleur).points = value;
+        } else {
+            throw new Error(`id ${name} non géré`);
+        }
+        this.refresh();
+    }
+
     public showConfig() {
         this.guiElem.config.style.display = "block";
         this.guiElem.combat.style.display = "none";
@@ -123,6 +147,7 @@ export class Gui {
     public hideConfig() {
         this.guiElem.config.style.display = "none";
         this.guiElem.combat.style.display = "block";
+        this.changeRegle();
     }
 
     private init() {
@@ -143,9 +168,8 @@ export class Gui {
 
     private initTouches(combattant: CombattantCouleur): string {
         return this.regle.touches
-            .map(
-                (touche) =>
-                    `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
+            .map((touche) =>
+                `<button class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
                 <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}" />${touche.points}
             </button>`,
             )
@@ -154,9 +178,8 @@ export class Gui {
 
     private initCartons(combattant: CombattantCouleur): string {
         return this.regle.cartons
-            .map(
-                (carton) =>
-                    `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
+            .map((carton) =>
+                `<button class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
                 <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}" /> -${carton.points}
             </button>`,
             )
@@ -164,10 +187,10 @@ export class Gui {
     }
 
     private initRegles(): string {
-        return Regle.REGLES.map(
-            (regle) =>
-                `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ""}>${regle.nom}</option>`,
-        ).join("");
+        return Regle.REGLES
+            .filter(r => r.nom !== "testing")
+            .map((regle) => `<option value="${regle.nom}"${this.regle === regle ? 'selected="selected"' : ""}>${regle.nom}</option>`)
+            .join("");
     }
 
     private getRegle(): Regle {
@@ -205,11 +228,11 @@ export class Gui {
     }
 
     private formatCarton(carton: CartonCouleur) {
-        return `<img src="${this.regle.getCarton(carton).image}" alt="touche ${carton}" ;`;
+        return `<img src="${this.regle.getCarton(carton).image}" alt="carton ${carton}" />`;
     }
 
     private formatTouche(touche: ToucheNom) {
-        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" ;`;
+        return `<img src="${this.regle.getTouche(touche).image}" alt="touche ${touche}" />`;
     }
 
     private updateTimer() {

@@ -68,12 +68,96 @@
     </div>
     Décompte des points d'un match de sabre laser au plus proche de la
     <a href="https://www.ffescrime.fr/media-documents/?thematic=sabre-laser">FFE</a>.<br/>
-    <div>
+    <div style="align-content: center; text-align: center">
         <label for="changeRegle">Règles:</label>
         <select id="changeRegle" onchange="gui.changeRegle()">
             <option value="FFE">FFE</option>
             <option value="testing">testing</option>
         </select>
+        <div id="ruleEditor">
+            Modification de la règle "personnalisée":<br/>
+            <table style="display: inline-table">
+                <tr>
+                    <td><label for="duree">Durée du match (sec)</label></td>
+                    <td><input id="duree" max="1200" min="5" onchange="gui.changeValeurRegles(this)" step="5"
+                               type="number"
+                               value="180"/></td>
+                </tr>
+                <tr>
+                    <td><label for="prolongation">Durée de la prolongation (sec)</label></td>
+                    <td><input id="prolongation" max="180" min="0" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number"
+                               value="30"/></td>
+                </tr>
+                <tr>
+                    <td><label for="mortSubiteScore">Score mort subite</label></td>
+                    <td><input id="mortSubiteScore" max="100" min="0" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number"
+                               value="10"/></td>
+                </tr>
+                <tr>
+                    <td><label for="scoreMax">Score gagnant</label></td>
+                    <td><input id="scoreMax" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number"
+                               value="15"/></td>
+                </tr>
+                <tr>
+                    <td>Touches</td>
+                    <td>
+                        <label for="touche_main">
+                            <img alt="touche main" src="images/main.svg" title="touche main"/>
+                        </label>
+                        <input id="touche_main" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="1"/>
+                        <label for="touche_bras">
+                            <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
+                        </label>
+                        <input id="touche_bras" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="3"/>
+                        <label for="touche_jambe">
+                            <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
+                        </label>
+                        <input id="touche_jambe" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="3"/>
+                        <label for="touche_tronc">
+                            <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
+                        </label>
+                        <input id="touche_tronc" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="5"/>
+                        <label for="touche_tête">
+                            <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
+                        </label>
+                        <input id="touche_tête" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="5"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cartons</td>
+                    <td>
+                        <label for="carton_blanc">
+                            <img alt="carton blanc" src="images/carton-blanc.svg" title="carton blanc"/>
+                        </label>
+                        <input id="carton_blanc" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="0"/>
+                        <label for="carton_jaune">
+                            <img alt="carton jaune" src="images/carton-jaune.svg" title="carton jaune"/>
+                        </label>
+                        <input id="carton_jaune" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="3"/>
+                        <label for="carton_rouge">
+                            <img alt="carton rouge" src="images/carton-rouge.svg" title="carton rouge"/>
+                        </label>
+                        <input id="carton_rouge" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="5"/>
+                        <label for="carton_noir">
+                            <img alt="carton noir" src="images/carton-noir.svg" title="carton noir"/>
+                        </label>
+                        <input id="carton_noir" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
+                               type="number" value="0"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <br/>
     Les sources sont dispo <a href="https://github.com/yannickbattail/sabre-laser-match">ici</a>.<br/>
