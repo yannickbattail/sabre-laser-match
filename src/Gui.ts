@@ -117,22 +117,31 @@ export class Gui {
 
     public changeValeurRegles(elem: HTMLInputElement) {
         const name = elem.id;
-        const value = parseInt(elem.value);
+        const value = elem.value;
         const reglePerso: Regle = Regle.getRegleByNom("personnalisée");
         if (name === "duree") {
-            reglePerso.duree = value;
+            reglePerso.duree = parseInt(value);
         } else if (name === "prolongation") {
-            reglePerso.prolongation = value;
+            reglePerso.prolongation = parseInt(value);
         } else if (name === "mortSubiteScore") {
-            reglePerso.mortSubiteScore = value;
+            reglePerso.mortSubiteScore = parseInt(value);
         } else if (name === "scoreMax") {
-            reglePerso.scoreMax = value;
-        } else if (name.startsWith('touche_')) {
-            const touche = name.replace('touche_', '');
-            reglePerso.getTouche(touche as ToucheNom).points = value;
-        } else if (name.startsWith('carton_')) {
-            const carton = name.replace('carton_', '');
-            reglePerso.getCarton(carton as CartonCouleur).points = value;
+            reglePerso.scoreMax = parseInt(value);
+        } else if (name.startsWith('touche_points_')) {
+            const touche = name.replace('touche_points_', '');
+            reglePerso.getTouche(touche as ToucheNom).points = parseInt(value);
+        } else if (name.startsWith('touche_mortSubite_')) {
+            const touche = name.replace('touche_mortSubite_', '');
+            reglePerso.getTouche(touche as ToucheNom).mortSubite = !!value;
+        } else if (name.startsWith('touche_prolongation_')) {
+            const touche = name.replace('touche_prolongation_', '');
+            reglePerso.getTouche(touche as ToucheNom).prolongation = !!value;
+        } else if (name.startsWith('carton_points_')) {
+            const carton = name.replace('carton_points_', '');
+            reglePerso.getCarton(carton as CartonCouleur).points = parseInt(value);
+        } else if (name.startsWith('carton_sup_')) {
+            const carton = name.replace('carton_sup_', '');
+            reglePerso.getCarton(carton as CartonCouleur).cartonSuperieur = value as CartonCouleur;
         } else {
             throw new Error(`id ${name} non géré`);
         }
