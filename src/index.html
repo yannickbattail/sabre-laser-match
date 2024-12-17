@@ -76,136 +76,17 @@
         </select>
         <div id="ruleEditor">
             Modification de la règle "personnalisée" :<br/>
-            <table style="display: inline-table">
-                <tr>
-                    <td><label for="duree">Durée du match (sec)</label></td>
-                    <td><input id="duree" max="1200" min="5" onchange="gui.changeValeurRegles(this)" step="5"
-                               type="number"
-                               value="180"/></td>
-                </tr>
-                <tr>
-                    <td><label for="prolongation">Durée de la prolongation (sec)</label></td>
-                    <td><input id="prolongation" max="180" min="0" onchange="gui.changeValeurRegles(this)" step="1"
-                               type="number"
-                               value="30"/></td>
-                </tr>
-                <tr>
-                    <td><label for="mortSubiteScore">Score mort subite</label></td>
-                    <td><input id="mortSubiteScore" max="100" min="0" onchange="gui.changeValeurRegles(this)" step="1"
-                               type="number"
-                               value="10"/></td>
-                </tr>
-                <tr>
-                    <td><label for="scoreMax">Score gagnant</label></td>
-                    <td><input id="scoreMax" max="100" min="1" onchange="gui.changeValeurRegles(this)" step="1"
-                               type="number"
-                               value="15"/></td>
-                </tr>
-            </table>
+            <table id="config_regle" style="display: inline-table"></table>
             <table>
                 <thead>
                 <tr>
                     <th>Touches</th>
                     <td>Points</td>
-                    <td>Mort subite</td>
-                    <td>Prolongation</td>
+                    <td>Dispo en mort subite</td>
+                    <td>Dispo en prolongation</td>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <label for="touche_points_main">
-                            Main
-                            <img alt="touche main" src="images/main.svg" title="touche main"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="touche_points_main" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="1"/>
-                    </td>
-                    <td>
-                        <input id="touche_mortSubite_main" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
-                    </td>
-                    <td>
-                        <input id="touche_prolongation_main" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="touche_points_bras">
-                            Bras
-                            <img alt="touche bras" src="images/bras.svg" title="touche bras"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="touche_points_bras" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="3"/>
-                    </td>
-                    <td>
-                        <input id="touche_mortSubite_bras" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
-                    </td>
-                    <td>
-                        <input id="touche_prolongation_bras" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="touche_points_jambe">
-                            Jambe
-                            <img alt="touche jambe" src="images/jambe.svg" title="touche jambe"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="touche_points_jambe" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="3"/>
-                    </td>
-                    <td>
-                        <input id="touche_mortSubite_jambe" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
-                    </td>
-                    <td>
-                        <input id="touche_prolongation_jambe" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="touche_points_tronc">
-                            Tronc
-                            <img alt="touche tronc" src="images/tronc.svg" title="touche tronc"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="touche_points_tronc" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="5"/>
-                    </td>
-                    <td>
-                        <input checked="checked" id="touche_mortSubite_tronc" onchange="gui.changeValeurRegles(this)"
-                               type="checkbox"/>
-                    </td>
-                    <td>
-                        <input checked="checked" id="touche_prolongation_tronc" onchange="gui.changeValeurRegles(this)"
-                               type="checkbox"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="touche_points_tête">
-                            Tête
-                            <img alt="touche tête" src="images/tete.svg" title="touche tête"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="touche_points_tête" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="5"/>
-                    </td>
-                    <td>
-                        <input checked="checked" id="touche_mortSubite_tête" onchange="gui.changeValeurRegles(this)"
-                               type="checkbox"/>
-                    </td>
-                    <td>
-                        <input checked="checked" id="touche_prolongation_tête" onchange="gui.changeValeurRegles(this)"
-                               type="checkbox"/>
-                    </td>
-                </tr>
+                <tbody id="config_touches">
                 </tbody>
             </table>
             <table>
@@ -213,98 +94,10 @@
                 <tr>
                     <th>Cartons</th>
                     <td>Points</td>
-                    <td colspan="2">Carton Supérieur</td>
+                    <td>Carton Supérieur</td>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        Blanc
-                        <label for="carton_points_blanc">
-                            <img alt="carton blanc" src="images/carton-blanc.svg" title="carton blanc"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="carton_points_blanc" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="0"/>
-                    </td>
-                    <td>
-                        <select id="carton_sup_blanc" style="border-radius: 2px;">
-                            <option style="background-color: white; color: black" value="blanc">Blanc</option>
-                            <option selected="selected" style="background-color: yellow; color: black" value="jaune">
-                                Jaune
-                            </option>
-                            <option style="background-color: red; color: black" value="rouge">Rouge</option>
-                            <option style="background-color: black; color: white" value="Noir">Noir</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Jaune
-                        <label for="carton_points_jaune">
-                            <img alt="carton jaune" src="images/carton-jaune.svg" title="carton jaune"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="carton_points_jaune" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="3"/>
-                    </td>
-                    <td>
-                        <select id="carton_sup_jaune" style="border-radius: 2px;">
-                            <option style="background-color: white; color: black" value="blanc">Blanc</option>
-                            <option style="background-color: yellow; color: black" value="jaune">Jaune</option>
-                            <option selected="selected" style="background-color: red; color: black" value="rouge">
-                                Rouge
-                            </option>
-                            <option style="background-color: black; color: white" value="Noir">Noir</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Rouge
-                        <label for="carton_points_rouge">
-                            <img alt="carton rouge" src="images/carton-rouge.svg" title="carton rouge"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="carton_points_rouge" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="5"/>
-                    </td>
-                    <td>
-                        <select id="carton_sup_rouge" style="border-radius: 2px;">
-                            <option style="background-color: white; color: black" value="blanc">Blanc</option>
-                            <option style="background-color: yellow; color: black" value="jaune">Jaune</option>
-                            <option style="background-color: red; color: black" value="rouge">Rouge</option>
-                            <option selected="selected" style="background-color: black; color: white" value="Noir">
-                                Noir
-                            </option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Noir
-                        <label for="carton_points_noir">
-                            <img alt="carton noir" src="images/carton-noir.svg" title="carton noir"/>
-                        </label>
-                    </td>
-                    <td>
-                        <input id="carton_points_noir" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="number" value="0"/>
-                    </td>
-                    <td>
-                        <select id="carton_sup_noir" style="border-radius: 2px;">
-                            <option style="background-color: white; color: black" value="blanc">Blanc</option>
-                            <option style="background-color: yellow; color: black" value="jaune">Jaune</option>
-                            <option style="background-color: red; color: black" value="rouge">Rouge</option>
-                            <option selected="selected" style="background-color: black; color: white" value="Noir">
-                                Noir
-                            </option>
-                        </select>
-                    </td>
-                </tr>
+                <tbody id="config_cartons">
                 </tbody>
             </table>
         </div>

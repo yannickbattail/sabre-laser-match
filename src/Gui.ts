@@ -7,6 +7,7 @@ import {CartonCouleur} from "./Carton.js";
 import {MatchModel} from "./MatchModel.js";
 import {EventLog, EventLogCarton, EventLogMortSubite, EventLogTouche, EventLogWin,} from "./EventLog.js";
 import {MortSubite} from "./MortSubite.js";
+import {NodeUpdate} from "./NodeUpdate.js";
 
 class GuiElem {
     public historique =
@@ -149,6 +150,10 @@ export class Gui {
     }
 
     public showConfig() {
+        const regle = Regle.getRegleByNom("personnalisée");
+        NodeUpdate.updateElement('config_regle', this.constructConfigRegle(regle));
+        NodeUpdate.updateElement('config_touches', this.constructConfigTouches(regle));
+        NodeUpdate.updateElement('config_cartons', this.constructConfigCartons(regle));
         this.guiElem.config.style.display = "block";
         this.guiElem.combat.style.display = "none";
     }
@@ -157,6 +162,75 @@ export class Gui {
         this.guiElem.config.style.display = "none";
         this.guiElem.combat.style.display = "block";
         this.changeRegle();
+    }
+
+    private constructConfigRegle(regle: Regle) {
+        return `<tr>
+                    <td><label for="duree">Durée du match (sec)</label></td>
+                    <td><input id="duree" type="number" onchange="gui.changeValeurRegles(this)" step="5" max="1200" min="5" value="${regle.duree}"/></td>
+                </tr>
+                <tr>
+                    <td><label for="prolongation">Durée de la prolongation (sec)</label></td>
+                    <td><input id="prolongation" type="number" onchange="gui.changeValeurRegles(this)" max="180" min="0" step="1" value="${regle.prolongation}"/></td>
+                </tr>
+                <tr>
+                    <td><label for="mortSubiteScore">Score mort subite</label></td>
+                    <td><input id="mortSubiteScore" type="number" onchange="gui.changeValeurRegles(this)" max="100" min="0" step="1" value="${regle.mortSubiteScore}"/></td>
+                </tr>
+                <tr>
+                    <td><label for="scoreMax">Score gagnant</label></td>
+                    <td><input id="scoreMax" type="number" onchange="gui.changeValeurRegles(this)" max="100" min="1" step="1" value="${regle.scoreMax}"/></td>
+                </tr>`
+    }
+
+    private constructConfigTouches(regle: Regle) {
+        return regle.touches
+            .map((touche) =>
+                `<tr>
+                    <td>
+                        <label for="touche_points_${touche.nom}">${touche.nom}<img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}"/></label>
+                    </td>
+                    <td>
+                        <input id="touche_points_${touche.nom}" type="number" onchange="gui.changeValeurRegles(this)" min="1" max="100" step="1" value="${touche.points}"/>
+                    </td>
+                    <td>
+                        <input id="touche_mortSubite_${touche.nom}" type="checkbox" onchange="gui.changeValeurRegles(this)" ${touche.mortSubite ? 'checked="checked"' : ''}/>
+                    </td>
+                    <td>
+                        <input id="touche_mortSubite_${touche.nom}" type="checkbox" onchange="gui.changeValeurRegles(this)" ${touche.mortSubite ? 'checked="checked"' : ''}/>
+                    </td>
+                    <td>
+                        <input id="touche_prolongation_${touche.nom}" type="checkbox" onchange="gui.changeValeurRegles(this)" ${touche.prolongation ? 'checked="checked"' : ''}/>
+                    </td>
+                </tr>`
+            )
+            .join("");
+    }
+
+    private constructConfigCartons(regle: Regle) {
+        return regle.cartons
+            .map((carton) =>
+                `<tr>
+                    <td>
+                        ${carton.couleur}
+                        <label for="carton_points_${carton.couleur}">
+                            <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}"/>
+                        </label>
+                    </td>
+                    <td>
+                        <input id="carton_points_${carton.couleur}" type="number"onchange="gui.changeValeurRegles(this)" min="1" max="100" step="1" value="${carton.points}"/>
+                    </td>
+                    <td>
+                        <select id="carton_sup_${carton.couleur}" style="border-radius: 2px;">
+                            <option style="background-color: white; color: black" value="${CartonCouleur.blanc}" ${carton.cartonSuperieur === CartonCouleur.blanc ? 'selected="selected"' : ''}>Blanc</option>
+                            <option style="background-color: yellow; color: black" value="${CartonCouleur.jaune}" ${carton.cartonSuperieur === CartonCouleur.jaune ? 'selected="selected"' : ''}>Jaune</option>
+                            <option style="background-color: red; color: black" value="${CartonCouleur.rouge}" ${carton.cartonSuperieur === CartonCouleur.rouge ? 'selected="selected"' : ''}>Rouge</option>
+                            <option style="background-color: black; color: white" value="${CartonCouleur.noir}" ${carton.cartonSuperieur === CartonCouleur.noir ? 'selected="selected"' : ''}>Noir</option>
+                        </select>
+                    </td>
+                </tr>`
+            )
+            .join("");
     }
 
     private init() {
