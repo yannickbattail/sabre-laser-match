@@ -66,7 +66,7 @@
         <h2 style="display: inline-block">Configuration</h2>
         <button onclick="gui.hideConfig()">[X]</button>
     </div>
-    Décompte des points d'un match de sabre laser au plus proche de la
+    Décompte des points d'un match de sabre laser selon les règles de la
     <a href="https://www.ffescrime.fr/media-documents/?thematic=sabre-laser">FFE</a>.<br/>
     <div style="align-content: center; text-align: center">
         <label for="changeRegle">Règles:</label>
@@ -75,7 +75,7 @@
             <option value="testing">testing</option>
         </select>
         <div id="ruleEditor">
-            Modification de la règle "personnalisée":<br/>
+            Modification de la règle "personnalisée" :<br/>
             <table style="display: inline-table">
                 <tr>
                     <td><label for="duree">Durée du match (sec)</label></td>
@@ -101,12 +101,17 @@
                                type="number"
                                value="15"/></td>
                 </tr>
+            </table>
+            <table>
+                <thead>
                 <tr>
                     <th>Touches</th>
                     <td>Points</td>
                     <td>Mort subite</td>
                     <td>Prolongation</td>
                 </tr>
+                </thead>
+                <tbody>
                 <tr>
                     <td>
                         <label for="touche_points_main">
@@ -116,16 +121,13 @@
                     </td>
                     <td>
                         <input id="touche_points_main" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="1"/>
+                               step="1" type="number" value="1"/>
                     </td>
                     <td>
-                        <input id="touche_mortSubite_main" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="checkbox" value="1"/>
+                        <input id="touche_mortSubite_main" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
                     </td>
                     <td>
-                        <input id="touche_prolongation_main" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="checkbox" value="1"/>
+                        <input id="touche_prolongation_main" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
                     </td>
                 </tr>
                 <tr>
@@ -137,16 +139,13 @@
                     </td>
                     <td>
                         <input id="touche_points_bras" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="3"/>
+                               step="1" type="number" value="3"/>
                     </td>
                     <td>
-                        <input id="touche_mortSubite_bras" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="checkbox" value="3"/>
+                        <input id="touche_mortSubite_bras" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
                     </td>
                     <td>
-                        <input id="touche_prolongation_bras" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="checkbox" value="3"/>
+                        <input id="touche_prolongation_bras" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
                     </td>
                 </tr>
                 <tr>
@@ -158,16 +157,13 @@
                     </td>
                     <td>
                         <input id="touche_points_jambe" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="3"/>
+                               step="1" type="number" value="3"/>
                     </td>
                     <td>
-                        <input id="touche_mortSubite_jambe" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="checkbox" value="3"/>
+                        <input id="touche_mortSubite_jambe" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
                     </td>
                     <td>
-                        <input id="touche_prolongation_jambe" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1" type="checkbox" value="3"/>
+                        <input id="touche_prolongation_jambe" onchange="gui.changeValeurRegles(this)" type="checkbox"/>
                     </td>
                 </tr>
                 <tr>
@@ -179,16 +175,15 @@
                     </td>
                     <td>
                         <input id="touche_points_tronc" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="5"/>
+                               step="1" type="number" value="5"/>
                     </td>
                     <td>
-                        <input checked="checked" id="touche_mortSubite_tronc" max="100" min="1"
-                               onchange="gui.changeValeurRegles(this)" step="1" type="checkbox" value="5"/>
+                        <input checked="checked" id="touche_mortSubite_tronc" onchange="gui.changeValeurRegles(this)"
+                               type="checkbox"/>
                     </td>
                     <td>
-                        <input checked="checked" id="touche_prolongation_tronc" max="100" min="1"
-                               onchange="gui.changeValeurRegles(this)" step="1" type="checkbox" value="5"/>
+                        <input checked="checked" id="touche_prolongation_tronc" onchange="gui.changeValeurRegles(this)"
+                               type="checkbox"/>
                     </td>
                 </tr>
                 <tr>
@@ -200,23 +195,28 @@
                     </td>
                     <td>
                         <input id="touche_points_tête" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="5"/>
+                               step="1" type="number" value="5"/>
                     </td>
                     <td>
-                        <input checked="checked" id="touche_mortSubite_tête" max="100" min="1"
-                               onchange="gui.changeValeurRegles(this)" step="1" type="checkbox" value="5"/>
+                        <input checked="checked" id="touche_mortSubite_tête" onchange="gui.changeValeurRegles(this)"
+                               type="checkbox"/>
                     </td>
                     <td>
-                        <input checked="checked" id="touche_prolongation_tête" max="100" min="1"
-                               onchange="gui.changeValeurRegles(this)" step="1" type="checkbox" value="5"/>
+                        <input checked="checked" id="touche_prolongation_tête" onchange="gui.changeValeurRegles(this)"
+                               type="checkbox"/>
                     </td>
                 </tr>
+                </tbody>
+            </table>
+            <table>
+                <thead>
                 <tr>
                     <th>Cartons</th>
                     <td>Points</td>
                     <td colspan="2">Carton Supérieur</td>
                 </tr>
+                </thead>
+                <tbody>
                 <tr>
                     <td>
                         Blanc
@@ -226,8 +226,7 @@
                     </td>
                     <td>
                         <input id="carton_points_blanc" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="0"/>
+                               step="1" type="number" value="0"/>
                     </td>
                     <td>
                         <select id="carton_sup_blanc" style="border-radius: 2px;">
@@ -249,8 +248,7 @@
                     </td>
                     <td>
                         <input id="carton_points_jaune" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="3"/>
+                               step="1" type="number" value="3"/>
                     </td>
                     <td>
                         <select id="carton_sup_jaune" style="border-radius: 2px;">
@@ -272,8 +270,7 @@
                     </td>
                     <td>
                         <input id="carton_points_rouge" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="5"/>
+                               step="1" type="number" value="5"/>
                     </td>
                     <td>
                         <select id="carton_sup_rouge" style="border-radius: 2px;">
@@ -295,8 +292,7 @@
                     </td>
                     <td>
                         <input id="carton_points_noir" max="100" min="1" onchange="gui.changeValeurRegles(this)"
-                               step="1"
-                               type="number" value="0"/>
+                               step="1" type="number" value="0"/>
                     </td>
                     <td>
                         <select id="carton_sup_noir" style="border-radius: 2px;">
@@ -309,6 +305,7 @@
                         </select>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>
     </div>
