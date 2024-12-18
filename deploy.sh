@@ -17,25 +17,25 @@ On_Reset='\e[0m'
 echo_log() {
     echo -ne "$ICyan"
     echo "$@"
-    echo -ne "$IReset"
+    echo -ne "$On_Reset"
 }
 
 echo_info() {
     echo -ne "$IGreen"
     echo "$@"
-    echo -ne "$IReset"
+    echo -ne "$On_Reset"
 }
 
 echo_warn() {
     echo -ne "$IPurple"
     echo "$@"
-    echo -ne "$IReset"
+    echo -ne "$On_Reset"
 }
 
 echo_error() {
     echo -ne "$IRed" >&2
     echo "$@" >&2
-    echo -ne "$IReset" >&2
+    echo -ne "$On_Reset" >&2
     exit 1
 }
 
