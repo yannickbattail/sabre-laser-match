@@ -34,11 +34,11 @@ export class Regle {
                 ),
             ],
             [
-                new Touche(ToucheNom.main, 1, false, false, "images/main.svg"),
-                new Touche(ToucheNom.bras, 3, false, false, "images/bras.svg"),
-                new Touche(ToucheNom.jambe, 3, false, false, "images/jambe.svg"),
-                new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
-                new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
+                new Touche(ToucheNom.main, 1, true, false, false, "images/main.svg"),
+                new Touche(ToucheNom.bras, 3, true, false, false, "images/bras.svg"),
+                new Touche(ToucheNom.jambe, 3, true, false, false, "images/jambe.svg"),
+                new Touche(ToucheNom.tronc, 5, true, true, true, "images/tronc.svg"),
+                new Touche(ToucheNom.tete, 5, true, true, true, "images/tete.svg"),
             ],
             180,
             30,
@@ -74,11 +74,11 @@ export class Regle {
                 ),
             ],
             [
-                new Touche(ToucheNom.main, 1, false, false, "images/main.svg"),
-                new Touche(ToucheNom.bras, 3, false, false, "images/bras.svg"),
-                new Touche(ToucheNom.jambe, 3, false, false, "images/jambe.svg"),
-                new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
-                new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
+                new Touche(ToucheNom.main, 1, true, false, false, "images/main.svg"),
+                new Touche(ToucheNom.bras, 3, true, false, false, "images/bras.svg"),
+                new Touche(ToucheNom.jambe, 3, true, false, false, "images/jambe.svg"),
+                new Touche(ToucheNom.tronc, 5, true, true, true, "images/tronc.svg"),
+                new Touche(ToucheNom.tete, 5, true, true, true, "images/tete.svg"),
             ],
             180,
             30,
@@ -114,11 +114,11 @@ export class Regle {
                 ),
             ],
             [
-                new Touche(ToucheNom.main, 1, false, false, "images/main.svg"),
-                new Touche(ToucheNom.bras, 3, false, true, "images/bras.svg"),
-                new Touche(ToucheNom.jambe, 3, false, true, "images/jambe.svg"),
-                new Touche(ToucheNom.tronc, 5, true, true, "images/tronc.svg"),
-                new Touche(ToucheNom.tete, 5, true, true, "images/tete.svg"),
+                new Touche(ToucheNom.main, 1, true, false, false, "images/main.svg"),
+                new Touche(ToucheNom.bras, 3, true, false, true, "images/bras.svg"),
+                new Touche(ToucheNom.jambe, 3, true, false, true, "images/jambe.svg"),
+                new Touche(ToucheNom.tronc, 5, true, true, true, "images/tronc.svg"),
+                new Touche(ToucheNom.tete, 5, true, true, true, "images/tete.svg"),
             ],
             10,
             10,
@@ -170,6 +170,10 @@ export class Regle {
             this.touches.find((c) => c.nom === nom) ||
             _throw(new Error(`Touche ${nom} introuvable`))
         );
+    }
+
+    public getTouchesMatch(match: boolean): Touche[] {
+        return this.touches.filter((c) => c.match === match);
     }
 
     public getTouchesMortSubite(mortSubite: boolean): Touche[] {
