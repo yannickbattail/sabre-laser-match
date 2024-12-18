@@ -3,9 +3,7 @@
   "name": "Match Sabre laser ",
   "short_name": "MatchSabreLaser",
   "description": "Décompte des points d'un match de sabre laser au plus proche de la FFE.",
-  "categories": [
-    "sports"
-  ],
+  "categories": ["sports"],
   "lang": "fr",
   "dir": "ltr",
   "start_url": "https://yannickbattail.github.io/sabre-laser-match/src/index.html",
