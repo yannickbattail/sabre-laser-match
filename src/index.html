@@ -1,122 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta charset="utf-8">
-    <link href="manifest.json" rel="manifest"/>
-    <link href="images/light-sabers-couleur.svg" rel="icon" type="image/svg+xml"/>
-    <link href="style.css" rel="stylesheet"/>
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta charset="utf-8" />
+    <link href="manifest.json" rel="manifest" />
+    <link
+      href="images/light-sabers-couleur.svg"
+      rel="icon"
+      type="image/svg+xml"
+    />
+    <link href="style.css" rel="stylesheet" />
     <title>Match sabre laser</title>
-</head>
-<body class="dark">
-<div id="background-image"></div>
-<div id="combat" style="display: block">
-    <div style="text-align: left">
+  </head>
+  <body class="dark">
+    <div id="background-image"></div>
+    <div id="combat" style="display: block">
+      <div style="text-align: left">
         <div style="display: inline-block">
-            <button id="play" onclick="gui.play()" style="display: inline-block">
-                <img alt="démarrer le combat" src="images/play.svg" title="démarrer le combat"/>
-            </button>
-            <button id="pause" onclick="gui.play()" style="display: none">
-                <img alt="mettre en pause le combat" src="images/pause.svg" title="mettre en pause le combat"/>
-            </button>
-            <button id="reset" onclick="gui.reset()">
-                <img alt="Nouveau combat" src="images/light-sabers-couleur.svg" title="Nouveau combat"/>
-            </button>
-            <button onclick="gui.annuler()">
-                <img alt="Supprimer la dernière action" src="images/abort.svg" title="Supprimer la dernière action"/>
-            </button>
-            <button onclick="gui.showConfig()">
-                <img alt="Configuration" src="images/gear.svg" title="Configuration"/>
-            </button>
+          <button id="play" onclick="gui.play()" style="display: inline-block">
+            <img
+              alt="démarrer le combat"
+              src="images/play.svg"
+              title="démarrer le combat"
+            />
+          </button>
+          <button id="pause" onclick="gui.play()" style="display: none">
+            <img
+              alt="mettre en pause le combat"
+              src="images/pause.svg"
+              title="mettre en pause le combat"
+            />
+          </button>
+          <button id="reset" onclick="gui.reset()">
+            <img
+              alt="Nouveau combat"
+              src="images/light-sabers-couleur.svg"
+              title="Nouveau combat"
+            />
+          </button>
+          <button onclick="gui.annuler()">
+            <img
+              alt="Supprimer la dernière action"
+              src="images/abort.svg"
+              title="Supprimer la dernière action"
+            />
+          </button>
+          <button onclick="gui.showConfig()">
+            <img
+              alt="Configuration"
+              src="images/gear.svg"
+              title="Configuration"
+            />
+          </button>
         </div>
         <div id="time" style="display: inline-block">00:00</div>
         <div id="message" style="display: inline-block">Prêt?</div>
-
-    </div>
-    <table id="tableCombattants">
+      </div>
+      <table id="tableCombattants">
         <thead>
-        <tr>
+          <tr>
             <th><span class="vertCombattant">Vert</span></th>
             <th><span class="rougeCombattant">Rouge</span></th>
-        </tr>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-            <td id="scoreVert">
-                0
-            </td>
-            <td id="scoreRouge">
-                0
-            </td>
-        </tr>
-        <tr>
+          <tr>
+            <td id="scoreVert">0</td>
+            <td id="scoreRouge">0</td>
+          </tr>
+          <tr>
             <td id="touchesVert"></td>
             <td id="touchesRouge"></td>
-        </tr>
-        <tr>
+          </tr>
+          <tr>
             <td id="cartonsVert"></td>
             <td id="cartonsRouge"></td>
-        </tr>
+          </tr>
         </tbody>
-    </table>
-    <div id="historique"></div>
-</div>
-<div id="config" style="display: none">
-    <div>
+      </table>
+      <div id="historique"></div>
+    </div>
+    <div id="config" style="display: none">
+      <div>
         <h2 style="display: inline-block">Configuration</h2>
         <button onclick="gui.hideConfig()">[X]</button>
-    </div>
-    Décompte des points d'un match de sabre laser selon les règles de la
-    <a href="https://www.ffescrime.fr/media-documents/?thematic=sabre-laser">FFE</a>.<br/>
-    <div style="align-content: center; text-align: center">
+      </div>
+      Décompte des points d'un match de sabre laser selon les règles de la
+      <a href="https://www.ffescrime.fr/media-documents/?thematic=sabre-laser"
+        >FFE</a
+      >.<br />
+      <div style="align-content: center; text-align: center">
         <label for="changeRegle">Règles:</label>
         <select id="changeRegle" onchange="gui.changeRegle()">
-            <option value="FFE">FFE</option>
-            <option value="testing">testing</option>
+          <option value="FFE">FFE</option>
+          <option value="testing">testing</option>
         </select>
         <div id="ruleEditor">
-            Modification de la règle "personnalisée" :<br/>
-            <table id="config_regle" style="display: inline-table"></table>
-            <table>
-                <thead>
-                <tr>
-                    <th>Touches</th>
-                    <td>Points</td>
-                    <td>Dispo en match</td>
-                    <td>Dispo en mort subite</td>
-                    <td>Dispo en prolongation</td>
-                </tr>
-                </thead>
-                <tbody id="config_touches">
-                </tbody>
-            </table>
-            <table>
-                <thead>
-                <tr>
-                    <th>Cartons</th>
-                    <td>Points</td>
-                    <td>Carton Supérieur</td>
-                </tr>
-                </thead>
-                <tbody id="config_cartons">
-                </tbody>
-            </table>
+          Modification de la règle "personnalisée" :<br />
+          <table id="config_regle" style="display: inline-table"></table>
+          <table>
+            <thead>
+              <tr>
+                <th>Touches</th>
+                <td>Points</td>
+                <td>Dispo en match</td>
+                <td>Dispo en mort subite</td>
+                <td>Dispo en prolongation</td>
+              </tr>
+            </thead>
+            <tbody id="config_touches"></tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th>Cartons</th>
+                <td>Points</td>
+                <td>Carton Supérieur</td>
+              </tr>
+            </thead>
+            <tbody id="config_cartons"></tbody>
+          </table>
         </div>
+      </div>
+      <br />
+      Les sources sont disponibles
+      <a href="https://github.com/yannickbattail/sabre-laser-match">ici</a
+      >.<br />
+      Si vous avez des idées d'amélioration ou un bug, n'hésitez à créer un
+      ticket
+      <a href="https://github.com/yannickbattail/sabre-laser-match/issues"
+        >ici</a
+      >.<br />
+      <br />
+      Les icônes viennent de
+      <a href="https://game-icons.net/">game-icons.net</a>.<br />
     </div>
-    <br/>
-    Les sources sont disponibles <a href="https://github.com/yannickbattail/sabre-laser-match">ici</a>.<br/>
-    Si vous avez des idées d'amélioration ou un bug, n'hésitez à créer un ticket
-    <a href="https://github.com/yannickbattail/sabre-laser-match/issues">ici</a>.<br/>
-    <br/>
-    Les icônes viennent de <a href="https://game-icons.net/">game-icons.net</a>.<br/>
-</div>
-<script type="module">
-    import {MatchState} from "./MatchState.js";
-    import {Gui} from "./Gui.js";
-    import {tests} from "./tests.js";
+    <script type="module">
+      import { MatchState } from "./MatchState.js";
+      import { Gui } from "./Gui.js";
+      import { tests } from "./tests.js";
 
-    window.gui = new Gui(new MatchState());
-    tests();
-</script>
-</body>
+      window.gui = new Gui(new MatchState());
+      tests();
+    </script>
+  </body>
 </html>
