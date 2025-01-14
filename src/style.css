@@ -79,6 +79,14 @@ button[disabled="disabled"] {
     width: 40px;
 }
 
+#ruleEditor table {
+    display: inline-table
+}
+
+#ruleEditor td {
+    background-color: black;
+}
+
 #historique img {
     width: 20px;
     height: 20px;

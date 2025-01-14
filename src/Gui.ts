@@ -29,6 +29,9 @@ class GuiElem {
   public config =
     document.getElementById("config") ||
     _throw(new Error("Element 'config' non trouvé"));
+  public ruleEditor =
+    document.getElementById("ruleEditor") ||
+    _throw(new Error("Element 'ruleEditor' non trouvé"));
   public combat =
     document.getElementById("combat") ||
     _throw(new Error("Element 'combat' non trouvé"));
@@ -88,6 +91,7 @@ export class Gui {
       )
     ) {
       this.regle = this.getRegle();
+      this.showConfigRules();
       this.init();
       this.reset();
     }
@@ -180,6 +184,12 @@ export class Gui {
     );
     this.guiElem.config.style.display = "block";
     this.guiElem.combat.style.display = "none";
+    this.showConfigRules();
+  }
+
+  public showConfigRules() {
+    this.guiElem.ruleEditor.style.display =
+      this.regle.nom === "personnalisée" ? "block" : "none";
   }
 
   public hideConfig() {
@@ -298,7 +308,7 @@ export class Gui {
       .map(
         (touche) =>
           `<button id="${combattant}_btn_touche_${touche.nom}" class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
-                <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}" />${touche.points}
+                <img alt="touche ${touche.nom}" src="${touche.image}" title="Touche ${touche.nom}" />${touche.points}
             </button>`,
       )
       .join("");
@@ -309,7 +319,7 @@ export class Gui {
       .map(
         (carton) =>
           `<button id="${combattant}_btn_carton_${carton.couleur}" class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
-                <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}" /> -${carton.points} ${carton.finDuMatch ? "&#128128;" : ""}
+                <img alt="carton ${carton.couleur}" src="${carton.image}" title="Carton ${carton.couleur}" /> -<span title="Points ajoutés à l'adversaire">${carton.points}</span> ${carton.finDuMatch ? "<span title='Déclenche la fin du match'>&#128128;</span>" : ""}
             </button>`,
       )
       .join("");
