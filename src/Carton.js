@@ -1,5 +1,7 @@
 export var CartonCouleur;
 (function (CartonCouleur) {
+    CartonCouleur["vert"] = "vert";
+    CartonCouleur["bleu"] = "bleu";
     CartonCouleur["blanc"] = "blanc";
     CartonCouleur["jaune"] = "jaune";
     CartonCouleur["rouge"] = "rouge";
@@ -8,13 +10,21 @@ export var CartonCouleur;
 export class Carton {
     couleur;
     points;
+    match;
+    mortSubite;
+    prolongation;
+    finDuMatch;
     image;
     cartonSuperieur;
-    constructor(couleur, points, image, cartonSuperieur) {
+    constructor(couleur, points, match, mortSubite, prolongation, finDuMatch, image, cartonSuperieur) {
         this.couleur = couleur;
         this.points = points;
+        this.match = match;
+        this.mortSubite = mortSubite;
+        this.prolongation = prolongation;
+        this.finDuMatch = finDuMatch;
         this.image = image;
         this.cartonSuperieur = cartonSuperieur;
     }
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2FydG9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2FydG9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE1BQU0sQ0FBTixJQUFZLGFBS1g7QUFMRCxXQUFZLGFBQWE7SUFDdkIsZ0NBQWUsQ0FBQTtJQUNmLGdDQUFlLENBQUE7SUFDZixnQ0FBZSxDQUFBO0lBQ2YsOEJBQWEsQ0FBQTtBQUNmLENBQUMsRUFMVyxhQUFhLEtBQWIsYUFBYSxRQUt4QjtBQUVELE1BQU0sT0FBTyxNQUFNO0lBRVI7SUFDQTtJQUNBO0lBQ0E7SUFKVCxZQUNTLE9BQXNCLEVBQ3RCLE1BQWMsRUFDZCxLQUFhLEVBQ2IsZUFBOEI7UUFIOUIsWUFBTyxHQUFQLE9BQU8sQ0FBZTtRQUN0QixXQUFNLEdBQU4sTUFBTSxDQUFRO1FBQ2QsVUFBSyxHQUFMLEtBQUssQ0FBUTtRQUNiLG9CQUFlLEdBQWYsZUFBZSxDQUFlO0lBQ3BDLENBQUM7Q0FDTCJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2FydG9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2FydG9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE1BQU0sQ0FBTixJQUFZLGFBT1g7QUFQRCxXQUFZLGFBQWE7SUFDdkIsOEJBQWEsQ0FBQTtJQUNiLDhCQUFhLENBQUE7SUFDYixnQ0FBZSxDQUFBO0lBQ2YsZ0NBQWUsQ0FBQTtJQUNmLGdDQUFlLENBQUE7SUFDZiw4QkFBYSxDQUFBO0FBQ2YsQ0FBQyxFQVBXLGFBQWEsS0FBYixhQUFhLFFBT3hCO0FBRUQsTUFBTSxPQUFPLE1BQU07SUFFUjtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBUlQsWUFDUyxPQUFzQixFQUN0QixNQUFjLEVBQ2QsS0FBYyxFQUNkLFVBQW1CLEVBQ25CLFlBQXFCLEVBQ3JCLFVBQW1CLEVBQ25CLEtBQWEsRUFDYixlQUE4QjtRQVA5QixZQUFPLEdBQVAsT0FBTyxDQUFlO1FBQ3RCLFdBQU0sR0FBTixNQUFNLENBQVE7UUFDZCxVQUFLLEdBQUwsS0FBSyxDQUFTO1FBQ2QsZUFBVSxHQUFWLFVBQVUsQ0FBUztRQUNuQixpQkFBWSxHQUFaLFlBQVksQ0FBUztRQUNyQixlQUFVLEdBQVYsVUFBVSxDQUFTO1FBQ25CLFVBQUssR0FBTCxLQUFLLENBQVE7UUFDYixvQkFBZSxHQUFmLGVBQWUsQ0FBZTtJQUNwQyxDQUFDO0NBQ0wifQ==
