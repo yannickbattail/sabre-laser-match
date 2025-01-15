@@ -35,7 +35,6 @@ body {
     filter: hue-rotate(270deg);
 }
 
-
 button {
     color: rgb(100, 200, 255);
     background-color: rgba(60, 60, 60);
@@ -55,14 +54,20 @@ button[disabled="disabled"] {
 #message {
     font-size: 20px;
     margin: 10px;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 #historique {
     min-height: 50px;
     overflow: scroll;
     max-height: 100px;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 #ruleEditor img {
@@ -72,6 +77,14 @@ button[disabled="disabled"] {
 
 #ruleEditor input {
     width: 40px;
+}
+
+#ruleEditor table {
+    display: inline-table
+}
+
+#ruleEditor td {
+    background-color: black;
 }
 
 #historique img {
