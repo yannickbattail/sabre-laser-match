@@ -3,7 +3,7 @@ import { Regle } from "./Regle.js";
 import { MatchState, MatchStatus } from "./MatchState.js";
 import { Touche, ToucheNom } from "./Touche.js";
 import { CombattantCouleur } from "./Evenement.js";
-import { CartonCouleur } from "./Carton.js";
+import { Carton, CartonCouleur } from "./Carton.js";
 import { MatchModel } from "./MatchModel.js";
 import {
   EventLog,
@@ -29,6 +29,9 @@ class GuiElem {
   public config =
     document.getElementById("config") ||
     _throw(new Error("Element 'config' non trouvé"));
+  public ruleEditor =
+    document.getElementById("ruleEditor") ||
+    _throw(new Error("Element 'ruleEditor' non trouvé"));
   public combat =
     document.getElementById("combat") ||
     _throw(new Error("Element 'combat' non trouvé"));
@@ -88,6 +91,7 @@ export class Gui {
       )
     ) {
       this.regle = this.getRegle();
+      this.showConfigRules();
       this.init();
       this.reset();
     }
@@ -126,13 +130,25 @@ export class Gui {
 
     if (name.startsWith("touche_match_")) {
       const touche = name.replace("touche_match_", "");
-      reglePerso.getTouche(touche as ToucheNom).match = !!value;
+      reglePerso.getTouche(touche as ToucheNom).match = value;
     } else if (name.startsWith("touche_mortSubite_")) {
       const touche = name.replace("touche_mortSubite_", "");
-      reglePerso.getTouche(touche as ToucheNom).mortSubite = !!value;
+      reglePerso.getTouche(touche as ToucheNom).mortSubite = value;
     } else if (name.startsWith("touche_prolongation_")) {
       const touche = name.replace("touche_prolongation_", "");
-      reglePerso.getTouche(touche as ToucheNom).prolongation = !!value;
+      reglePerso.getTouche(touche as ToucheNom).prolongation = value;
+    } else if (name.startsWith("carton_match_")) {
+      const carton = name.replace("carton_match_", "");
+      reglePerso.getCarton(carton as CartonCouleur).match = value;
+    } else if (name.startsWith("carton_mortSubite_")) {
+      const carton = name.replace("carton_mortSubite_", "");
+      reglePerso.getCarton(carton as CartonCouleur).mortSubite = value;
+    } else if (name.startsWith("carton_prolongation_")) {
+      const carton = name.replace("carton_prolongation_", "");
+      reglePerso.getCarton(carton as CartonCouleur).prolongation = value;
+    } else if (name.startsWith("carton_finDuMatch_")) {
+      const carton = name.replace("carton_finDuMatch_", "");
+      reglePerso.getCarton(carton as CartonCouleur).finDuMatch = value;
     } else {
       throw new Error(`id ${name} non géré`);
     }
@@ -168,6 +184,12 @@ export class Gui {
     );
     this.guiElem.config.style.display = "block";
     this.guiElem.combat.style.display = "none";
+    this.showConfigRules();
+  }
+
+  public showConfigRules() {
+    this.guiElem.ruleEditor.style.display =
+      this.regle.nom === "personnalisée" ? "block" : "none";
   }
 
   public hideConfig() {
@@ -237,6 +259,18 @@ export class Gui {
                         <input id="carton_points_${carton.couleur}" type="number" onchange="gui.changeValeurReglesNumber(this)" min="1" max="100" step="1" value="${carton.points}"/>
                     </td>
                     <td>
+                        <input id="carton_match_${carton.couleur}" type="checkbox" onchange="gui.changeValeurReglesBool(this)" ${carton.match ? 'checked="checked"' : ""}/>
+                    </td>
+                    <td>
+                        <input id="carton_mortSubite_${carton.couleur}" type="checkbox" onchange="gui.changeValeurReglesBool(this)" ${carton.mortSubite ? 'checked="checked"' : ""}/>
+                    </td>
+                    <td>
+                        <input id="carton_prolongation_${carton.couleur}" type="checkbox" onchange="gui.changeValeurReglesBool(this)" ${carton.prolongation ? 'checked="checked"' : ""}/>
+                    </td>
+                    <td>
+                        <input id="carton_finDuMatch_${carton.couleur}" type="checkbox" onchange="gui.changeValeurReglesBool(this)" ${carton.finDuMatch ? 'checked="checked"' : ""}/>
+                    </td>
+                    <td>
                         <select id="carton_sup_${carton.couleur}" style="border-radius: 2px;" onchange="gui.changeValeurReglesEnum(this)" >
                             <option style="background-color: white; color: black" value="${CartonCouleur.blanc}" ${carton.cartonSuperieur === CartonCouleur.blanc ? 'selected="selected"' : ""}>Blanc</option>
                             <option style="background-color: yellow; color: black" value="${CartonCouleur.jaune}" ${carton.cartonSuperieur === CartonCouleur.jaune ? 'selected="selected"' : ""}>Jaune</option>
@@ -274,7 +308,7 @@ export class Gui {
       .map(
         (touche) =>
           `<button id="${combattant}_btn_touche_${touche.nom}" class="touche ${touche.nom}" disabled="disabled" onclick="gui.touche('${touche.nom}', '${combattant}')">
-                <img alt="touche ${touche.nom}" src="${touche.image}" title="touche ${touche.nom}" />${touche.points}
+                <img alt="touche ${touche.nom}" src="${touche.image}" title="Touche ${touche.nom}" />${touche.points}
             </button>`,
       )
       .join("");
@@ -285,7 +319,7 @@ export class Gui {
       .map(
         (carton) =>
           `<button id="${combattant}_btn_carton_${carton.couleur}" class="carton ${carton.couleur}" disabled="disabled" onclick="gui.carton('${carton.couleur}', '${combattant}')">
-                <img alt="carton ${carton.couleur}" src="${carton.image}" title="carton ${carton.couleur}" /> -${carton.points}
+                <img alt="carton ${carton.couleur}" src="${carton.image}" title="Carton ${carton.couleur}" /> -<span title="Points ajoutés à l'adversaire">${carton.points}</span> ${carton.finDuMatch ? "<span title='Déclenche la fin du match'>&#128128;</span>" : ""}
             </button>`,
       )
       .join("");
@@ -422,13 +456,13 @@ export class Gui {
     this.regle.cartons.forEach((carton) =>
       this.enableButton(
         `vert_btn_carton_${carton.couleur}`,
-        this.isButtonCartonEnabled(),
+        this.isButtonCartonEnabled(carton, match),
       ),
     );
     this.regle.cartons.forEach((carton) =>
       this.enableButton(
         `rouge_btn_carton_${carton.couleur}`,
-        this.isButtonCartonEnabled(),
+        this.isButtonCartonEnabled(carton, match),
       ),
     );
     this.regle.touches.forEach((touche) =>
@@ -445,8 +479,12 @@ export class Gui {
     );
   }
 
-  private isButtonCartonEnabled(): boolean {
-    return this.matchState.status !== MatchStatus.pret;
+  private isButtonCartonEnabled(carton: Carton, match: MatchModel): boolean {
+    if (this.matchState.status === MatchStatus.pret) return false;
+    if (match.mortSubite === MortSubite.limite) return carton.mortSubite;
+    if (match.mortSubite === MortSubite.prolongation)
+      return carton.prolongation;
+    return carton.match;
   }
 
   private isButtonToucheEnabled(touche: Touche, match: MatchModel): boolean {

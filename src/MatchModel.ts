@@ -31,6 +31,8 @@ export class MatchModel {
       CartonCouleur,
       number
     >;
+    nbCarton[CartonCouleur.vert] = 0;
+    nbCarton[CartonCouleur.bleu] = 0;
     nbCarton[CartonCouleur.blanc] = 0;
     nbCarton[CartonCouleur.jaune] = 0;
     nbCarton[CartonCouleur.rouge] = 0;
@@ -88,7 +90,7 @@ export class MatchModel {
       ),
     );
     this.scores[Regle.adversaire(evenement.combattant)] += carton.points;
-    if (carton.couleur === CartonCouleur.noir) {
+    if (carton.finDuMatch) {
       this.matchState.status = MatchStatus.fini;
       this.message = `Fin du match: le combattant ${evenement.combattant} a recu un carton ${carton.couleur}.`;
     }
