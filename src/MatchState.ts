@@ -1,9 +1,4 @@
-import {
-  CombattantCouleur,
-  Evenement,
-  EvenementCarton,
-  EvenementTouche,
-} from "./Evenement.js";
+import { CombattantCouleur, Evenement, EvenementCarton, EvenementTouche } from "./Evenement.js";
 import { CartonCouleur } from "./Carton.js";
 import { ToucheNom } from "./Touche.js";
 

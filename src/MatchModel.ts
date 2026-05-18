@@ -1,17 +1,7 @@
-import {
-  EventLog,
-  EventLogCarton,
-  EventLogMortSubite,
-  EventLogTouche,
-  EventLogWin,
-} from "./EventLog.js";
+import { EventLog, EventLogCarton, EventLogMortSubite, EventLogTouche, EventLogWin } from "./EventLog.js";
 import { MatchState, MatchStatus } from "./MatchState.js";
 import { CartonCouleur } from "./Carton.js";
-import {
-  CombattantCouleur,
-  EvenementCarton,
-  EvenementTouche,
-} from "./Evenement.js";
+import { CombattantCouleur, EvenementCarton, EvenementTouche } from "./Evenement.js";
 import { MortSubite } from "./MortSubite.js";
 import { Regle } from "./Regle.js";
 
@@ -27,10 +17,7 @@ export class MatchModel {
     private matchState: MatchState,
     private regle: Regle,
   ) {
-    const nbCarton: Record<CartonCouleur, number> = {} as Record<
-      CartonCouleur,
-      number
-    >;
+    const nbCarton: Record<CartonCouleur, number> = {} as Record<CartonCouleur, number>;
     nbCarton[CartonCouleur.vert] = 0;
     nbCarton[CartonCouleur.bleu] = 0;
     nbCarton[CartonCouleur.blanc] = 0;
@@ -64,22 +51,14 @@ export class MatchModel {
 
   private processTouche(evenement: EvenementTouche) {
     const touche = this.regle.getTouche(evenement.nom);
-    this.eventLog.push(
-      new EventLogTouche(evenement.temps, evenement.combattant, touche),
-    );
+    this.eventLog.push(new EventLogTouche(evenement.temps, evenement.combattant, touche));
     this.scores[evenement.combattant] += touche.points;
   }
 
-  private processCarton(
-    evenement: EvenementCarton,
-    nbCarton: Record<CartonCouleur, number>,
-  ) {
+  private processCarton(evenement: EvenementCarton, nbCarton: Record<CartonCouleur, number>) {
     const evNom = evenement.couleur;
     nbCarton[evNom]++;
-    const carton =
-      nbCarton[evNom] >= 2
-        ? this.regle.getCartonSuperieur(evNom)
-        : this.regle.getCarton(evNom);
+    const carton = nbCarton[evNom] >= 2 ? this.regle.getCartonSuperieur(evNom) : this.regle.getCarton(evNom);
     this.eventLog.push(
       new EventLogCarton(
         evenement.temps,
@@ -104,21 +83,16 @@ export class MatchModel {
     ) {
       this.message = `Mort subite: scores &gt; ${this.regle.mortSubiteScore}.`;
       if (!this.mortSubite) {
-        this.eventLog.push(
-          new EventLogMortSubite(tempsEvenement, MortSubite.limite),
-        );
+        this.eventLog.push(new EventLogMortSubite(tempsEvenement, MortSubite.limite));
       }
       this.mortSubite = MortSubite.limite;
     }
     if (
-      this.scores[CombattantCouleur.vert] ===
-        this.scores[CombattantCouleur.rouge] &&
+      this.scores[CombattantCouleur.vert] === this.scores[CombattantCouleur.rouge] &&
       this.matchState.time >= this.regle.duree
     ) {
       if (this.mortSubite !== MortSubite.prolongation) {
-        this.eventLog.push(
-          new EventLogMortSubite(this.regle.duree, MortSubite.prolongation),
-        );
+        this.eventLog.push(new EventLogMortSubite(this.regle.duree, MortSubite.prolongation));
       }
       this.mortSubite = MortSubite.prolongation;
       this.message = `Mort subite: ex aequo prolongation de ${this.regle.prolongation}s.`;
@@ -134,16 +108,10 @@ export class MatchModel {
         return this.win(this.matchState.time, CombattantCouleur.rouge);
       }
     } else {
-      if (
-        this.scores[CombattantCouleur.vert] >
-        this.scores[CombattantCouleur.rouge]
-      ) {
+      if (this.scores[CombattantCouleur.vert] > this.scores[CombattantCouleur.rouge]) {
         return this.win(this.matchState.time, CombattantCouleur.vert);
       }
-      if (
-        this.scores[CombattantCouleur.rouge] >
-        this.scores[CombattantCouleur.vert]
-      ) {
+      if (this.scores[CombattantCouleur.rouge] > this.scores[CombattantCouleur.vert]) {
         return this.win(this.matchState.time, CombattantCouleur.rouge);
       }
     }
@@ -157,8 +125,6 @@ export class MatchModel {
     this.message = combattantCouleur
       ? `Fin du match: le combattant ${combattantCouleur} a gagné.`
       : `Fin du match: ex aequo.`;
-    this.eventLog.push(
-      new EventLogWin(temps, combattantCouleur, this.mortSubite),
-    );
+    this.eventLog.push(new EventLogWin(temps, combattantCouleur, this.mortSubite));
   }
 }

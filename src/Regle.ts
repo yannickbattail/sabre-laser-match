@@ -8,46 +8,10 @@ export class Regle {
     new Regle(
       "FFE",
       [
-        new Carton(
-          CartonCouleur.blanc,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-blanc.svg",
-          CartonCouleur.jaune,
-        ),
-        new Carton(
-          CartonCouleur.jaune,
-          3,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-jaune.svg",
-          CartonCouleur.rouge,
-        ),
-        new Carton(
-          CartonCouleur.rouge,
-          5,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-rouge.svg",
-          CartonCouleur.noir,
-        ),
-        new Carton(
-          CartonCouleur.noir,
-          0,
-          true,
-          true,
-          true,
-          true,
-          "images/carton-noir.svg",
-          CartonCouleur.noir,
-        ),
+        new Carton(CartonCouleur.blanc, 0, true, true, true, false, "images/carton-blanc.svg", CartonCouleur.jaune),
+        new Carton(CartonCouleur.jaune, 3, true, true, true, false, "images/carton-jaune.svg", CartonCouleur.rouge),
+        new Carton(CartonCouleur.rouge, 5, true, true, true, false, "images/carton-rouge.svg", CartonCouleur.noir),
+        new Carton(CartonCouleur.noir, 0, true, true, true, true, "images/carton-noir.svg", CartonCouleur.noir),
       ],
       [
         new Touche(ToucheNom.main, 1, true, false, false, "images/main.svg"),
@@ -64,66 +28,12 @@ export class Regle {
     new Regle(
       "personnalisée",
       [
-        new Carton(
-          CartonCouleur.vert,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-vert.svg",
-          CartonCouleur.vert,
-        ),
-        new Carton(
-          CartonCouleur.bleu,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-bleu.svg",
-          CartonCouleur.bleu,
-        ),
-        new Carton(
-          CartonCouleur.blanc,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-blanc.svg",
-          CartonCouleur.jaune,
-        ),
-        new Carton(
-          CartonCouleur.jaune,
-          3,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-jaune.svg",
-          CartonCouleur.rouge,
-        ),
-        new Carton(
-          CartonCouleur.rouge,
-          5,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-rouge.svg",
-          CartonCouleur.noir,
-        ),
-        new Carton(
-          CartonCouleur.noir,
-          0,
-          true,
-          true,
-          true,
-          true,
-          "images/carton-noir.svg",
-          CartonCouleur.noir,
-        ),
+        new Carton(CartonCouleur.vert, 0, true, true, true, false, "images/carton-vert.svg", CartonCouleur.vert),
+        new Carton(CartonCouleur.bleu, 0, true, true, true, false, "images/carton-bleu.svg", CartonCouleur.bleu),
+        new Carton(CartonCouleur.blanc, 0, true, true, true, false, "images/carton-blanc.svg", CartonCouleur.jaune),
+        new Carton(CartonCouleur.jaune, 3, true, true, true, false, "images/carton-jaune.svg", CartonCouleur.rouge),
+        new Carton(CartonCouleur.rouge, 5, true, true, true, false, "images/carton-rouge.svg", CartonCouleur.noir),
+        new Carton(CartonCouleur.noir, 0, true, true, true, true, "images/carton-noir.svg", CartonCouleur.noir),
       ],
       [
         new Touche(ToucheNom.main, 1, true, false, false, "images/main.svg"),
@@ -140,66 +50,12 @@ export class Regle {
     new Regle(
       "testing",
       [
-        new Carton(
-          CartonCouleur.vert,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-vert.svg",
-          CartonCouleur.vert,
-        ),
-        new Carton(
-          CartonCouleur.bleu,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-bleu.svg",
-          CartonCouleur.bleu,
-        ),
-        new Carton(
-          CartonCouleur.blanc,
-          0,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-blanc.svg",
-          CartonCouleur.jaune,
-        ),
-        new Carton(
-          CartonCouleur.jaune,
-          3,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-jaune.svg",
-          CartonCouleur.rouge,
-        ),
-        new Carton(
-          CartonCouleur.rouge,
-          5,
-          true,
-          true,
-          true,
-          false,
-          "images/carton-rouge.svg",
-          CartonCouleur.noir,
-        ),
-        new Carton(
-          CartonCouleur.noir,
-          0,
-          true,
-          true,
-          true,
-          true,
-          "images/carton-noir.svg",
-          CartonCouleur.noir,
-        ),
+        new Carton(CartonCouleur.vert, 0, true, true, true, false, "images/carton-vert.svg", CartonCouleur.vert),
+        new Carton(CartonCouleur.bleu, 0, true, true, true, false, "images/carton-bleu.svg", CartonCouleur.bleu),
+        new Carton(CartonCouleur.blanc, 0, true, true, true, false, "images/carton-blanc.svg", CartonCouleur.jaune),
+        new Carton(CartonCouleur.jaune, 3, true, true, true, false, "images/carton-jaune.svg", CartonCouleur.rouge),
+        new Carton(CartonCouleur.rouge, 5, true, true, true, false, "images/carton-rouge.svg", CartonCouleur.noir),
+        new Carton(CartonCouleur.noir, 0, true, true, true, true, "images/carton-noir.svg", CartonCouleur.noir),
       ],
       [
         new Touche(ToucheNom.main, 1, true, false, false, "images/main.svg"),
@@ -226,23 +82,15 @@ export class Regle {
   ) {}
 
   public static getRegleByNom(nomRegle: string): Regle {
-    return (
-      this.REGLES.find((r) => r.nom === nomRegle) ||
-      _throw(new Error(`Regle ${nomRegle} introuvable`))
-    );
+    return this.REGLES.find((r) => r.nom === nomRegle) || _throw(new Error(`Regle ${nomRegle} introuvable`));
   }
 
   public static adversaire(combattant: CombattantCouleur): CombattantCouleur {
-    return combattant === CombattantCouleur.vert
-      ? CombattantCouleur.rouge
-      : CombattantCouleur.vert;
+    return combattant === CombattantCouleur.vert ? CombattantCouleur.rouge : CombattantCouleur.vert;
   }
 
   public getCarton(couleur: CartonCouleur): Carton {
-    return (
-      this.cartons.find((c) => c.couleur === couleur) ||
-      _throw(new Error(`Carton ${couleur} introuvable`))
-    );
+    return this.cartons.find((c) => c.couleur === couleur) || _throw(new Error(`Carton ${couleur} introuvable`));
   }
 
   public getCartonSuperieur(couleur: CartonCouleur): Carton {
@@ -253,10 +101,7 @@ export class Regle {
   }
 
   public getTouche(nom: ToucheNom): Touche {
-    return (
-      this.touches.find((c) => c.nom === nom) ||
-      _throw(new Error(`Touche ${nom} introuvable`))
-    );
+    return this.touches.find((c) => c.nom === nom) || _throw(new Error(`Touche ${nom} introuvable`));
   }
 
   public getTouchesMatch(match: boolean): Touche[] {
