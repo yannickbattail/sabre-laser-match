@@ -1,158 +1,160 @@
 body {
-    text-align: center;
+  text-align: center;
 }
 
 .dark {
-    color: rgb(100, 200, 255);
-    background-color: rgb(30, 30, 30);
+  color: rgb(100, 200, 255);
+  background-color: rgb(30, 30, 30);
 }
 
 #background-image {
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    display: block;
-    background-image: url("images/lightsaber.png");
-    background-repeat: no-repeat;
-    background-position: center top+100px;
-    width: 100%;
-    height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: block;
+  background-image: url("images/lightsaber.png");
+  background-repeat: no-repeat;
+  background-position: center top + 100px;
+  width: 100%;
+  height: 100%;
 }
 
 #background-image.blue {
-    transition: all 1s ease-out;
-    filter: hue-rotate(0deg);
+  transition: all 1s ease-out;
+  filter: hue-rotate(0deg);
 }
 
 #background-image.orange {
-    transition: all 1s ease-out;
-    filter: hue-rotate(180deg);
+  transition: all 1s ease-out;
+  filter: hue-rotate(180deg);
 }
 
 #background-image.green {
-    transition: all 1s ease-out;
-    filter: hue-rotate(270deg);
+  transition: all 1s ease-out;
+  filter: hue-rotate(270deg);
 }
 
 button {
-    color: rgb(100, 200, 255);
-    background-color: rgba(60, 60, 60);
-    border-color: rgb(100, 200, 255);
-    border-width: 4px;
-    border-radius: 15px;
-    margin: 5px;
-    padding: 10px;
+  color: rgb(100, 200, 255);
+  background-color: rgba(60, 60, 60);
+  border-color: rgb(100, 200, 255);
+  border-width: 4px;
+  border-radius: 15px;
+  margin: 5px;
+  padding: 10px;
 }
 
 button:disabled,
 button[disabled],
 button[disabled="disabled"] {
-    border-color: rgb(30, 60, 75);
+  border-color: rgb(30, 60, 75);
 }
 
 #message {
-    font-size: 20px;
-    margin: 10px;
-    text-shadow: -1px -1px 0 #000,
+  font-size: 20px;
+  margin: 10px;
+  text-shadow:
+    -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
 }
 
 #historique {
-    min-height: 50px;
-    overflow: scroll;
-    max-height: 100px;
-    text-shadow: -1px -1px 0 #000,
+  min-height: 50px;
+  overflow: scroll;
+  max-height: 100px;
+  text-shadow:
+    -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
 }
 
 #ruleEditor img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 #ruleEditor input {
-    width: 40px;
+  width: 40px;
 }
 
 #ruleEditor table {
-    display: inline-table
+  display: inline-table;
 }
 
 #ruleEditor td {
-    background-color: black;
+  background-color: black;
 }
 
 #historique img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 button img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 #scoreVert,
 #scoreRouge {
-    width: 40px;
-    font-size: 20px;
-    text-align: center;
+  width: 40px;
+  font-size: 20px;
+  text-align: center;
 }
 
 #time {
-    display: inline-block;
-    font-size: 20px;
+  display: inline-block;
+  font-size: 20px;
 }
 
 .positive {
-    color: rgb(100, 200, 255);
+  color: rgb(100, 200, 255);
 }
 
 .positive25th {
-    color: rgb(255, 128, 0);
+  color: rgb(255, 128, 0);
 }
 
 .negative {
-    color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0);
 }
 
 .vertCombattant {
-    color: chartreuse;
+  color: chartreuse;
 }
 
 .rougeCombattant {
-    color: red;
+  color: red;
 }
 
 .blancCarton {
-    color: black;
-    background-color: white;
+  color: black;
+  background-color: white;
 }
 
 .jauneCarton {
-    color: black;
-    background-color: yellow;
+  color: black;
+  background-color: yellow;
 }
 
 .rougeCarton {
-    color: black;
-    background-color: red;
+  color: black;
+  background-color: red;
 }
 
 .noirCarton {
-    color: white;
-    background-color: black;
+  color: white;
+  background-color: black;
 }
 
 #restant {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 #tableCombattants {
-    width: 100%;
+  width: 100%;
 }

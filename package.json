@@ -4,17 +4,26 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "start": "live-server --wait=1000 ./src",
-    "lint": "eslint --fix ./src/*.ts",
-    "format": "stylelint ./src/*.css && prettier -w ."
+    "test": "vitest run ./tests/ --coverage",
+    "lint": "eslint --fix src",
+    "format": "stylelint ./src/*.css && prettier --log-level error --write .",
+    "depcheck": "depcheck --quiet --ignore-path=./.gitignore --ignores='@types/*,@vitest/coverage-v8'",
+    "check": "npm run depcheck && npm run format && npm run lint && npm run build",
+    "check-updates": "npm-check-updates -u && npm update --save && npm i && npm dedupe && npm run check",
+    "publish-new-v": "npm version patch --no-git-tag-version && npm run check && npm publish"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
-    "eslint": "^9.18.0",
-    "globals": "^15.14.0",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.6",
+    "depcheck": "^1.4.7",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
     "live-server": "^1.2.2",
-    "prettier": "^3.4.2",
-    "stylelint": "^16.13.2",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "npm-check-updates": "^22.2.0",
+    "prettier": "^3.8.3",
+    "stylelint": "^17.11.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4",
+    "vitest": "^4.1.6"
   }
 }

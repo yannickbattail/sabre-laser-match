@@ -5,36 +5,20 @@ import { Touche, ToucheNom } from "./Touche.js";
 import { CombattantCouleur } from "./Evenement.js";
 import { Carton, CartonCouleur } from "./Carton.js";
 import { MatchModel } from "./MatchModel.js";
-import {
-  EventLog,
-  EventLogCarton,
-  EventLogMortSubite,
-  EventLogTouche,
-  EventLogWin,
-} from "./EventLog.js";
+import { EventLog, EventLogCarton, EventLogMortSubite, EventLogTouche, EventLogWin } from "./EventLog.js";
 import { MortSubite } from "./MortSubite.js";
 import { NodeUpdate } from "./NodeUpdate.js";
 
 class GuiElem {
-  public play =
-    document.getElementById("play") ||
-    _throw(new Error("Element 'play' non trouvé"));
-  public pause =
-    document.getElementById("pause") ||
-    _throw(new Error("Element 'pause' non trouvé"));
+  public play = document.getElementById("play") || _throw(new Error("Element 'play' non trouvé"));
+  public pause = document.getElementById("pause") || _throw(new Error("Element 'pause' non trouvé"));
   public changeRegle: HTMLOptionElement =
     (document.getElementById("changeRegle") as HTMLOptionElement) ||
     _throw(new Error("Element 'changeRegle' non trouvé"));
 
-  public config =
-    document.getElementById("config") ||
-    _throw(new Error("Element 'config' non trouvé"));
-  public ruleEditor =
-    document.getElementById("ruleEditor") ||
-    _throw(new Error("Element 'ruleEditor' non trouvé"));
-  public combat =
-    document.getElementById("combat") ||
-    _throw(new Error("Element 'combat' non trouvé"));
+  public config = document.getElementById("config") || _throw(new Error("Element 'config' non trouvé"));
+  public ruleEditor = document.getElementById("ruleEditor") || _throw(new Error("Element 'ruleEditor' non trouvé"));
+  public combat = document.getElementById("combat") || _throw(new Error("Element 'combat' non trouvé"));
 }
 
 export class Gui {
@@ -73,10 +57,7 @@ export class Gui {
   public play() {
     if (this.matchState.status === MatchStatus.en_cours) {
       this.matchState.status = MatchStatus.pause;
-    } else if (
-      this.matchState.status === MatchStatus.pause ||
-      this.matchState.status === MatchStatus.pret
-    ) {
+    } else if (this.matchState.status === MatchStatus.pause || this.matchState.status === MatchStatus.pret) {
       this.matchState.status = MatchStatus.en_cours;
     }
     this.refresh();
@@ -86,9 +67,7 @@ export class Gui {
     if (
       this.matchState.status === MatchStatus.pret ||
       this.matchState.status === MatchStatus.fini ||
-      confirm(
-        "Changer de règle va remettre à zéro le match, voulez-vous continuer?",
-      )
+      confirm("Changer de règle va remettre à zéro le match, voulez-vous continuer?")
     ) {
       this.regle = this.getRegle();
       this.showConfigRules();
@@ -163,8 +142,7 @@ export class Gui {
 
     if (name.startsWith("carton_sup_")) {
       const carton = name.replace("carton_sup_", "");
-      reglePerso.getCarton(carton as CartonCouleur).cartonSuperieur =
-        value as CartonCouleur;
+      reglePerso.getCarton(carton as CartonCouleur).cartonSuperieur = value as CartonCouleur;
     } else {
       throw new Error(`id ${name} non géré`);
     }
@@ -174,22 +152,15 @@ export class Gui {
   public showConfig() {
     const regle = Regle.getRegleByNom("personnalisée");
     NodeUpdate.updateElement("config_regle", this.constructConfigRegle(regle));
-    NodeUpdate.updateElement(
-      "config_touches",
-      this.constructConfigTouches(regle),
-    );
-    NodeUpdate.updateElement(
-      "config_cartons",
-      this.constructConfigCartons(regle),
-    );
+    NodeUpdate.updateElement("config_touches", this.constructConfigTouches(regle));
+    NodeUpdate.updateElement("config_cartons", this.constructConfigCartons(regle));
     this.guiElem.config.style.display = "block";
     this.guiElem.combat.style.display = "none";
     this.showConfigRules();
   }
 
   public showConfigRules() {
-    this.guiElem.ruleEditor.style.display =
-      this.regle.nom === "personnalisée" ? "block" : "none";
+    this.guiElem.ruleEditor.style.display = this.regle.nom === "personnalisée" ? "block" : "none";
   }
 
   public hideConfig() {
@@ -284,22 +255,10 @@ export class Gui {
   }
 
   private init() {
-    NodeUpdate.updateElement(
-      "touchesVert",
-      this.initTouches(CombattantCouleur.vert),
-    );
-    NodeUpdate.updateElement(
-      "touchesRouge",
-      this.initTouches(CombattantCouleur.rouge),
-    );
-    NodeUpdate.updateElement(
-      "cartonsVert",
-      this.initCartons(CombattantCouleur.vert),
-    );
-    NodeUpdate.updateElement(
-      "cartonsRouge",
-      this.initCartons(CombattantCouleur.rouge),
-    );
+    NodeUpdate.updateElement("touchesVert", this.initTouches(CombattantCouleur.vert));
+    NodeUpdate.updateElement("touchesRouge", this.initTouches(CombattantCouleur.rouge));
+    NodeUpdate.updateElement("cartonsVert", this.initCartons(CombattantCouleur.vert));
+    NodeUpdate.updateElement("cartonsRouge", this.initCartons(CombattantCouleur.rouge));
     NodeUpdate.updateElement("changeRegle", this.initRegles());
   }
 
@@ -377,10 +336,7 @@ export class Gui {
   }
 
   private updateTimer() {
-    NodeUpdate.updateElement(
-      "time",
-      this.formatCountDown(this.matchState.time),
-    );
+    NodeUpdate.updateElement("time", this.formatCountDown(this.matchState.time));
   }
 
   private formatCountDown(time: number) {
@@ -409,7 +365,7 @@ export class Gui {
   }
 
   private getHistorique(match: MatchModel) {
-    const html = [];
+    const html: string[] = [];
     for (let i = 0; i < match.eventLog.length; i++) {
       const eventLog: EventLog = match.eventLog[i];
       const horodatage = `<span class="temps">[${this.formatTime(eventLog.temps)}]</span>`;
@@ -426,14 +382,10 @@ export class Gui {
         }
       } else if (eventLog instanceof EventLogTouche) {
         const prefix = `${horodatage} combattant ${this.formatCombattant(eventLog.combattant)}: `;
-        html.push(
-          `<div>${prefix} touche ${this.formatTouche(eventLog.touche.nom)} (+${eventLog.touche.points})</div>`,
-        );
+        html.push(`<div>${prefix} touche ${this.formatTouche(eventLog.touche.nom)} (+${eventLog.touche.points})</div>`);
       } else if (eventLog instanceof EventLogMortSubite) {
         if (eventLog.cause === MortSubite.limite) {
-          html.push(
-            `<div>${horodatage} mort subite: score des 2 combattants &gt; ${this.regle.mortSubiteScore}</div>`,
-          );
+          html.push(`<div>${horodatage} mort subite: score des 2 combattants &gt; ${this.regle.mortSubiteScore}</div>`);
         } else {
           html.push(
             `<div>${horodatage} mort subite: score ex aequo, prolongation de ${this.regle.prolongation}s</div>`,
@@ -454,44 +406,30 @@ export class Gui {
 
   private activeButtons(match: MatchModel) {
     this.regle.cartons.forEach((carton) =>
-      this.enableButton(
-        `vert_btn_carton_${carton.couleur}`,
-        this.isButtonCartonEnabled(carton, match),
-      ),
+      this.enableButton(`vert_btn_carton_${carton.couleur}`, this.isButtonCartonEnabled(carton, match)),
     );
     this.regle.cartons.forEach((carton) =>
-      this.enableButton(
-        `rouge_btn_carton_${carton.couleur}`,
-        this.isButtonCartonEnabled(carton, match),
-      ),
+      this.enableButton(`rouge_btn_carton_${carton.couleur}`, this.isButtonCartonEnabled(carton, match)),
     );
     this.regle.touches.forEach((touche) =>
-      this.enableButton(
-        `vert_btn_touche_${touche.nom}`,
-        this.isButtonToucheEnabled(touche, match),
-      ),
+      this.enableButton(`vert_btn_touche_${touche.nom}`, this.isButtonToucheEnabled(touche, match)),
     );
     this.regle.touches.forEach((touche) =>
-      this.enableButton(
-        `rouge_btn_touche_${touche.nom}`,
-        this.isButtonToucheEnabled(touche, match),
-      ),
+      this.enableButton(`rouge_btn_touche_${touche.nom}`, this.isButtonToucheEnabled(touche, match)),
     );
   }
 
   private isButtonCartonEnabled(carton: Carton, match: MatchModel): boolean {
     if (this.matchState.status === MatchStatus.pret) return false;
     if (match.mortSubite === MortSubite.limite) return carton.mortSubite;
-    if (match.mortSubite === MortSubite.prolongation)
-      return carton.prolongation;
+    if (match.mortSubite === MortSubite.prolongation) return carton.prolongation;
     return carton.match;
   }
 
   private isButtonToucheEnabled(touche: Touche, match: MatchModel): boolean {
     if (this.matchState.status === MatchStatus.pret) return false;
     if (match.mortSubite === MortSubite.limite) return touche.mortSubite;
-    if (match.mortSubite === MortSubite.prolongation)
-      return touche.prolongation;
+    if (match.mortSubite === MortSubite.prolongation) return touche.prolongation;
     return touche.match;
   }
 
